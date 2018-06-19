@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /*待审核质疑列表 inittaskid，requestorID，name，picid,url,质疑原因*/
+    var html = $.ajax({
+        type: "Post",
+        url: '/review/query',
+        dataType:'json',
+        success: function(myobj) {
+            taskIDs=[];
+            taskRequestorIDs=[];
+            taskRequestorNames=[];
+            taskPicIDs=[];
+            taskPicurls=[];
+            taskReasons=[];
+
+            taskIDs=myobj.id;
+            taskRequestorIDs=myobj.requestorid;
+            taskRequestorNames=myobj.requestorname;
+            taskPicIDs=myobj.picid;
+            taskPicurls=myobj.picurl;
+            taskReasons=myobj.reason;
+
+            $("#info").children("div").remove();
+            loadReview();
+
+        },
+        error: function() {
+            alert("error");
+        }
+    });
+    /*$("#info").children("div").remove();
+    loadReview();*/
+
+
+    /*质疑通过，给任务inittaskid，picid，正确答案list（可能0，也可能大于1，修改答案,通知发起者（requestor）（？，返回结果成功*/
+    var obj={
+        taskID:taskIDs[i],
+        picID:taskPicIDs[i],
+        answer:answerlist,
+    };
+    var html = $.ajax({
+        type: "Post",
+        url: '/checkQuery/pass',
+        data:JSON.stringify(obj),
+        dataType:'json',
+        contentType: "application/json",
+        async: false,
+        success: function(data) {
+            clickReview();
+        },
+        error: function() {
+            alert("error");
+        }
+    });
+
+    /*质疑失败，给任务inittaskid，picid,通知质疑人（requestor）（？，返回结果成功*/
+    var obj={
+        taskID:taskIDs[i],
+        picID:taskPicIDs[i],
+    };
+    var html = $.ajax({
+        type: "Post",
+        url: '/checkQuery/nopass',
+        data:JSON.stringify(obj),
+        dataType:'json',
+        contentType: "application/json",
+        async: false,
+        success: function(data) {
+            clickReview();
+        },
+        error: function() {
+            alert("error");
+        }
+    });
+</script>
+</body>
+</html>

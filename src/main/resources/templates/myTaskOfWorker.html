@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/myTaskOfWorkerCSS.css" type="text/css"/>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script>
+        $(document).ready(function(){
+            clickSearch();
+
+
+
+            document.getElementById('username').innerText=localStorage.nickname;
+            var username=document.getElementById('username');
+            username.onmouseover=function () {
+                document.getElementById("menu").style.display="inherit";
+            }
+            document.getElementById("userbar").onmouseleave=function (e) {
+                if(e.target.id!="menu"){
+                    document.getElementById("menu").style.display="none";
+                }
+            }
+        });
+
+
+        function logout(){
+            window.open("./homepage.html","_self");
+        }
+
+        function goPersonalSpace(){
+            window.open("./personalSpacePage.html","_self");
+        }
+    </script>
+</head>
+<body>
+<!--头部-->
+
+<div id="userbar" class="u1">
+    <li class="u3"><img class="u2" src="../static/pic/logo.png" style=""></li>
+    <li class="u3"><a href="./chooseNewTask.html" class="u5">任务大厅</a></li>
+    <li class="u3"><a href="#" class="u5">新闻</a></li>
+    <li class="u3"><a href="#" class="u5">联系</a></li>
+    <li class="u3"><a href="#" class="u5">帮助</a></li>
+    <li class="u4"><a href="./myTaskOfWorker.html" class="u6" id="x"  style="color: darkviolet">我的接取</a></li>
+    <li class="u4"><a href="./myTaskOfRequestor.html" class="u6">我的发布</a></li>
+    <li class="u4"><a href="./taskAnnouncement.html" class="u6">发布任务</a></li>
+    <li class="u4"><a href="./rechargePage.html" class="u6">在线充值</a></li>
+    <li class="u4">
+        <a class="u7">
+            你好，
+            <u id="username" style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">用户</u>
+        </a>
+    </li>
+    <div id="menu" style="margin-left: 82%;margin-top: -3%;z-index: 5;display: none;">
+        <button onclick="goPersonalSpace()" style="border-radius:0;background: black;color:white;font-size: 20px;width: 120px;border-color: white;border-width: 1px;z-index: 5;margin-top: 65px;">个人空间</button><br>
+        <button onclick="logout()" style="border-radius:0;background: black;color:white;font-size: 20px;margin-top: -2px;width:120px;border-color: white;border-width: 1px;">退出账户</button>
+
+    </div>
+</div>
+
+<!--选择-->
+<div class="menubox">
+    <label class="menu-label1" id="menu-label1">种类:</label>
+    <span class="menu-span">
+        <input type="radio" id="menu-radio1" class="menu-radio" name="kind" value='全部' onclick="clickChoose()" checked>
+    <label for="menu-radio1"></label><em>全部</em>
+    </span>
+    <span class="menu-span">
+        <input type="radio" id="menu-radio2" class="menu-radio" name="kind" value='自然' onclick="clickChoose()">
+        <label for="menu-radio2"></label><em>自然</em>
+    </span>
+    <span class="menu-span">
+         <input type="radio" id="menu-radio3" class="menu-radio" name="kind" value='地理' onclick="clickChoose()">
+    <label for="menu-radio3"></label><em>地理</em>
+    </span>
+    <span class="menu-span">
+        <input type="radio" id="menu-radio4" class="menu-radio" name="kind" value='文化' onclick="clickChoose()">
+    <label for="menu-radio4"></label><em>文化</em>
+    </span>
+    <span class="menu-span">
+         <input type="radio" id="menu-radio5" class="menu-radio" name="kind" value='历史' onclick="clickChoose()">
+    <label for="menu-radio5"></label><em>历史</em>
+    </span>
+    <span class="menu-span">
+         <input type="radio" id="menu-radio6" class="menu-radio" name="kind" value='艺术' onclick="clickChoose()">
+    <label for="menu-radio6"></label><em>艺术</em>
+    </span>
+    <span class="menu-span">
+         <input type="radio" id="menu-radio7" class="menu-radio" name="kind" value='人物' onclick="clickChoose()">
+    <label for="menu-radio7"></label><em>人物</em>
+    </span>
+    <span class="menu-span">
+        <input type="radio" id="menu-radio8" class="menu-radio" name="kind" value='生活' onclick="clickChoose()">
+    <label for="menu-radio8"></label><em>生活</em>
+    </span>
+    <span class="menu-span">
+        <input type="radio" id="menu-radio9" class="menu-radio" name="kind" value='社会' onclick="clickChoose()">
+    <label for="menu-radio9"></label><em>社会</em>
+    </span>
+    <span class="menu-span">
+         <input type="radio" id="menu-radio10" class="menu-radio" name="kind" value='体育' onclick="clickChoose()">
+    <label for="menu-radio10"></label><em>体育</em>
+    </span>
+    <span class="menu-span">
+         <input type="radio" id="menu-radio11" class="menu-radio" name="kind" value='经济' onclick="clickChoose()">
+    <label for="menu-radio11"></label><em>经济</em>
+    </span>
+    <span class="menu-span">
+         <input type="radio" id="menu-radio12" class="menu-radio" name="kind" value='科技' onclick="clickChoose()">
+    <label for="menu-radio12"></label><em>科技</em>
+    </span>
+    <hr>
+    <label class="menu-label1" id="menu-label2">完成情况:</label>
+    <span class="menu-span">
+         <input type="radio" id="menu-radio13" class="menu-radio" name="condition" value='4' onclick="clickChoose()" checked>
+    <label for="menu-radio13"></label><em>全部</em>
+    </span>
+    <span class="menu-span">
+         <input type="radio" id="menu-radio14" class="menu-radio" name="condition" value='0' onclick="clickChoose()">
+    <label for="menu-radio14"></label><em>进行中</em>
+    </span>
+    <span class="menu-span">
+         <input type="radio" id="menu-radio15" class="menu-radio" name="condition" value='1' onclick="clickChoose()">
+    <label for="menu-radio15"></label><em>已完成</em>
+    </span>
+    <span class="menu-span">
+         <input type="radio" id="menu-radio16" class="menu-radio" name="condition" value='2' onclick="clickChoose()">
+    <label for="menu-radio16"></label><em>已关闭</em>
+    </span>
+    <span class="menu-span">
+         <input type="radio" id="menu-radio17" class="menu-radio" name="condition" value='3' onclick="clickChoose()">
+    <label for="menu-radio17"></label><em>未完成</em>
+    </span>
+    <hr>
+</div>
+<!--图片加载-->
+
+<!--任务详情-->
+<div class="taskDetail" id="taskDetail">
+    <!--<img class="taskDetail-m" id="taskDetail-m">-->
+    <div class="taskDetail-div" id="taskDetail-div">
+        <div class="taskDetail-info">
+            <img class="task-img" id="task-img">
+            <p class="task-infop1" id="task-infop1"></p>
+            <p class="task-infop2" id="task-infop2"></p>
+            <p class="task-infop3" id="task-infop3"></p>
+            <p class="task-infop4" id="task-infop4"></p>
+            <p class="task-infop5" id="task-infop5"></p>
+            <p class="task-infop6" id="task-infop6"></p>
+            <p class="task-infop7" id="task-infop7"></p>
+            <p class="task-infop8" id="task-infop8"></p>
+            <p class="task-infop9" id="task-infop9"></p>
+            <p class="task-infop10" id="task-infop10">要求:</p>
+        </div>
+        <button class="taskDetail-close" id="taskDetail-close" onclick=taskDetailClose()>×</button>
+    </div>
+</div>
+
+<!--加载-->
+<script>
+   //数据
+    var workerID=localStorage.account;
+
+   //任务加载
+   var maindiv = document.createElement("div");
+   maindiv.className="maindiv";
+   maindiv.id="main";
+
+   var searchKind='全部';
+   var searchCondition=4;
+   var marklist=new Array();
+
+//任务信息
+    var taskIDs=new Array();
+    var taskRequestorIDs=new Array();
+    var taskRequestorNames=new Array();
+    var taskRequests=new Array();
+    var taskTags=new Array();
+    var taskCredits=new Array();
+    var taskActualCredits=new Array();
+    var taskPeople=new Array();
+    var taskParticipants=new Array();
+    var taskPicurls=new Array();
+    var taskConditions=new Array();
+    var taskStarttimes=new Array();
+    var taskEndtimes=new Array();
+    var taskDeadlines=new Array();
+    var taskKinds=new Array();
+    var taskMarks=new Array();
+    var taskRequestorHeadshots=new Array();
+
+    //具体任务
+    var picIDs=new Array();
+    var picurls=new Array();
+    var picConditions=new Array();
+    var picTags=new Array();
+
+//测试数据
+   /*taskConditions[0]=2;
+   taskConditions[1]=0;
+   taskConditions[2]=0;
+   taskConditions[3]=0;
+   taskConditions[4]=0;
+   taskIDs[0]='01';
+   taskIDs[1]='02';
+   taskIDs[2]='03';
+   taskIDs[3]='04';
+   taskIDs[4]='05';
+   taskRequestorIDs[0]='001';
+   taskRequestorIDs[1]='002';
+   taskRequestorIDs[2]='003';
+   taskRequestorIDs[3]='004';
+   taskRequestorIDs[4]='005';
+   taskRequestorNames[0]='zz1';
+   taskRequestorNames[1]='zz2';
+   taskRequestorNames[2]='zz3';
+   taskRequestorNames[3]='zz4';
+   taskRequestorNames[4]='zz5';
+   taskRequests[0]='水电费水电费是否水电费水电费贷方金额就过节费打飞机房管局符合规范合格的房间号长水电';
+   taskRequests[1]='水电费水电费是否水电费水电费水电';
+   taskRequests[2]='水电费水电费是否水电费水电费水电';
+   taskRequests[3]='水电费水电费是否水电费水电费水电';
+   taskRequests[4]='水电费水电费是否水电费水电费水电';
+   taskTags[0]='0';
+   taskTags[1]='1';
+   taskTags[2]='1';
+   taskTags[3]='2';
+   taskTags[4]='3';
+   taskCredits[0]='100';
+   taskCredits[1]='100';
+   taskCredits[2]='100';
+   taskCredits[3]='100';
+   taskCredits[4]='100';
+   taskPeople[0]='100';
+   taskPeople[1]='100';
+   taskPeople[2]='100';
+   taskPeople[3]='100';
+   taskPeople[4]='100';
+   taskParticipants[0]='0';
+   taskParticipants[1]='0';
+   taskParticipants[2]='0';
+   taskParticipants[3]='0';
+   taskParticipants[4]='0';
+   taskPicurls[0]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+   taskPicurls[1]='http://bizhi.cnanzhi.com/upload/bizhi/2014/1204/14176797213073.jpg';
+   taskPicurls[2]='http://img.pconline.com.cn/images/upload/upc/tx/wallpaper/1306/09/c1/21860139_1370763185267.jpg';
+   taskPicurls[3]='http://dl.bizhi.sogou.com/images/2014/01/15/491195.jpg';
+   taskPicurls[4]='http://pic1.win4000.com/wallpaper/2/5486adf77972d.jpg';
+   taskStarttimes[0]='20180909';
+   taskStarttimes[1]='20180909';
+   taskStarttimes[2]='20180909';
+   taskStarttimes[3]='20180909';
+   taskStarttimes[4]='20180909';
+   taskKinds[0]="2342";
+   taskKinds[1]="2342";
+   taskKinds[2]="2342";
+   taskKinds[3]="2342";
+   taskKinds[4]="2342";
+   taskMarks[0]="十多年健身房康师傅奴隶:23:";
+   taskMarks[1]="23:123:2:";
+   taskMarks[2]="23:";
+   taskMarks[3]="23:345:345:";
+   taskMarks[4]="23433:2342:676:";
+   taskRequestorHeadshots[0]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+   taskRequestorHeadshots[1]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+   taskRequestorHeadshots[2]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+   taskRequestorHeadshots[3]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+   taskRequestorHeadshots[4]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+
+*/
+
+
+
+
+
+  function clickChoose() {
+      var radio1=document.getElementsByName('kind');
+      for(var i=0;i<radio1.length;i++){
+          if(radio1[i].checked){
+              searchKind=radio1[i].value;
+          }
+      }
+      var radio2=document.getElementsByName('condition');
+      for(var i=0;i<radio2.length;i++){
+          if(radio2[i].checked){
+              searchCondition=radio2[i].value;
+          }
+      }
+      console.log(searchCondition);
+      console.log(searchKind);
+      clickSearch();
+  }
+
+
+
+/*根据workerID获取该worker的任务的信息（每个workertask的id，发布者id、name，任务要求（string）、要求标注类型（0无1整体2方框3描边）、积分、实际获得积分、
+人数、参与者人数、第一张图片的url、任务状态（未完成0、已完成1、已关闭已完成2，已关闭未完成3）、任务获取情况（系统分配1、自主领取2）、开始时间、截止时间、结束时间*/
+    function clickSearch () {
+       var obj=new Object();
+        obj={
+            workerID:workerID,
+            searchCondition:searchCondition,//int,未完成0、已完成1、已关闭已完成2，已关闭未完成3，全部4
+            searchKind:searchKind,//string,分类+全部
+        };
+        var html = $.ajax({
+            type: "Post",
+            url: '/workerTask',
+            dataType:'json',
+            contentType: "application/json",
+            async: false,
+            data:JSON.stringify(obj),
+            success: function(myobj) {
+                taskIDs=[];
+                taskRequestorIDs=[];
+                taskRequestorNames=[];
+                taskRequests=[];
+                taskTags=[];
+                taskCredits=[];
+                taskActualCredits=[];
+                taskPeople=[];
+                taskParticipants=[];
+                taskPicurls=[];
+                taskConditions=[];
+                taskStarttimes=[];
+                taskEndtimes=[];
+                taskDeadlines=[];
+                taskKinds=[];
+                taskMarks=[];
+                taskRequestorHeadshots=[];
+
+                taskIDs=myobj.id;
+                taskRequestorIDs=myobj.Rid;
+                taskRequestorNames=myobj.Rname;
+                taskRequests=myobj.request;
+                taskTags=myobj.tag;
+                taskCredits=myobj.credit;
+                taskActualCredits=myobj.actualcredit;
+                taskPeople=myobj.people;
+                taskParticipants=myobj.participant;
+                taskPicurls=myobj.picurl;
+                taskConditions=myobj.condition;
+                taskStarttimes=myobj.starttime;
+                taskEndtimes=myobj.endtime;
+                taskDeadlines=myobj.deadline;
+                taskKinds=myobj.kind;
+                taskMarks=myobj.marklist;
+                taskRequestorHeadshots=myobj.rheadshot;
+
+                $("#main").children("div").remove();
+                loadtask();
+            },
+            error: function() {
+                alert("error");
+            }
+        });
+       /* $("#main").children("div").remove();
+        loadtask();*/
+    }
+
+    function loadtask() {
+        for(var i=0;i<taskPicurls.length;i++){
+            marklist=taskMarks[i].split(":");
+            console.log(marklist);
+            var item=document.createElement("div");
+            var img = document.createElement("img");
+            var tag = document.createElement("div");
+            var infonum=document.createElement("div");
+            var info=document.createElement("div");
+            var inforeq=document.createElement("div");
+            var infokind=document.createElement("a");
+            var infomark1=document.createElement("a");
+            var infomark2=document.createElement("a");
+            var infomark3=document.createElement("a");
+            var bt = document.createElement("button");
+            img.src=taskPicurls[i];
+            item.className="item";
+            tag.className="tag";
+            infonum.className="infonum";
+            infonum.innerHTML="完成度: "+taskParticipants[i]+"/"+taskPeople[i];
+            info.className="info";
+            var infocredit = document.createElement("h4");
+            infocredit.innerHTML=taskCredits[i];
+            infocredit.className="infocredit";
+            info.appendChild(infocredit);
+            inforeq.className="inforeq";
+            var inforeqimg=document.createElement("img");
+            inforeqimg.className="inforeqimg";
+            inforeqimg.src=taskRequestorHeadshots[i];
+            inforeq.appendChild(inforeqimg);
+            var inforeqname = document.createElement("h4");
+            inforeqname.innerHTML='&nbsp;&nbsp;'+taskRequestorNames[i];
+            inforeqname.className="inforeqname";
+            inforeq.appendChild(inforeqname);
+            bt.className="bt";
+            bt.id="bt"+i;
+            bt.innerHTML="see";
+            infokind.className='infokind';
+            infokind.innerHTML=taskKinds[i];
+            infomark1.className='infomark1';
+            infomark2.className='infomark2';
+            infomark3.className='infomark3';
+            if(marklist.length==2){
+                infomark1.style.display='block';
+                infomark1.innerHTML=marklist[0];
+            }
+            else if(marklist.length==3){
+                infomark1.style.display='block';
+                infomark1.innerHTML=marklist[0];
+                infomark2.style.display='block';
+                infomark2.innerHTML=marklist[1];
+            }
+            else if(marklist.length==4){
+                infomark1.style.display='block';
+                infomark1.innerHTML=marklist[0];
+                infomark2.style.display='block';
+                infomark2.innerHTML=marklist[1];
+                infomark3.style.display='block';
+                infomark3.innerHTML=marklist[2];
+            }
+            tag.appendChild(infokind);
+            tag.appendChild(infomark1);
+            tag.appendChild(infomark2);
+            tag.appendChild(infomark3);
+            item.appendChild(img);
+            item.appendChild(tag);
+            tag.appendChild(bt);
+            tag.appendChild(infonum);
+            tag.appendChild(info);
+            tag.appendChild(inforeq);
+            maindiv.appendChild(item);
+        }
+        document.body.appendChild(maindiv);
+        clickTaskDetail();
+    }
+
+    function clickTaskDetail() {
+        for(var i=0;i<taskPicurls.length;i++){
+            !function (i) {
+                var btn=document.getElementById('bt'+i);
+                btn.addEventListener("click",function () {
+                    var taskidc=localStorage.taskidc;
+                    localStorage.setItem('taskidc',taskIDs[i]);
+                    var taskrequestoridc=localStorage.taskrequestoridc;
+                    localStorage.setItem('taskrequestoridc',taskRequestorIDs[i]);
+                    var taskrequestornamec=localStorage.taskrequestornamec;
+                    localStorage.setItem('taskrequestornamec',taskRequestorNames[i]);
+                    var taskrequestc=localStorage.taskrequestc;
+                    localStorage.setItem('taskrequestc',taskRequests[i]);
+                    var tasktagc=localStorage.tasktagc;
+                    localStorage.setItem('tasktagc',taskTags[i]);
+                    var taskcreditc=localStorage.taskcreditc;
+                    localStorage.setItem('taskcreditc',taskCredits[i]);
+                    var taskactualcreditc=localStorage.taskactualcreditc;
+                    localStorage.setItem('taskactualcreditc',taskActualCredits[i]);
+                    /*var taskpeoplec=localStorage.taskpeoplec;
+                    localStorage.setItem('taskpeoplec',taskPeople[i]);*/
+                    var taskparticipantc=localStorage.taskparticipantc;
+                    localStorage.setItem('taskparticipantc',taskParticipants[i]);
+                   /* var taskpicurlc=localStorage.taskpicurlc;
+                    localStorage.setItem('taskpicurlc',taskPicurls[i]);*/
+                    var taskconditionc=localStorage.taskconditionc;
+                    localStorage.setItem('taskconditionc',taskConditions[i]);
+                    var taskstarttimec=localStorage.taskstarttimec;
+                    localStorage.setItem('taskstarttimec',taskStarttimes[i]);
+                    var taskendtimec=localStorage.taskendtimes;
+                    localStorage.setItem('taskendtimes',taskEndtimes[i]);
+                    var taskdeadlinec=localStorage.taskdeadlinec;
+                    localStorage.setItem('taskdeadlinec',taskDeadlines[i]);
+                    var taskkindc=localStorage.taskkindc;
+                    localStorage.setItem('taskkindc',taskKinds[i]);
+                    var taskmarkc=localStorage.taskmarkc;
+                    localStorage.setItem('taskmarkc',taskMarks[i]);
+                    var taskrequestorheadshotc=localStorage.taskrequestorheadshotc;
+                    localStorage.setItem('taskrequestorheadshotc',taskRequestorHeadshots[i]);
+                    console.log(localStorage);
+                    window.open("./myTaskDetailOfWorker.html","_blank");
+                })
+            }(i);
+        }
+    }
+
+</script>
+</body>
+</html>

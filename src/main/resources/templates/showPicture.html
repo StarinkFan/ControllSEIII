@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <title>Title</title>
+    <style>
+        .maindiv{
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .maindiv:after{
+            content: " ";
+            flex-grow: 9999999
+        }
+        .item{
+            flex-grow: 1;
+            margin: 2px;
+            position: relative;
+        }
+       img{
+           height: 200px;
+           min-width: 100%;
+           object-fit: cover;
+       }
+        .tag{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            transition: all 1s;
+        }
+        .tag:hover{
+            background: rgba(77,77,77,0.3)
+        }
+        .tag:hover .bt{
+            height: 40px;
+            background: rgba(0,0,0,0.5);
+            transition: all 0.5s;
+        }
+        .bt{
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            border: none;
+            font-size: 20px;
+            width: 100px;
+            text-align: center;
+            padding: 0 10px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            color:white;
+            height: 0;
+        }
+        .choose{
+            background-color:white;
+            border:none;
+            -webkit-transition-duration: 0.4s;
+            transition-duration: 0.4s;
+            color: black;
+            font-size: 20px;
+        }
+        .choose:hover{
+            background-color: rgba(77,77,77,0.3);
+            color: white;
+        }
+        .choosingTag{
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+            top: 0px;
+            left: 0px;
+            z-index: 1;
+        }
+        #whole{
+            font-size: 40px;
+            font-weight: bold;
+            position: absolute;
+            top: 260px;
+            left:200px;
+            color:#f1f1f1;
+        }
+        #whole:hover #whole:focus{
+            color:#bbb;
+            cursor:pointer;
+        }
+        #outline{
+            font-size: 40px;
+            font-weight: bold;
+            position: absolute;
+            top: 260px;
+            left:600px;
+            color:#f1f1f1;
+        }
+        #outline:hover #outline:focus{
+            color:#bbb;
+            cursor:pointer;
+        }
+        #rectangle{
+            font-size: 40px;
+            font-weight: bold;
+            position: absolute;
+            top: 260px;
+            left:1000px;
+            color:#f1f1f1;
+        }
+        #rectangle:hover #rectangle:focus{
+            color:#bbb;
+            cursor:pointer;
+        }
+        #m{
+            display: block;
+            margin:200px auto;
+        }
+    </style>
+    <script>
+        var picurl = new Array();
+        var picid = new Array();
+        var pictag = new Array();
+
+        var maindiv = document.createElement("div");
+        maindiv.className="maindiv";
+        maindiv.id="main";
+
+        function loadpic(x) {
+            var a = x;
+            for(var i=0;i<picurl.length;i++){
+                var item=document.createElement("div");
+                var img = document.createElement("img");
+                var tag = document.createElement("div");
+                var bt = document.createElement("button");
+                img.src=picurl[i];
+                item.className="item";
+                tag.className="tag";
+                bt.className="bt";
+                bt.id="bt"+i;
+                bt.innerHTML="tag";
+                item.appendChild(img);
+                item.appendChild(tag);
+                tag.appendChild(bt);
+                maindiv.appendChild(item);
+            }
+            document.body.appendChild(maindiv);
+            clickTag(a);
+        }
+
+       function clickTag(x) {
+            var a=x;
+            for(var i=0;i<picurl.length;i++){
+                !function (i) {
+                    var btn=document.getElementById('bt'+i);
+                    btn.addEventListener("click",function () {
+                        if(a==1){
+                            choosingT(picid[i],picurl[i]);
+                        }
+                        else if(a==2){
+                            if(pictag[i]==1){
+                                var postData ={'picSrc':picurl[i],'picID':picid[i]};
+                                window['filter'] =postData;
+                                window.open("./EditWholeLabelPage.html","_blank");
+                            }
+                            else if(pictag[i]==2){
+                                var postData ={'picSrc':picurl[i],'picID':picid[i]};
+                                window['filter'] =postData;
+                                window.open("./editRectangleLabelPage.html","_blank");
+                            }
+                            else if(pictag[i]==3){
+                                var postData ={'picSrc':picurl[i],'picID':picid[i]};
+                                window['filter'] =postData;
+                                window.open("./editOutlineLabelPage.html","_blank");
+                            }
+                        }
+                    }
+                    )
+
+                }(i);
+
+            }
+
+        }
+
+        $(function(){
+            $("#labeled").click(function(){
+                var html = $.ajax({
+                    type: "Post",
+                    url: '/check/labeled',
+                    success: function(data) {
+                        var myobj = eval(data);
+                        picurl=[];
+                        picid=[];
+                        pictag=[];
+                        for (var i = 0; i < myobj.length; i++) {
+                           picurl[i]=myobj[i].uRL;
+                           picid[i]=myobj[i].iD;
+                           pictag[i]=myobj[i].tag;
+                        }
+                        $("#main").children("div").remove();
+                        loadpic(2);
+                    },
+                    error: function() {
+                        alert("error");
+                    }
+                });
+            });
+        });
+
+        $(function(){
+            $("#unlabeled").click(function(){
+                var html = $.ajax({
+                    type: "Post",
+                    url: '/check/unlabeled',
+                    success: function(data) {
+                        var myobj = eval(data);
+                        picurl=[];
+                        picid=[];
+                        pictag=[];
+                        for (var i = 0; i < myobj.length; i++) {
+                            picurl[i]=myobj[i].uRL;
+                            picid[i]=myobj[i].iD;
+                            pictag[i]=myobj[i].tag;
+                        }
+                        $("#main").children("div").remove();
+                        loadpic(1);
+                    },
+                    error: function() {
+                        alert("error");
+                    }
+                });
+            });
+        });
+
+    </script>
+</head>
+<body>
+     <button id="labeled" class="choose" type="button">LABELED</button>
+     <button id="unlabeled" class="choose" type="button">UNLABELED</button>
+     <div class="choosingTag" id="choosingTag">
+         <span class="c" id="whole">WholeTAG</span>
+         <span class="c" id="outline">OutlineTAG</span>
+         <span class="c" id="rectangle">RectangleTAG</span>
+         <img class="m" id="m">
+     </div>
+     <script>
+         var choosingTag=document.getElementById('choosingTag');
+         var m=document.getElementById("m");
+         var pid1=0;
+         var purl1=0;
+         function choosingT(pid,purl) {
+             pid1=pid;
+             purl1=purl;
+             choosingTag.style.display="block";
+             m.src='https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1521924911473&di=2d53d38fa788e3ce6d440518c3c6372b&imgtype=0&src=http%3A%2F%2Fimg3.fengniao.com%2Fforum%2Fsecpics%2F159%2F154%2F6350761.jpg';
+         }
+
+         var span1=document.getElementById("whole");
+         span1.onclick=function(){
+             choosingTag.style.display="none";
+            /* url="wholeLabelPage.html?picSrc="purl1+"&picID="+picid;
+             window.location.href=url;*/
+             var postData ={'picSrc':purl1,'picID':pid1};
+             window['filter'] =postData;
+             window.open("./wholeLabelPage.html","_blank");
+         }
+         var span2=document.getElementById("outline");
+         span2.onclick=function(){
+             choosingTag.style.display="none";
+             var postData ={'picSrc':purl1,'picID':pid1};
+             window['filter'] =postData;
+             window.open("./outlineLabelPage.html","_blank");
+         }
+         var span3=document.getElementById("rectangle");
+         span3.onclick=function(){
+             choosingTag.style.display="none";
+             var postData ={'picSrc':purl1,'picID':pid1};
+             window['filter'] =postData;
+             window.open("./rectangleLabelPage.html","_blank");
+         }
+     </script>
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /*审核申诉列表 inittaskid，requestorID，name，workerid,name,picid,url,申诉原因*/
+    var html = $.ajax({
+        type: "Post",
+        url: '/review/appeal',
+        dataType:'json',
+        success: function(myobj) {
+            taskIDs=[];
+            taskRequestorIDs=[];
+            taskRequestorNames=[];
+            taskWorkerIDs=[];
+            taskWorkerNames=[];
+            taskPicIDs=[];
+            taskPicurls=[];
+            taskReasons=[];
+
+            taskIDs=myobj.id;
+            taskRequestorIDs=myobj.requestorid;
+            taskRequestorNames=myobj.requestorname;
+            taskWorkerIDs=myobj.workerid;
+            taskWorkerNames=myobj.workername;
+            taskPicIDs=myobj.picid;
+            taskPicurls=myobj.picurl;
+            taskReasons=myobj.reason;
+
+            $("#info").children("div").remove();
+            loadReview();
+
+        },
+        error: function() {
+            alert("error");
+        }
+    });
+    /*$("#info").children("div").remove();
+    loadReview();*/
+
+
+    /*申诉通过，给任务inittaskid，picid，正确答案list（可能0，也可能大于1，修改答案,通知发起者（requestor）申诉者（worker）（？，返回结果成功*/
+    var obj={
+        taskID:taskIDs[i],
+        picID:taskPicIDs[i],
+        answer:answerlist,
+    };
+    var html = $.ajax({
+        type: "Post",
+        url: '/checkAppeal/pass',
+        data:JSON.stringify(obj),
+        dataType:'json',
+        contentType: "application/json",
+        async: false,
+        success: function(data) {
+            clickReview();
+        },
+        error: function() {
+            alert("error");
+        }
+    });
+
+    /*申诉失败，给任务inittaskid，picid,workerid,通知申诉者（worker）（？，返回结果成功*/
+    var obj={
+        taskID:taskIDs[i],
+        picID:taskPicIDs[i],
+        workerID:taskWorkerIDs[i],
+    };
+    var html = $.ajax({
+        type: "Post",
+        url: '/checkAppeal/nopass',
+        data:JSON.stringify(obj),
+        dataType:'json',
+        contentType: "application/json",
+        async: false,
+        success: function(data) {
+            clickReview();
+        },
+        error: function() {
+            alert("error");
+        }
+    });
+</script>
+</body>
+</html>

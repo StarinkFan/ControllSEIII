@@ -1,0 +1,359 @@
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: transparent;
+}
+
+li{
+    display: inline-block;
+}
+
+li a {
+    display: block;
+    color: ghostwhite;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 24px;
+    font-family: "Microsoft YaHei UI";
+}
+
+li a:hover {
+    background-color: transparent;
+}
+
+.titleBox{
+    width:101%;
+    height: 140px;
+    position: relative;
+    margin: auto;
+    color: #333333;
+    border-radius: 4px;
+    background: white;
+    box-shadow: 1px 1px 4px #a0a0a0;
+    font-family: "Microsoft YaHei UI";
+    font-size: 20px;
+    margin-left: 0;
+}
+
+.mainbody{
+    width: 102%;
+    background-color: lightblue;
+    margin-left: -1%;
+    font-family: "Microsoft YaHei UI";
+    font-size: 20px;
+    vertical-align: top;
+    min-width: 1590px;
+}
+
+
+
+.maincut{
+    width: 102%;
+    height: 30px;
+    background-color: lightblue;
+    margin-left: -1%;
+}
+
+.left_menu_box{
+    background: #fff;
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, .12), 0 1px 6px 0 rgba(0, 0, 0, .12);
+    border-radius: 3px;
+    height: 520px;
+    min-height: 520px;
+    border-top: 4px solid #2093ff;
+    width: 16%;
+    margin-left: 12.5%;
+    display: inline-block;
+    float: top;
+    vertical-align: top;
+    min-width: 255px;
+}
+
+.menus a{
+    padding-left: 40px;
+    color: black;
+    font-size: 20px;
+
+}
+.menus li{
+    padding: 0;
+}
+
+.menus p{
+    padding-left: 20px;
+    color: black;
+    font-size: 20px;
+}
+
+.mainPanel{
+    background: #fff;
+    -webkit-box-shadow: 0px 0px 8px #c8c8c8;
+    /* box-shadow: 0px 0px 8px #c8c8c8; */
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, .12), 0 1px 6px 0 rgba(0, 0, 0, .12);
+    border-radius: 3px;
+    min-height: 590px;
+    width:56%;
+    display: inline-block;
+    float: top;
+    margin-left: 3%;
+}
+
+hr{height:1px;border:none;border-top:1px solid lightgrey;}
+
+.review{
+    font-family: "Microsoft YaHei UI";
+    border: 0;
+    font-size: 15px;
+    height: 35px;
+    width: 100px;
+    opacity: 0.8;
+    background-color: #fff;
+}
+.review:hover{
+    background-color: rgba(0, 0, 0, .3)
+}
+.nopass{
+    font-family: "Microsoft YaHei UI";
+    border: 0;
+    font-size: 15px;
+    height: 35px;
+    width: 100px;
+    opacity: 0.8;
+    background-color: #fff;
+}
+.nopass:hover{
+    background-color: rgba(0, 0, 0, .3)
+}
+.pass{
+    font-family: "Microsoft YaHei UI";
+    border: 0;
+    font-size: 15px;
+    height: 35px;
+    width: 100px;
+    opacity: 0.8;
+    background-color: #fff;
+}
+.pass:hover{
+    background-color: rgba(0, 0, 0, .3)
+}
+
+.taskbox{
+    position: relative;
+    margin: auto;
+    width: 880px
+}
+.item{
+    font-family: "Microsoft YaHei UI";
+    font-size: 13px;
+    height: 200px;
+    margin: 10px;
+    /*background-color: rgba(0, 0, 0, .05);*/
+    background-color: #fff;
+    position: relative;
+
+}
+.item:hover{
+    background-color: rgba(0, 0, 0, .05);
+    transition: all 0.5s;
+}
+.tag1{
+    font-family: "Microsoft YaHei UI";
+    font-size: 13px;
+    position: absolute;
+    margin: 15px;
+}
+.tag2{
+    font-family: "Microsoft YaHei UI";
+    font-size: 13px;
+    position: absolute;
+    margin: 15px;
+    left: 250px;
+}
+.tag3{
+    font-family: "Microsoft YaHei UI";
+    font-size: 13px;
+    position: absolute;
+    margin: 15px;
+    left: 550px;
+}
+.tag4{
+    font-family: "Microsoft YaHei UI";
+    font-size: 13px;
+    position: absolute;
+    margin: 15px;
+    top: 30px;
+}
+.tag5{
+    font-family: "Microsoft YaHei UI";
+    font-size: 13px;
+    position: absolute;
+    margin: 15px;
+    top: 30px;
+    left: 250px;
+ }
+.tag6{
+    font-family: "Microsoft YaHei UI";
+    font-size: 13px;
+    position: absolute;
+    margin: 15px;
+    top: 30px;
+    left: 550px;
+  }
+.tag7{
+    font-family: "Microsoft YaHei UI";
+    font-size: 13px;
+    position: absolute;
+    margin: 15px;
+    top: 60px;
+}
+.tag8{
+    font-family: "Microsoft YaHei UI";
+    font-size: 13px;
+    position: absolute;
+    margin: 15px;
+    top: 60px;
+    left: 250px;
+}
+.tag9{
+    font-family: "Microsoft YaHei UI";
+    font-size: 13px;
+    position: absolute;
+    margin: 15px;
+    top: 90px;
+    width: 800px;
+}
+.tag10{
+    font-family: "Microsoft YaHei UI";
+    font-size: 13px;
+    position: absolute;
+    margin: 15px;
+    top: 60px;
+    width: 800px;
+    left: 550px;
+}
+.tag11{
+    font-family: "Microsoft YaHei UI";
+    font-size: 13px;
+    position: absolute;
+    margin: 15px;
+    top: 120px;
+    width: 800px;
+}
+.tag12{
+    font-family: "Microsoft YaHei UI";
+    font-size: 13px;
+    position: absolute;
+    margin: 15px;
+    top: 150px;
+    width: 800px;
+}
+
+.bt1{
+    position: absolute;
+    margin: 15px;
+    top: 140px;
+    left: 580px;
+    border: 0;
+    font-family: "Microsoft YaHei UI";
+    font-size: 13px;
+    width: 80px;
+    height: 30px;
+    color: slategrey;
+}
+.bt2{
+    position: absolute;
+    margin: 15px;
+    top: 140px;
+    left: 670px;
+    border: 0;
+    font-family: "Microsoft YaHei UI";
+    font-size: 13px;
+    width: 80px;
+    height: 30px;
+    color: slategrey;
+}
+.bt3{
+    position: absolute;
+    margin: 15px;
+    top: 140px;
+    left: 760px;
+    border: 0;
+    font-family: "Microsoft YaHei UI";
+    font-size: 13px;
+    width: 80px;
+    height: 30px;
+    color: slategrey;
+}
+.bt1:hover{
+    color: black;
+}
+.bt2:hover{
+    color: black;
+}
+.bt3:hover{
+    color: black;
+}
+.info{
+
+}
+.picitem{
+    flex-grow: 1;
+    margin: 2px;
+    position: relative;
+
+}
+.picimg{
+    height: 150px;
+    min-width: 100%;
+    object-fit: cover;
+
+}
+.taskDetail{
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.7);
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+}
+.taskDetail-close{
+    position: absolute;
+    left: 1290px;
+    top: 100px;
+    border-radius: 500px;
+    font-size: 25px;
+    width: 36px;
+}
+.taskDetail-pics{
+    position: absolute;
+    left: 400px;
+    top: 100px;
+    width: 800px;
+    display: flex;
+    flex-wrap: wrap;
+    height: 400px;
+
+}
+.taskDetail-pics:after{
+    content: " ";
+    flex-grow: 9999999
+}
+.nopass-div{
+    display: none;
+    padding: 0 0 0;
+    position: fixed;
+    background-color: #fff;
+    top: 350px;
+    left: 1380px;
+    height: 162px;
+}
+.nopass-text{
+    font-size: 15px;
+    font-family: "Microsoft Yahei";
+}

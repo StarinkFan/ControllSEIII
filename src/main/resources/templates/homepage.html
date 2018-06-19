@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="./css/homepageCSS.css" rel="stylesheet">
+    <title>Title</title>
+    <script>
+        function function1(){
+            //设置向后台发送的查询数据
+            var postData ={'picSrc':"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1521648495184&di=8ed07bacfb651cc543129aa8ca223f45&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dshijue1%252C0%252C0%252C294%252C40%2Fsign%3Df1fc1abac711728b24208461a095a9bb%2F4610b912c8fcc3cee3015c189845d688d53f20d3.jpg"};
+            //设置父窗口的参数，然后在打开的子窗口中使用opener获取此参数
+            window['filter'] =postData;
+            window.open("./outlineLabelPage.html","_blank");
+        }
+        function function2(){
+            //设置向后台发送的查询数据
+            var postData ={'picSrc':"http://114.215.188.21/161250119_ControllSECIII/SECIII_Phase_I/raw/master/html/pic/homepageBackground.jpg", 'label': "星空", 'description':"" +
+                "银河系（Milky Way Galaxy，别名“银汉”“天河、银河、星河、天汉等）”），是太阳系所在的棒旋星系，包括1000~4000亿颗恒星和大量的星团、星云以及各种类型的星际气体和星际尘埃，从地球看银河系呈环绕天空的银白色的环带。总质量约为太阳的2100亿倍[1]  ，隶属于本星系群，最近的河外星系是距离银河系254万光年的仙女星系。\n" +
+                "银河系呈扁球体，具有巨大的盘面结构，由明亮密集的核心、两条主要的旋臂和两条未形成的旋臂组成，旋臂相距4500光年。太阳位于银河一个支臂猎户臂上，至银河中心的距离大约是2.6万光年。\n" +
+                "银河系的中央是超大质量的黑洞（人马座A），自内向外分别由银心、银核、银盘、银晕和银冕组成。银河系中央区域多数为老年恒星（以白矮星为主[2]  ），外围区域多数为新生和年轻的恒星。周围几十万光年的区域分布着十几个卫星星系，其中较大的有大麦哲伦星云和小麦哲伦星云。银河系通过缓慢的吞噬周边的矮星系使自身不断壮大。2015年3月，科学家发现银河系体积比之前认为的要大50%。"};
+
+            //设置父窗口的参数，然后在打开的子窗口中使用opener获取此参数
+            window['filter'] =postData;
+            window.open("./EditWholeLabelPage.html","_blank");
+        }
+    </script>
+
+    <style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            //display: inline-block;
+            background-color: transparent;
+        }
+
+        li{
+            display: inline-block;
+        }
+
+        li a {
+            display: block;
+            color: ghostwhite;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 24px;
+            font-family: "Microsoft YaHei UI";
+        }
+
+        li a:hover {
+            background-color: transparent;
+        }
+
+        .main-box {
+            position: relative;
+            min-height: 750px;
+            width: 100%;
+            height: 100%;
+            background: #222;
+            background-image: url(../static/pic/homepageBackground.jpg);
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+
+        .main-button {
+            position: relative;
+            z-index: 10;
+            left: 25%;
+            top: -200px;
+        }
+
+        .main-button {
+            border-radius: 30px;
+            height: 50px;
+            /* width: 24%; */
+            min-width: 290px;
+            min-height: 60px;
+            padding: 0px 0px;
+            line-height: 50px;
+            background-color: #FFF;
+            color: #000;
+            border: none;
+            font-size: 24px;
+            font-family: "Microsoft YaHei UI";
+        }
+
+        .advantage-box {
+            position: relative;
+            left: 20%;
+            right: 0;
+            width: 60%;
+            height: 175px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            background: #fff;
+            -webkit-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, .12), 0 1px 6px 0 rgba(0, 0, 0, .12);
+            box-shadow: 0 1px 6px 0 rgba(0, 0, 0, .12), 0 1px 6px 0 rgba(0, 0, 0, .12);
+            border-radius: 3px;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            top:-120px;
+            z-index: 10;
+        }
+
+        .advantage-item{
+            padding: 5%;
+        }
+
+        .advantage-item img {
+            z-index: 11;
+            width: 130px;
+        }
+
+        .advantage-item .title {
+            font-weight: 700;
+            margin-top: 12px;
+            font-size: 17px;
+        }
+
+        .advantage-item span {
+            display: block;
+        }
+        .advantage-item .title-desc {
+            margin-top: 6px;
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+
+
+<div style="position: relative; z-index:3;display: inline-block;float:left;margin-left: 370px;">
+    <ul>
+        <li><a href="./chooseNewTask.html">任务大厅</a></li>
+        <li><a href="#news">新闻</a></li>
+        <li><a href="#contact">联系</a></li>
+        <li><a href="#about">帮助</a></li>
+    </ul>
+</div>
+<div style="float: right;position: relative; z-index:3;float:right;margin-right:20px;display: inline-block;">
+    <ul>
+        <li><a href="./login.html">登录</a></li>
+        <li><a href="./signup.html">注册</a></li>
+
+    </ul>
+</div>
+
+
+
+
+    <div>
+        <div id="container" style="background-color: rgb(255,255,255);position: relative;top:-60px;">
+            <div class="main-content" style="top:0px; padding-bottom: 0px; background-color: rgb(255,255,255);text-align:center;">
+                <div class="main-box"></div>
+
+            </div>
+
+            <div>
+                <button type="button" class="main-button">
+                    <span>立刻发布需求</span>
+                </button>
+            </div>
+            <div class="advantage-box" align="center">
+                <div class="advantage-item">
+                    <img src="../static/pic/1.png" alt="极速匹配">
+                    <span class="title">极速匹配</span>
+                    <span class="title-desc"></span>
+                </div>
+                <div class="advantage-item">
+                    <img src="../static/pic/2.png" alt="资金安全">
+                    <span class="title">资金安全</span>
+                    <span class="title-desc"></span>
+                </div>
+                <div class="advantage-item">
+                    <img src="../static/pic/3.png" alt="特色服务">
+                    <span class="title">特色服务</span>
+                    <span class="title-desc"></span>
+                </div>
+                <div class="advantage-item">
+                    <img src="../static/pic/4.png" alt="安全保障">
+                    <span class="title">安全保障</span>
+                    <span class="title-desc"></span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+<div style="width:100%; float: bottom; background-color: black;">
+    <img src="../static/pic/logo.png" style="width:8%">
+    <span style="color: white;text-align: center;font-size: 25px;">让世界的智慧凝聚为你的眼</span>
+    <span style="color: white;text-align: center;font-size: 25px;float: right;padding-top: 20px">怎么码都码不队</span>
+</div>
+
+</body>
+</html>

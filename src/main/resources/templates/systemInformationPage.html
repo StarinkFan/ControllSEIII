@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="../static/echarts.min.js"></script>
+
+    <style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: transparent;
+        }
+
+        li{
+            display: inline-block;
+        }
+
+        li a {
+            display: block;
+            color: ghostwhite;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 24px;
+            font-family: "Microsoft YaHei UI";
+        }
+
+        li a:hover {
+            background-color: transparent;
+        }
+
+        .titleBox{
+            width:101%;
+            height: 140px;
+            position: relative;
+            margin: auto;
+            color: #333333;
+            border-radius: 4px;
+            background: white;
+            box-shadow: 1px 1px 4px #a0a0a0;
+            font-family: "Microsoft YaHei UI";
+            font-size: 20px;
+            margin-left: 0;
+        }
+
+        .mainbody{
+            width: 102%;
+            height: 640px;
+            background-color: lightblue;
+            margin-left: -1%;
+            font-family: "Microsoft YaHei UI";
+            font-size: 20px;
+            vertical-align: top;
+        }
+
+
+
+        .maincut{
+            width: 102%;
+            height: 30px;
+            background-color: lightblue;
+            margin-left: -1%;
+        }
+
+        .left_menu_box{
+            background: #fff;
+            box-shadow: 0 1px 6px 0 rgba(0, 0, 0, .12), 0 1px 6px 0 rgba(0, 0, 0, .12);
+            border-radius: 3px;
+            height: 520px;
+            min-height: 520px;
+            border-top: 4px solid #2093ff;
+            width: 16%;
+            margin-left: 12.5%;
+            display: inline-block;
+            float: top;
+            vertical-align: top;
+        }
+
+        .menus a{
+            padding-left: 40px;
+            color: black;
+            font-size: 20px;
+
+        }
+        .menus li{
+            padding: 0;
+        }
+
+        .menus p{
+            padding-left: 20px;
+            color: black;
+            font-size: 20px;
+        }
+
+        .mainPanel{
+            background: #fff;
+            -webkit-box-shadow: 0px 0px 8px #c8c8c8;
+            /* box-shadow: 0px 0px 8px #c8c8c8; */
+            box-shadow: 0 1px 6px 0 rgba(0, 0, 0, .12), 0 1px 6px 0 rgba(0, 0, 0, .12);
+            border-radius: 3px;
+            height: 590px;
+            width:56%;
+            display: inline-block;
+            float: top;
+            margin-left: 3%;
+        }
+
+        hr{height:1px;border:none;border-top:1px solid lightgrey;}
+    </style>
+
+    <script>
+
+        var complete=1;
+        var undergoing=1;
+        var uncomplete=1;
+
+
+        var name="1";
+        var account=0;
+        var dates=new Array();
+        var peopleNumbers=new Array();
+        var credits=new Array();
+
+        window.onload=function () {
+            name = localStorage.nickname;
+            account = localStorage.account;
+            document.getElementById('username').innerText=name;
+            var username=document.getElementById('username');
+            username.onmouseover=function () {
+                document.getElementById("menu").style.display="inherit";
+            }
+            document.getElementById("userbar").onmouseleave=function (e) {
+                if(e.target.id!="nemu"){
+                    document.getElementById("menu").style.display="none";
+                }
+            }
+
+            var html = $.ajax({
+                type: "Post",
+                url: '/admin/getAllData',
+                dataType:'json',
+                contentType: "application/json",
+                async: true,
+                success: function(myobj) {
+                    document.getElementById("credit").innerText="流通积分："+myobj.credit;
+                    document.getElementById("task").innerText="总任务数："+myobj.task;
+                    document.getElementById("user").innerText="注册人数："+myobj.user;
+                    document.getElementById("average").innerText="任务均值："+myobj.user;
+                    complete=myobj.complete;
+                    undergoing=myobj.undergoing;
+                    uncomplete=myobj.uncomplete;
+                    dates=myobj.dates;
+                    peopleNumbers=myobj.peopleNumbers;
+                    credits=myobj.credits;
+                    setPie();
+                    setBar1();
+                    setBar2();
+
+                },
+                error: function() {
+                    alert("error");
+                }
+            });
+        };
+
+
+        function setPie() {
+            var myChart = echarts.init(document.getElementById('pie'));
+            var option = {
+                title : {
+                    text: '系统任务完成情况',
+                    subtext: localStorage.nickname,
+                    x:'center'
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    right: 'right',
+                    data: ['已完成','进行中','未完成']
+                },
+                series : [
+                    {
+                        name: '完成情况',
+                        type: 'pie',
+                        radius : '55%',
+                        center: ['50%', '60%'],
+                        data:[
+                            {value:complete, name:'已完成'},
+                            {value:undergoing, name:'进行中'},
+                            {value:uncomplete, name:'未完成'}
+                        ],
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+
+            myChart.setOption(option);
+        }
+
+        function setBar1() {
+            var myChart = echarts.init(document.getElementById('bar1'));
+            var option = {
+                title: {
+                    text: '系统注册人数'
+                },
+                legend: {
+                    data: ['bar', 'bar2'],
+                    align: 'left'
+                },
+                toolbox: {
+                    // y: 'bottom',
+                    feature: {
+                        magicType: {
+                            type: ['stack', 'tiled']
+                        },
+                        dataView: {},
+                        saveAsImage: {
+                            pixelRatio: 2
+                        }
+                    }
+                },
+                tooltip: {},
+                xAxis: {
+                    data: dates,
+                    silent: false,
+                    splitLine: {
+                        show: false
+                    }
+                },
+                yAxis: {
+                },
+                series: [{
+                    name: 'people',
+                    type: 'bar',
+                    data: peopleNumbers,
+                    animationDelay: function (idx) {
+                        return idx * 10;
+                    }
+                }],
+                animationEasing: 'elasticOut',
+                animationDelayUpdate: function (idx) {
+                    return idx * 5;
+                }
+            };
+            myChart.setOption(option);
+        }
+
+        function setBar2() {
+            var myChart = echarts.init(document.getElementById('bar2'));
+            var option = {
+                title: {
+                    text: '系统流通积分'
+                },
+                legend: {
+                    data: ['bar', 'bar2'],
+                    align: 'left'
+                },
+                toolbox: {
+                    // y: 'bottom',
+                    feature: {
+                        magicType: {
+                            type: ['stack', 'tiled']
+                        },
+                        dataView: {},
+                        saveAsImage: {
+                            pixelRatio: 2
+                        }
+                    }
+                },
+                tooltip: {},
+                xAxis: {
+                    data: dates,
+                    silent: false,
+                    splitLine: {
+                        show: false
+                    }
+                },
+                yAxis: {
+                },
+                series: [{
+                    name: 'credits',
+                    type: 'bar',
+                    data: credits,
+                    animationDelay: function (idx) {
+                        return idx * 10;
+                    }
+                }],
+                animationEasing: 'elasticOut',
+                animationDelayUpdate: function (idx) {
+                    return idx * 5;
+                }
+            };
+            myChart.setOption(option);
+        }
+
+        function showCharts() {
+            document.getElementById('details').style.display="none";
+            document.getElementById('pie').style.display="none";
+            document.getElementById('bar1').style.display="inherit";
+            document.getElementById('bar2').style.display="inherit";
+            document.getElementById("shift").innerText="当今情况";
+            document.getElementById("shift").onclick = showDetails;
+        }
+
+        function showDetails() {
+            document.getElementById('details').style.display="inherit";
+            document.getElementById('pie').style.display="inherit";
+            document.getElementById('bar1').style.display="none";
+            document.getElementById('bar2').style.display="none";
+            document.getElementById("shift").innerText="历史回顾";
+            document.getElementById("shift").onclick=showCharts;
+        }
+
+        function logout(){
+            window.open("./homepage.html","_self");
+        }
+    </script>
+
+</head>
+
+
+<body>
+<div id="userbar" style="width: 1860px;position: fixed;z-index: 3;padding-left: 12%;">
+    <li><img src="http://p7ogpwb2n.bkt.clouddn.com/logo.png" style="height: 60px;margin-left: -465%"></li>
+    <div style=" z-index:3;display: inline-block;float:left;margin-left: 10%;" >
+        <ul>
+            <li><a href="./chooseNewTask.html">任务大厅</a></li>
+            <li><a href="#news">新闻</a></li>
+            <li><a href="#contact">联系</a></li>
+            <li><a href="#about">帮助</a></li>
+        </ul>
+    </div>
+    <br>
+
+    <div style="float: right;z-index:3;margin-right:20px;display: inline-block;padding-right: 22%;;margin-top: -65px">
+        <ul>
+            <li style="z-index: 3">
+                <a style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">
+                    你好，管理员
+                    <u id="username" style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">用户</u>
+                </a>
+            </li>
+        </ul>
+
+        <div id="menu" style="margin-left: 62%;margin-top: -13%;z-index: 5;display: none;">
+            <button onclick="logout()" style="border-radius:0;background: black;color:white;font-size: 20px;margin-top: -2px;width:120px;border-color: white;border-width: 1px;">退出账户</button>
+
+        </div>
+    </div>
+
+
+</div>
+
+
+<div style="position: fixed;width: 101%;height:90px;background-color: black;opacity: 1;z-index: 2;margin-top: -1%;margin-left: -1%"></div>
+<br>
+
+<div class="titleBox">
+    <h2 style="padding-top: 2%;color: #232323;padding-left: 11.5%">系统中心</h2>
+    <p style="color: #939393;padding-left: 11.5%">在这里，可以集中查看管理系统的用户、收益、使用情况等信息,也可以处理待审核内容</p>
+</div>
+
+<div class="maincut"></div>
+
+<div class="mainbody">
+    <div class="mainbox">
+        <div class="left_menu_box">
+            <ul class="menus">
+                <li><p>系统数据</p></li>
+                <hr style="margin-top: -2%"/>
+                <li><a href="./systemInformationPage.html" class="" style="color: violet">统计数据</a></li><br>
+            </ul>
+            <hr style=""/>
+            <ul class="menus">
+                <li style="margin-top: -3%"><p>审核处理</p></li>
+                <hr style="margin-top: -2%"/>
+                <li><a href="./reviewTaskOfManager.html" class="">图片审核</a></li><br>
+                <li><a href="./reviewComplaintsOfManager.html" class="">投诉审核</a></li>
+            </ul>
+        </div>
+
+        <div class="mainPanel" style="font-size: 20px;">
+            <h3 style="padding-left: 3%;">统计数据</h3>
+            <a onclick="showCharts()" style="float: right;margin-top: -5%;margin-right: 2%;color: blue;cursor: pointer;" id="shift">历史回顾</a>
+            <hr />
+            <div style="padding-left: 10%;color: #333333" id="details">
+                <p></p><p id="user" style="padding-top: 20px">注册人数：</p><br>
+                <p></p><p id="task">总任务数：</p><br>
+                <p></p><p id="credit">流通积分：</p><br>
+                <p></p><p id="average">任务均值：</p><br>
+            </div>
+        </div>
+
+
+
+    </div>
+
+</div>
+
+
+</div>
+
+<div style="width:101%; float: bottom; background-color: black;margin-left: -0.2%;margin-bottom: -100px;">
+    <img src="http://p7ogpwb2n.bkt.clouddn.com/logo.png" style="width:8%">
+    <span style="color: white;text-align: center;font-size: 25px;vertical-align: center">让世界的智慧凝聚为你的眼</span>
+    <span style="color: white;text-align: center;font-size: 25px;float: right;padding-top: 20px;margin-right: 0.4%">怎么码都码不队</span>
+</div>
+
+<div id="pie" style="width: 700px;height: 300px; right: 250px;position: absolute;vertical-align: top;top: 320px"></div>
+<div id="bar1" style="width: 700px;height: 250px; right: 450px;position: absolute;vertical-align: top;top: 320px;display: none"></div>
+<div id="bar2" style="width: 700px;height: 250px; right: 450px;position: absolute;vertical-align: top;top: 580px;display: none"></div>
+
+</body>

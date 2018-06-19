@@ -1,0 +1,759 @@
+.u1{
+    /* position: fixed; */
+    list-style: none;
+    /* min-height: 60px; */
+    margin-bottom: 0px;
+    padding: 20px 0 10px;
+    background-color: black;
+    height: 60px;
+    width: 100%;
+    min-width: 1583px;
+}
+.u2{
+    height: 60px;
+    min-width: 0;
+    margin-left: 200px;
+}
+.u3{
+    float: left;
+}
+.u4{
+    float: left;
+}
+.u5{
+    line-height: 50px;
+    color: white;
+    /* background-color: #f7f7f7; */
+    text-align: center;
+    /* border: 1px solid #ccc; */
+    border-top: none;
+    display: block;
+    font-family: "Microsoft YaHei UI";
+    font-size: 24px;
+    padding-left: 30px;
+    text-decoration: none;
+}
+
+.u6{
+    width: 100px;
+    line-height: 50px;
+    color: white;
+    /* background-color: #f7f7f7; */
+    text-align: center;
+    /* border: 1px solid #ccc; */
+    border-top: none;
+    display: block;
+    font-family: "Microsoft YaHei UI";
+    font-size: 24px;
+    padding-left: 30px;
+    text-decoration: none;
+}
+.u7{
+    width: 100px;
+    line-height: 50px;
+    color: white;
+    /* background-color: #f7f7f7; */
+    text-align: center;
+    /* border: 1px solid #ccc; */
+    border-top: none;
+    /* display: block; */
+    font-family: "Microsoft YaHei UI";
+    font-size: 24px;
+    padding-left: 20px;
+    text-decoration: none;
+}
+#x{
+    padding-left: 160px;
+}
+
+
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+h4{
+    font-size: 10px;
+}
+hr{
+    margin: 18px;
+}
+.menubox {
+    list-style: none;
+    position: relative;
+    min-height: 60px;
+    margin-bottom: 40px;
+    padding: 20px 0 10px;
+    background-color: #e9e9e9;
+    height: 105px;
+    min-width: 1583px;
+}
+.menu-label1{
+    margin-left: 25px;
+    font-family: "Microsoft YaHei";
+    font-size: 18px;
+}
+.menu-span{
+    position:relative;
+}
+.menu-span label{
+    width:16px;
+    height:16px;
+    position:absolute;
+    top:0;
+    left:0;
+    border:2px solid #cacaca;
+    border-radius:50%;
+    background:#fff;
+    cursor:pointer;
+}
+.menu-span label:hover{
+    border:2px solid dimgray;
+}
+.menu-span label:after{
+    content:'';
+    width:8px;
+    height:4px;
+    position:absolute;
+    top:4px;
+    left:3px;
+    border:2px solid #cacaca;
+    border-top:none;
+    border-right:none;
+    opacity:0.4;
+    transform:rotate(-45deg);
+    /*-webkit-transform:rotate(-45deg);*/
+}
+.menu-span label:hover:after{
+    border:2px solid dimgray;
+    border-top:none;
+    border-right:none;
+}
+.menu-span input:checked+label{
+    border:2px solid dimgray;
+}
+.menu-span input:checked+label:after{
+    opacity:1; border:2px solid dimgray;
+    border-top:none;
+    border-right:none;
+}
+.menu-span em{
+    font-family: "Microsoft YaHei";
+    margin: 0 30px 0px 5px;
+    font-size: 18px;
+}
+/*
+.menubox a {
+    text-decoration: none;
+}
+.menu{
+    position: absolute;
+    margin: 0 auto;
+    list-style: none;
+    float: left;
+}
+.menubox ul , .menubox li {
+    list-style: none;
+    padding: 0;
+    float: left;
+}
+.style-ul1{
+    position: absolute;
+    display: none;
+    margin-left: 400px;
+    margin-top: 40px;
+}
+.style-ul2{
+    position: absolute;
+    display: none;
+    margin-left: 700px;
+    margin-top: 40px;
+}
+.style-ul3{
+    position: absolute;
+    display: none;
+    margin-left: 1000px;
+    margin-top: 40px;
+}
+ .menubox > ul > li > ul {
+     position: absolute;
+     display: none;
+ }
+
+ .menubox > ul > li > ul > li {
+     float: none;
+ }
+
+ .menubox > ul > li:hover ul {
+     display: block;
+ }
+.arrow1{
+    position: absolute;
+    left:400px;
+    width: 200px;
+    line-height: 40px;
+    color: black;
+    background-color: #f7f7f7;
+    text-align: center;
+    border:none;
+    display: block;
+    font-family: "Microsoft YaHei";
+    border-radius: 10px;
+}
+.arrow2{
+    position: absolute;
+    left:700px;
+    width: 200px;
+    line-height: 40px;
+    color: black;
+    background-color: #f7f7f7;
+    text-align: center;
+    border:none;
+    display: block;
+    font-family: "Microsoft YaHei";
+    border-radius: 10px;
+}
+.arrow3{
+    position: absolute;
+    left:1000px;
+    width: 200px;
+    line-height: 40px;
+    color: black;
+    background-color: #f7f7f7;
+    text-align: center;
+    border:none;
+    display: block;
+    font-family: "Microsoft YaHei";
+    border-radius: 10px;
+}
+
+ .menubox > ul > li > a:hover {
+     background-color: #b1b1b1;
+     color: #456;
+     font-family: "Microsoft YaHei";
+ }
+.unfinished{
+     border-radius: 10px 10px 0 0;
+     border-left: none;
+ }
+
+.closed{
+    border-radius: 0 0 10px 10px;
+    border-left: none;
+}
+
+ .menubox > ul > li > ul > li > a {
+     width: 200px;
+     line-height: 36px;
+     color: black;
+     background-color: #f7f7f7;
+     text-align: center;
+     border: 1px solid #ccc;
+     border-top: none;
+     display: block;
+     font-family: "Microsoft YaHei";
+ }
+
+
+ .menubox > ul > li > ul > li:first-child > a {
+     border-top: 1px solid #ccc;
+     font-family: "Microsoft YaHei";
+ }
+
+
+ .menubox > ul > li > ul > li > a:hover {
+     background-color: #b1b1b1;
+     color: #456;
+     font-family: "Microsoft YaHei";
+ }
+*/
+
+.maindiv{
+    display: flex;
+    flex-wrap: wrap;
+}
+.maindiv:after{
+    content: " ";
+    flex-grow: 9999999
+}
+.item{
+    flex-grow: 1;
+    margin: 20px;
+    position: relative;
+}
+img{
+    height: 400px;
+    min-width: 100%;
+    object-fit: cover;
+}
+.tag{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /*transition: all 1s;*/
+    background: -webkit-linear-gradient(top,transparent 0,rgba(0,0,0,.35) 50%,rgba(0,0,0,.95) 100%)!important;
+}
+/*.tag:hover{
+    !*background: rgba(77,77,77,0.3)*!
+    background: -webkit-linear-gradient(top,transparent 0,rgba(0,0,0,.55) 50%,rgba(0,0,0,.95) 100%)!important;
+}*/
+.tag:hover .bt{
+    height: 40px;
+    background: rgba(0,0,0,0.5);
+    transition: all 0.5s;
+}
+.bt{
+    position: absolute;
+    /*bottom: 0;*/
+    right: 0;
+    border: none;
+    font-size: 20px;
+    text-align: center;
+    padding: 0 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color:white;
+    height: 0;
+    font-family: "Microsoft YaHei";
+}
+/*.tag:hover .info{
+    height: 40px;
+    background: rgba(0,0,0,0.5);
+    transition: all 0.5s;
+}*/
+.info{
+    padding: 15px 0;
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+    border-top: 1px solid rgba(255,255,255,.5);
+    font-size: 20px;
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color:white;
+    height: 40px;
+    font-family: "Microsoft YaHei";
+}
+.infocredit{
+    float: right;
+    display: inline-block;
+    height: 40px;
+    width: 60px;
+    background: 0 0;
+    font-weight: 700;
+    color: #FFF;
+    text-align: center;
+    border-radius: 100px;
+    opacity: .8;
+    margin: -9px auto;
+    padding: 18px 0 0;
+    font-size: 1em;
+    border: 2px solid #FFF;
+    margin-right: 20px;
+}
+.infonum{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 80px;
+    padding: 0 22px;
+    font-size: 15px;
+    color: rgba(255,255,255,.6);
+    font-family: "Microsoft YaHei";
+}
+.inforeq{
+    position: absolute;
+    font-size: 1em;
+    font-family: "Microsoft Yahei", Helvetica, Arial, sans-serif;
+    color: #FFF;
+    opacity: .95;
+    font-weight: 600;
+    bottom: 10px;
+    line-height: 1.2em;
+    left: 20px;
+}
+
+.inforeqimg{
+    display: inline-block;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    height: 50px;
+    min-width: 30px;
+    border-radius: 100px;
+    width: 50px;
+    float: left;
+}
+.inforeqname{
+    display: block;
+    /* letter-spacing: -1px; */
+    text-overflow: ellipsis;
+    font-size: 14px;
+    color: #FFF!important;
+    white-space: nowrap;
+    overflow: hidden;
+    word-spacing:5px;
+    float: left;
+}
+.infokind{
+    width: 150px;
+    height: 30px;
+    background-color: #FCB69F;
+    font-size: 15px;
+    line-height: 30px;
+    text-align: center;
+    position: absolute;
+    top: 100px;
+    right: -15px;
+    font-weight: bold;
+    color: gray;
+}
+.infokind:before{
+    content:'';
+    width:20px;
+    height: 0%;
+    border: 15px solid;
+    border-color: transparent #FCB69F transparent transparent ;
+    position: absolute;right:150px;top: 0px; }
+
+.infokind:after{
+    content:'';
+    width:10px;
+    border: 15px solid;
+    border-color: transparent transparent transparent #FFECD2;
+    border-top: 0;
+    right: -25px;
+    position: absolute;/*使伪元素脱离文档流,使伪元素不受div内容的影响,便于计算位置,此时after相对于div的左上角进行定位*/
+    top: 30px;
+}
+.infomark1{
+    display: none;
+    width: 150px;
+    height: 30px;
+    background-color: #CFD9DF;
+    font-size: 15px;
+    line-height: 30px;
+    text-align: center;
+    position: absolute;
+    top: 150px;
+    right: -15px;
+    font-weight: bold;
+    color: white;
+}
+.infomark1:before{
+    content:'';
+    width:20px;
+    height: 0%;
+    border: 15px solid;
+    border-color: transparent #CFD9DF transparent transparent ;
+    position: absolute;right:150px;top: 0px; }
+
+.infomark1:after{
+    content:'';
+    width:10px;
+    border: 15px solid;
+    border-color: transparent transparent transparent #E2EBF0;
+    border-top: 0;
+    right: -25px;
+    position: absolute;/*使伪元素脱离文档流,使伪元素不受div内容的影响,便于计算位置,此时after相对于div的左上角进行定位*/
+    top: 30px;
+}
+.infomark2{
+    display: none;
+    width: 150px;
+    height: 30px;
+    background-color: #C3CFE2;
+    font-size: 15px;
+    line-height: 30px;
+    text-align: center;
+    position: absolute;
+    top: 200px;
+    right: -15px;
+    font-weight: bold;
+    color: white;
+}
+.infomark2:before{
+    content:'';
+    width:20px;
+    height: 0%;
+    border: 15px solid;
+    border-color: transparent #C3CFE2 transparent transparent ;
+    position: absolute;right:150px;top: 0px; }
+
+.infomark2:after{
+    content:'';
+    width:10px;
+    border: 15px solid;
+    border-color: transparent transparent transparent #F5F7FA;
+    border-top: 0;
+    right: -25px;
+    position: absolute;/*使伪元素脱离文档流,使伪元素不受div内容的影响,便于计算位置,此时after相对于div的左上角进行定位*/
+    top: 30px;
+}
+.infomark3{
+    display: none;
+    width: 150px;
+    height: 30px;
+    background-color: #E2D1C3;
+    font-size: 15px;
+    line-height: 30px;
+    text-align: center;
+    position: absolute;
+    top: 250px;
+    right: -15px;
+    font-weight: bold;
+    color: white;
+}
+.infomark3:before{
+    content:'';
+    width:20px;
+    height: 0%;
+    border: 15px solid;
+    border-color: transparent #E2D1C3 transparent transparent ;
+    position: absolute;right:150px;top: 0px; }
+
+.infomark3:after{
+    content:'';
+    width:10px;
+    border: 15px solid;
+    border-color: transparent transparent transparent #FDFCFB;
+    border-top: 0;
+    right: -25px;
+    position: absolute;/*使伪元素脱离文档流,使伪元素不受div内容的影响,便于计算位置,此时after相对于div的左上角进行定位*/
+    top: 30px;
+}
+
+
+
+.taskDetail{
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.7);
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+}
+.taskDetail-info{
+
+}
+.taskDetail-div{
+
+
+}
+.taskDetail-pics{
+    position: absolute;
+    left: 500px;
+    top: 100px;
+    width: 800px;
+    display: flex;
+    flex-wrap: wrap;
+
+}
+.taskDetail-pics:after{
+    content: " ";
+    flex-grow: 9999999
+}
+.picitem{
+    flex-grow: 1;
+    margin: 2px;
+    position: relative;
+
+}
+.picimg{
+    height: 150px;
+    min-width: 100%;
+    object-fit: cover;
+
+}
+.pictag{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transition: all 1s;
+}
+.picbt1{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border: none;
+    font-size: 8px;
+    width: 50px;
+    text-align: center;
+    padding: 0 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color:white;
+    height: 0;
+    font-family: "Microsoft YaHei";
+
+}
+.picbt2{
+    position: absolute;
+    bottom: 0;
+    right: 50px;
+    border: none;
+    font-size: 8px;
+    width: 50px;
+    text-align: center;
+    padding: 0 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color:white;
+    height: 0;
+    font-family: "Microsoft YaHei";
+
+}
+.picbt3{
+    position: absolute;
+    bottom: 0;
+    right: 100px;
+    border: none;
+    font-size: 8px;
+    width: 50px;
+    text-align: center;
+    padding: 0 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color:white;
+    height: 0;
+    font-family: "Microsoft YaHei";
+
+}
+.picbt{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border: none;
+    font-size: 15px;
+    width: 50px;
+    text-align: center;
+    padding: 0 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color:white;
+    height: 0;
+    font-family: "Microsoft YaHei UI";
+
+}
+.pictag:hover{
+    background: rgba(77,77,77,0.3)
+}
+.pictag:hover .picbt1{
+    height: 25px;
+    background: rgba(0,0,0,0.5);
+    transition: all 0.5s;
+}
+.pictag:hover .picbt2{
+    height: 25px;
+    background: rgba(0,0,0,0.5);
+    transition: all 0.5s;
+}
+.pictag:hover .picbt3{
+    height: 25px;
+    background: rgba(0,0,0,0.5);
+    transition: all 0.5s;
+}
+.pictag:hover .picbt{
+    height: 25px;
+    background: rgba(0,0,0,0.5);
+    transition: all 0.5s;
+}
+p{
+    font-family: "Microsoft YaHei";
+    font-size: 15px;
+    position: absolute;
+    left: 180px;
+    top:100px;
+    color: #f7f7f7;
+}
+.task-infop1{
+    top:100px;
+}
+.task-infop2{
+    top:140px;
+
+}
+.task-infop3{
+    top:180px;
+}
+.task-infop4{
+    top:220px;
+}
+.task-infop5{
+    top:260px;
+}
+.task-infop6{
+    top:300px;
+ }
+.task-infop7{
+    top:340px;
+}
+.task-infop8{
+    top:380px;
+}
+.task-infop9{
+    top:420px;
+}
+.task-infop10{
+    top:460px;
+    width: 300px;
+}
+.taskDetail-close{
+    position: absolute;
+    left: 1390px;
+    top: 70px;
+    border-radius: 500px;
+    font-size: 25px;
+    width: 36px;
+}
+
+/*.tasklist{
+    width: 1100px;
+    margin: 0 auto;
+    background-color: #fff;
+}
+.tasklist-ul{
+    margin-left: 0;
+    padding-left: 40px;
+    overflow:hidden;
+    height: 400px;
+}
+.tasklist-ul li{
+    float: left;
+    width: 265px;
+    height: 210px;
+    position: relative;
+}
+.tasklist-ul li span{
+    position: absolute;
+    bottom: 30px;
+    width: 240px;
+    text-align: center;
+    background: rgba(0,0,0,0.6);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000,endColorstr=#99000000);
+    color: #fff;
+    font-size: 15px;
+    padding: 3px 0;
+    font-family: "Microsoft YaHei UI";
+}
+.tasklist-ul li img{
+    height: 150px;
+    min-width: 200px;
+    object-fit: cover;
+}*/

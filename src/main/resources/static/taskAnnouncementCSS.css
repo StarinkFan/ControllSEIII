@@ -1,0 +1,278 @@
+.u1{
+    /* position: fixed; */
+    list-style: none;
+    /* min-height: 60px; */
+    margin-bottom: 0px;
+    padding: 20px 0 10px;
+    background-color: black;
+    height: 60px;
+    width: 100%;
+    min-width: 1583px;
+}
+.u2{
+    height: 60px;
+    min-width: 0;
+    margin-left: 200px;
+}
+.u3{
+    float: left;
+}
+.u4{
+    float: left;
+}
+.u5{
+    line-height: 50px;
+    color: white;
+    /* background-color: #f7f7f7; */
+    text-align: center;
+    /* border: 1px solid #ccc; */
+    border-top: none;
+    display: block;
+    font-family: "Microsoft YaHei UI";
+    font-size: 24px;
+    padding-left: 30px;
+    text-decoration: none;
+}
+
+.u6{
+    width: 100px;
+    line-height: 50px;
+    color: white;
+    /* background-color: #f7f7f7; */
+    text-align: center;
+    /* border: 1px solid #ccc; */
+    border-top: none;
+    display: block;
+    font-family: "Microsoft YaHei UI";
+    font-size: 24px;
+    padding-left: 30px;
+    text-decoration: none;
+}
+.u7{
+    width: 100px;
+    line-height: 50px;
+    color: white;
+    /* background-color: #f7f7f7; */
+    text-align: center;
+    /* border: 1px solid #ccc; */
+    border-top: none;
+    /* display: block; */
+    font-family: "Microsoft YaHei UI";
+    font-size: 24px;
+    padding-left: 20px;
+    text-decoration: none;
+}
+#x{
+    padding-left: 160px;
+}
+
+
+
+
+
+
+
+
+
+
+
+.menubox{
+    list-style: none;
+    position: relative;
+    min-height: 60px;
+    margin-bottom: 0px;
+    padding: 20px 0 10px;
+    background-color: #e9e9e9;
+    height: 105px;
+}
+h1{
+    position: absolute;
+    left: 100px;
+    font-family: "Microsoft Yahei";
+    font-size: 30px;
+}
+html, body {
+    margin: 0;
+    padding: 0;
+}
+.mainbox{
+    background-color: rgba(0, 49, 79, 0.3);
+    margin: 0;
+    min-height: 700px;
+}
+.mainbox-1{
+    position: relative;
+    top: 80px;
+    width: 850px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: #e9e9e9;
+    min-height: 300px;
+}
+.taskform{
+    position: relative;
+    top: 80px;
+    width: 850px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: #e9e9e9;
+    min-height: 920px;
+}
+.form-label:after{
+    content: '*';
+    color: #ff9999;
+    margin-left: 0.25em;
+}
+.form-label{
+    font-family: "Microsoft Yahei";
+    font-size: 18px;
+}
+.form-label2{
+    font-family: "Microsoft Yahei";
+    font-size: 15px;
+}
+.form-input{
+    font-family: "Microsoft Yahei";
+    font-size: 15px;
+    width: 300px;
+}
+.form-select{
+    font-family: "Microsoft Yahei";
+    font-size: 15px;
+    width: 300px;
+}
+.form-text{
+    font-size: 15px;
+    font-family: "Microsoft Yahei";
+
+}
+.form-file{
+    position: absolute;
+    top: 81px;
+    left: 40px;
+    opacity: 0;
+    height: 30px;
+    width: 122px;
+}
+.form-a{
+    display: block;
+    padding: 4px 10px;
+    height: 20px;
+    line-height: 20px;
+    border: 1px solid #999;
+    text-decoration: none;
+    color: #666;
+    font-size: 15px;
+    font-family: "Microsoft Yahei";
+    width: 100px;
+}
+.submit1{
+    position: absolute;
+    left: 350px;
+    margin-top: -30px;
+    border: 0;
+    width: 150px;
+    font-size: 23px;
+    font-family: "Microsoft Yahei";
+    height: 50px;
+    opacity: 0.8;
+    border-radius: 5px;
+}
+.submit2{
+    position: absolute;
+    left: 680px;
+    border: 0;
+    width: 150px;
+    font-size: 23px;
+    font-family: "Microsoft Yahei";
+    height: 50px;
+    opacity: 0.8;
+    border-radius: 5px;
+}
+
+.imgContainer{
+   /* border: 1px solid #ddd;
+    border-radius: 100%;
+    float: left;
+    line-height: 1;
+    margin-left: 5px;
+    overflow: hidden;*/
+    flex-grow: 1;
+    margin: 2px;
+    position: relative;
+    margin-top: 10px;
+}
+.imgDelete{
+    position: absolute;
+    top: -20px;
+    right: 0;
+    color: #ff9999;
+    font-family: "Microsoft Yahei";
+    font-weight: bolder;
+}
+.img-box{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 100px;
+}
+.img-box:after{
+    content: " ";
+    flex-grow: 9999999
+}
+img{
+    height: 100px;
+    min-width: 100%;
+    object-fit: cover;
+}
+
+.nextbox{
+    display: none;
+    background-color: rgba(0, 49, 79, 0.9);
+    margin: 0;
+    min-height: 1150px;
+}
+.warming{
+    display: none;
+    font-family: "Microsoft Yahei";
+    font-weight: bolder;
+    font-size: 15px;
+    color: #ff9999;
+    position: absolute;
+    left: 550px;
+    margin-top: -10px;
+}
+
+#form-input4{
+    display: none;
+    margin-left: 56px;
+    font-family: "Microsoft Yahei";
+    font-size: 15px;
+    width: 300px;
+}
+#form-input5{
+    display: none;
+    margin-left: 56px;
+    font-family: "Microsoft Yahei";
+    font-size: 15px;
+    width: 300px;
+}
+#next1{
+    background: none;
+    border: none;
+    font-size: 20px;
+    font-weight: bolder;
+}
+#next2{
+    display: none;
+    background: none;
+    border: none;
+    font-size: 20px;
+    font-weight: bolder;
+}
+.qbox{
+    display: none;
+}
+.form-radio{
+    font-family: "Microsoft Yahei";
+    font-size: 18px;
+}

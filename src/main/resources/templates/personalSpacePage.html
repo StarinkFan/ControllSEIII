@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+
+    <style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: transparent;
+        }
+
+        li{
+            display: inline-block;
+        }
+
+        li a {
+            display: block;
+            color: ghostwhite;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 24px;
+            font-family: "Microsoft YaHei UI";
+        }
+
+        li a:hover {
+            background-color: transparent;
+        }
+
+        .titleBox{
+            width:101%;
+            height: 140px;
+            position: relative;
+            margin: auto;
+            color: #333333;
+            border-radius: 4px;
+            background: white;
+            box-shadow: 1px 1px 4px #a0a0a0;
+            font-family: "Microsoft YaHei UI";
+            font-size: 20px;
+            margin-left: 0;
+        }
+
+        .mainbody{
+            width: 102%;
+            height: 800px;
+            background-color: lightblue;
+            margin-left: -1%;
+            font-family: "Microsoft YaHei UI";
+            font-size: 20px;
+            vertical-align: top;
+        }
+
+
+
+        .maincut{
+            width: 102%;
+            height: 30px;
+            background-color: lightblue;
+            margin-left: -1%;
+        }
+
+        .left_menu_box{
+            background: #fff;
+            box-shadow: 0 1px 6px 0 rgba(0, 0, 0, .12), 0 1px 6px 0 rgba(0, 0, 0, .12);
+            border-radius: 3px;
+            height: 520px;
+            min-height: 520px;
+            border-top: 4px solid #2093ff;
+            width: 16%;
+            margin-left: 12.5%;
+            display: inline-block;
+            float: top;
+            vertical-align: top;
+        }
+
+        .menus a{
+            padding-left: 40px;
+            color: black;
+            font-size: 20px;
+
+        }
+        .menus li{
+            padding: 0;
+        }
+
+        .menus p{
+            padding-left: 20px;
+            color: black;
+            font-size: 20px;
+        }
+
+        .mainPanel{
+            background: #fff;
+            -webkit-box-shadow: 0px 0px 8px #c8c8c8;
+            /* box-shadow: 0px 0px 8px #c8c8c8; */
+            box-shadow: 0 1px 6px 0 rgba(0, 0, 0, .12), 0 1px 6px 0 rgba(0, 0, 0, .12);
+            border-radius: 3px;
+            height: 750px;
+            width:56%;
+            display: inline-block;
+            float: top;
+            margin-left: 3%;
+        }
+
+        hr{height:1px;border:none;border-top:1px solid lightgrey;}
+
+        .photo{
+            width: 200px;
+            height: 200px;
+            border-radius: 100px;
+            margin-left: 75%;
+            margin-top: 2%;
+            float: top;
+        }
+    </style>
+
+    <script>
+        var name="1";
+        var account=0;
+
+        window.onload=function () {
+            name = localStorage.nickname;
+            account = localStorage.account;
+            document.getElementById('username').innerText=name;
+            var username=document.getElementById('username');
+            username.onmouseover=function () {
+                document.getElementById("menu").style.display="inherit";
+            }
+            document.getElementById("userbar").onmouseleave=function (e) {
+                if(e.target.id!="nemu"){
+                    document.getElementById("menu").style.display="none";
+                }
+            }
+
+            var obj={account:account};
+            var html = $.ajax({
+                type: "Post",
+                url: '/personalSpace/getPersonalInformation',
+                dataType:'json',
+                contentType: "application/json",
+                async: true,
+                data: JSON.stringify(obj),
+                success: function(myobj) {
+                    document.getElementById("nickname").innerText="昵称："+myobj.nickname;
+                    document.getElementById("sex").innerText="性别："+myobj.sex;
+                    document.getElementById("credit").innerText="积分："+myobj.credit;
+                    document.getElementById("address").innerText="地址："+myobj.address;
+                    document.getElementById("wechat").innerText="微信："+myobj.wechat;
+                    document.getElementById("introduction").innerText="简介："+myobj.introduction;
+                    document.getElementById("photo").src=myobj.photoSrc;
+                },
+                error: function() {
+                    alert("error");
+                }
+            });
+
+        }
+
+        function logout(){
+            window.open("./homepage.html","_self");
+        }
+
+        function goPersonalSpace(){
+            window.open("./personalSpacePage.html","_self");
+        }
+    </script>
+
+</head>
+
+
+<body>
+<div id="userbar" style="width: 1860px;position: fixed;z-index: 3;padding-left: 12%;">
+    <li><img src="../static/pic/logo.png" style="height: 60px;margin-left: -465%"></li>
+    <div style=" z-index:3;display: inline-block;float:left;margin-left: 10%;" >
+        <ul>
+            <li><a href="./chooseNewTask.html">任务大厅</a></li>
+            <li><a href="#news">新闻</a></li>
+            <li><a href="#contact">联系</a></li>
+            <li><a href="#about">帮助</a></li>
+        </ul>
+    </div>
+    <br>
+
+    <div style="float:right;right:0;z-index:3;margin-right:20px;display: inline-block;padding-right: 22%;margin-top: -65px">
+        <ul>
+            <li><a href="./myTaskOfWorker.html">我的接取</a></li>
+            <li><a href="./myTaskOfRequestor.html">我的发布</a></li>
+            <li><a href="./taskAnnouncement.html">发布任务</a></li>
+            <li><a href="./rechargePage.html">在线充值</a></li>
+            <li style="z-index: 3">
+                <a style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">
+                    你好，
+                    <u id="username" style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">用户</u>
+                </a>
+            </li>
+        </ul>
+
+        <div id="menu" style="margin-left: 82%;margin-top: -3%;z-index: 5;display: none;">
+            <button onclick="goPersonalSpace()" style="border-radius:0;background: black;color:white;font-size: 20px;width: 120px;border-color: white;border-width: 1px;z-index: 5;">个人空间</button><br>
+            <button onclick="logout()" style="border-radius:0;background: black;color:white;font-size: 20px;margin-top: -2px;width:120px;border-color: white;border-width: 1px;">退出账户</button>
+
+        </div>
+    </div>
+
+
+</div>
+
+
+<div style="position: fixed;width: 101%;height:90px;background-color: black;opacity: 1;z-index: 2;margin-top: -1%;margin-left: -1%"></div>
+<br>
+
+<div class="titleBox">
+    <h2 style="padding-top: 2%;color: #232323;padding-left: 11.5%">个人中心</h2>
+    <p style="color: #939393;padding-left: 11.5%">在这里，可以集中管理维护您的用户、账号等信息,也可以查看您的任务统计数据</p>
+</div>
+
+<div class="maincut"></div>
+
+<div class="mainbody">
+    <div class="mainbox">
+        <div class="left_menu_box">
+            <ul class="menus">
+                <li><p>基础资料</p></li>
+                <hr style="margin-top: -2%"/>
+                <li><a href="./personalSpacePage.html" style="color: violet">用户信息</a></li><br>
+                <li><a href="./personalSkill.html">擅长领域</a></li>
+            </ul>
+            <hr style=""/>
+            <ul class="menus">
+                <li style="margin-top: -3%"><p>统计信息</p></li>
+                <hr style="margin-top: -2%"/>
+                <li><a href="./personalCompletionSituation.html">完成情况</a></li><br>
+                <li><a href="./personalRequestSituation.html">发布情况</a></li><br>
+                <li><a href="./personalAchievements.html">称号一览</a></li>
+            </ul>
+        </div>
+
+        <div class="mainPanel" style="font-size: 20px;">
+            <h3 style="padding-left: 3%;">基本信息</h3>
+            <a href="./editPersonalInformation.html" style="float: right;margin-top: -5%;margin-right: 2%;color: blue;cursor: pointer;">编辑资料</a>
+            <hr />
+            <img class="photo" id="photo" src="../static/pic/photo.jpg">
+            <div style="padding-left: 10%;color: #333333;margin-top: -22%">
+                <p style="padding-top: 20px" id="nickname">昵称：</p><br>
+                <p id="sex">性别：</p><br>
+                <p id="credit">积分：</p><br>
+                <p id="address">地址：</p><br>
+                <p id="wechat">微信：</p><br>
+                <p id="introduction">简介：</p><br>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
+
+<div style="width:101%; float: bottom; background-color: black;margin-left: -0.2%;height: 80px;">
+    <img src="../static/pic/logo.png" style="width:8%;">
+    <span style="color: white;text-align: center;font-size: 25px;vertical-align: center">让世界的智慧凝聚为你的眼</span>
+    <span style="color: white;text-align: center;font-size: 25px;float: right;padding-top: 20px;margin-right: 0.4%">怎么码都码不队</span>
+</div>
+
+</body>
+</html>

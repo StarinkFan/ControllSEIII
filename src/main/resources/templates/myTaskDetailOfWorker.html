@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/myTaskDetailOfWorkerCSS.css" type="text/css"/>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script>
+        $(document).ready(function(){
+            loadTask();
+
+
+            document.getElementById('username').innerText=localStorage.nickname;
+            var username=document.getElementById('username');
+            username.onmouseover=function () {
+                document.getElementById("menu").style.display="inherit";
+            }
+            document.getElementById("userbar").onmouseleave=function (e) {
+                if(e.target.id!="menu"){
+                    document.getElementById("menu").style.display="none";
+                }
+            }
+        });
+
+
+        function logout(){
+            window.open("./homepage.html","_self");
+        }
+
+        function goPersonalSpace(){
+            window.open("./personalSpacePage.html","_self");
+        }
+    </script>
+</head>
+<body>
+<div id="userbar" class="u1">
+    <li class="u3"><img class="u2" src="../static/pic/logo.png" style=""></li>
+    <li class="u3"><a href="./chooseNewTask.html" class="u5">任务大厅</a></li>
+    <li class="u3"><a href="#" class="u5">新闻</a></li>
+    <li class="u3"><a href="#" class="u5">联系</a></li>
+    <li class="u3"><a href="#" class="u5">帮助</a></li>
+    <li class="u4"><a href="./myTaskOfWorker.html" class="u6" id="x"  style="color: darkviolet">我的接取</a></li>
+    <li class="u4"><a href="./myTaskOfRequestor.html" class="u6">我的发布</a></li>
+    <li class="u4"><a href="./taskAnnouncement.html" class="u6">发布任务</a></li>
+    <li class="u4"><a href="./rechargePage.html" class="u6">在线充值</a></li>
+    <li class="u4">
+        <a class="u7">
+            你好，
+            <u id="username" style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">用户</u>
+        </a>
+    </li>
+    <div id="menu" style="margin-left: 82%;margin-top: -3%;z-index: 5;display: none;">
+        <button onclick="goPersonalSpace()" style="border-radius:0;background: black;color:white;font-size: 20px;width: 120px;border-color: white;border-width: 1px;z-index: 5;margin-top: 65px;">个人空间</button><br>
+        <button onclick="logout()" style="border-radius:0;background: black;color:white;font-size: 20px;margin-top: -2px;width:120px;border-color: white;border-width: 1px;">退出账户</button>
+
+    </div>
+</div>
+<div class="menubox">
+    <h1>任务详情</h1>
+</div>
+<div class="mainbox" id="mainbox">
+    <div class="taskDetail-info" id="taskDetail-info">
+        <img class="task-img" id="task-img">
+        <p class="task-infop1" id="task-infop1"></p>
+        <p class="task-infop2" id="task-infop2"></p>
+        <p class="task-infop3" id="task-infop3"></p>
+        <p class="task-infop4" id="task-infop4"></p>
+        <p class="task-infop5" id="task-infop5"></p>
+        <p class="task-infop6" id="task-infop6"></p>
+        <p class="task-infop7" id="task-infop7"></p>
+        <p class="task-infop8" id="task-infop8"></p>
+        <p class="task-infop9" id="task-infop9"></p>
+        <p class="task-infop10" id="task-infop10"></p>
+        <p class="task-infop11" id="task-infop11"></p>
+        <p class="task-infop12" id="task-infop12"></p>
+    </div>
+</div>
+<div class="picbox" id="picbox">
+
+</div>
+
+<script>
+    var workerID=localStorage.account;
+    var marklist=new Array();
+
+    //任务信息
+    var taskID='';
+    var taskRequestorID='';
+    var taskRequestorName='';
+    var taskRequest='';
+    var taskTag='';
+    var taskCredit='';
+    var taskActualCredit='';
+    var taskNum='';
+    var taskParticipant='';
+    var taskCondition='';
+    var taskStarttime='';
+    var taskEndtime='';
+    var taskDeadline='';
+    var taskKind='';
+    var taskMark='';
+    var taskRequestorHeadshot='';
+
+    //具体任务
+    var picIDs=new Array();
+    var picurls=new Array();
+    var picConditions=new Array();
+    var picTags=new Array();
+    var picLabels=new Array();
+    var isRights=new Array();
+
+    /*picIDs[0]='01';
+    picIDs[1]='02';
+    picIDs[2]='03';
+    picIDs[3]='04';
+    picIDs[4]='04';
+    picIDs[5]='04';
+    picIDs[6]='04';
+    picIDs[7]='04';
+    picIDs[8]='04';
+    picIDs[9]='04';
+    picIDs[10]='04';
+    picurls[0]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    picurls[1]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    picurls[2]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    picurls[3]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    picurls[4]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    picurls[5]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    picurls[6]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    picurls[7]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    picurls[8]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    picurls[9]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    picurls[10]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    picConditions[0]='1';
+    picConditions[1]='0';
+    picConditions[2]='1';
+    picConditions[3]='1';
+    picConditions[4]='1';
+    picConditions[5]='1';
+    picConditions[6]='1';
+    picConditions[7]='1';
+    picConditions[8]='1';
+    picConditions[9]='1';
+    picConditions[10]='1';
+    picTags[0]='1';
+    picTags[1]='1';
+    picTags[2]='2';
+    picTags[3]='3';
+    picTags[4]='0';
+    picTags[5]='0';
+    picTags[6]='0';
+    picTags[7]='0';
+    picTags[8]='0';
+    picTags[9]='0';
+    picTags[10]='0';
+    picLabels[0]='sdcs';
+    picLabels[1]='sdcs';
+    picLabels[2]='sdcs';
+    picLabels[3]='sdcs';
+    picLabels[4]='sdcs';
+    picLabels[5]='sdcs';
+    picLabels[6]='sdcs';
+    picLabels[7]='sdcs';
+    picLabels[8]='sdcs';
+    picLabels[9]='sdcs';
+    picLabels[10]='sdcs';
+    isRights[0]=1;
+    isRights[1]=0;
+    isRights[2]=1;
+    isRights[3]=0;
+    isRights[4]=0;
+    isRights[5]=1;
+    isRights[6]=0;
+    isRights[7]=1;
+    isRights[8]=1;
+    isRights[9]=1;
+    isRights[10]=1;*/
+
+
+function loadTask() {
+    taskID=localStorage.getItem('taskidc');
+    taskRequestorID=localStorage.getItem('taskrequestoridc');
+    taskRequestorName=localStorage.getItem('taskrequestornamec');
+    taskRequest=localStorage.getItem('taskrequestc');
+    taskTag=localStorage.getItem('tasktagc');
+    taskCredit=localStorage.getItem('taskcreditc');
+    taskActualCredit=localStorage.getItem('taskactualcreditc');
+    taskParticipant=localStorage.getItem('taskparticipantc');
+    taskCondition=localStorage.getItem('taskconditionc');
+    taskStarttime=localStorage.getItem('taskstarttimec');
+    taskEndtime=localStorage.getItem('taskendtimes');
+    taskDeadline=localStorage.getItem('taskdeadlinec');
+    taskKind=localStorage.getItem('taskkindc');
+    taskMark=localStorage.getItem('taskmarkc');
+    taskRequestorHeadshot=localStorage.getItem('taskrequestorheadshotc');
+//任务状态（未完成0、已完成1、已关闭已完成2，已关闭未完成3）
+
+    var taskimg=document.getElementById('task-img');
+    var taskinfo1=document.getElementById('task-infop1');
+    var taskinfo2=document.getElementById('task-infop2');
+    var taskinfo3=document.getElementById('task-infop3');
+    var taskinfo4=document.getElementById('task-infop4');
+    var taskinfo5=document.getElementById('task-infop5');
+    var taskinfo6=document.getElementById('task-infop6');
+    var taskinfo7=document.getElementById('task-infop7');
+    var taskinfo8=document.getElementById('task-infop8');
+    var taskinfo9=document.getElementById('task-infop9');
+    var taskinfo10=document.getElementById('task-infop10');
+    var taskinfo11=document.getElementById('task-infop11');
+    var taskinfo12=document.getElementById('task-infop12');
+    taskimg.src=taskRequestorHeadshot;
+    taskinfo1.innerText=taskRequestorName;
+    if(taskTag==0){
+        taskinfo2.innerHTML="标注类型： 都可";
+    }
+    else if(taskTag==1){
+        taskinfo2.innerHTML="标注类型： 整体标注";
+    }
+    else if(taskTags[i]==2){
+        taskinfo2.innerHTML="标注类型： 方框标注";
+    }
+    else if(taskTags[i]==3){
+        taskinfo2.innerHTML="标注类型： 描边标注";
+    }
+    taskinfo3.innerText="任务积分： "+taskCredit;
+    taskinfo10.innerText="实际得分： "+taskActualCredit;
+    taskinfo4.innerText="参与人数： "+taskParticipant;
+    taskinfo6.innerText="开始时间： "+taskStarttime;
+    taskinfo7.innerText="任务种类： "+taskKind;
+    var marklist=taskMark.split(":");
+    if(marklist.length==2){
+        taskinfo8.innerHTML="标签： "+marklist[0];
+    }
+    else if(marklist.length==3){
+        taskinfo8.innerHTML="标签： "+marklist[0]+" ; "+marklist[1];
+    }
+    else if(marklist.length==4){
+        taskinfo8.innerHTML="标签： "+marklist[0]+" ; "+marklist[1]+" ; "+marklist[2];
+    }
+    taskinfo9.innerText="要求： "+taskRequest;
+
+    if(taskCondition==0){
+        taskinfo5.innerText="任务状态： 进行中";
+        taskinfo11.innerText="截止时间： "+taskDeadline;
+        gainUPics();
+    }
+    else if(taskCondition==1){
+        taskinfo5.innerText="任务状态： 已完成";
+        taskinfo11.innerText="截止时间： "+taskDeadline;
+        gainUPics();
+    }
+    else if(taskCondition==3){
+        taskinfo5.innerText="任务状态： 未完成";
+        taskinfo11.innerText="截止时间： "+taskDeadline;
+        taskinfo12.innerText="结束时间： "+taskEndtime;
+        gainUPics();
+    }
+    else if(taskCondition==2){
+        taskinfo5.innerText="任务状态： 已关闭";
+        taskinfo11.innerText="截止时间： "+taskDeadline;
+        taskinfo12.innerText="结束时间： "+taskEndtime;
+        gainFPics();
+    }
+}
+
+    var mainbox=document.getElementById('mainbox');
+    var taskDetail_pics = document.createElement("div");
+    taskDetail_pics.className="taskDetail-pics";
+    taskDetail_pics.id="taskDetail-pics";
+
+
+    function gainUPics() {
+        /*根据任务worktaskid获取该任务的所有图片（每张图片的id、url、tag（0未标注1整体2方框3描边）、
+该worker的完成情况（完成1、未完成0），标注的info*/
+        var obj=new Object();
+        obj={
+            taskID:taskID
+        };
+        var html = $.ajax({
+            type: "Post",
+            url: '/workerTask/UnfinishedPiclist',
+            dataType:'json',
+            contentType: "application/json",
+            async: false,
+            data:JSON.stringify(obj),
+            success: function(myobj) {
+                picIDs=[];
+                picurls=[];
+                picConditions=[];
+                picTags=[];
+                picLabels=[];
+                picIDs=myobj.id;
+                picurls=myobj.url;
+                picConditions=myobj.condition;
+                picTags=myobj.tag;
+                picLabels=myobj.label;
+                if(taskCondition==0){
+                    loadUPics();
+                }
+                else if(taskCondition==1){
+                    loadFPics();
+                }
+                else if(taskCondition==3){
+                    loadXPics();
+                }
+            },
+            error: function() {
+                alert("error");
+            }
+        });
+        console.log(picIDs);
+        /*if(taskCondition==0){
+            console.log("ok");
+            loadUPics();
+        }
+        else if(taskCondition==1){
+            loadFPics();
+        }
+        else if(taskCondition==3){
+            loadXPics();
+        }*/
+
+    }
+    function gainFPics() {
+        /*根据任务worktaskid获取该任务的所有图片（每张图片的id、url、tag（0未标注1整体2方框3描边）、
+                    标注的info，每张图片标注的正确情况（0错1对*/
+        var obj=new Object();
+        obj={
+            taskID:taskIDs[i]
+        };
+        var html = $.ajax({
+            type: "Post",
+            url: '/workerTask/FinishedPiclist',
+            dataType:'json',
+            contentType: "application/json",
+            async: false,
+            data:JSON.stringify(obj),
+            success: function(myobj) {
+                picIDs=[];
+                picurls=[];
+                picTags=[];
+                picLabels=[];
+                isRights=[];
+                picIDs=myobj.id;
+                picurls=myobj.url;
+                picTags=myobj.tag;
+                picLabels=myobj.label;
+                isRights=myobj.isright;
+                loadCPics();
+            },
+            error: function() {
+                alert("error");
+            }
+        });
+       /* loadCPics();*/
+    }
+//underway
+    function loadUPics() {
+        console.log("ok1");
+        for (var i = 0; i < picurls.length; i++) {
+            var picitem = document.createElement("div");
+            var picimg = document.createElement("img");
+            var pictag = document.createElement("div");
+            var picbt1 = document.createElement("button");
+            var picbt2 = document.createElement("button");
+            var picbt3 = document.createElement("button");
+            picimg.src = picurls[i];
+            picimg.className = "picimg";
+            picitem.className = "picitem";
+            pictag.className = "pictag";
+            picbt1.className = "picbt1";
+            picbt1.id = "picbt1" + i;
+            picbt1.innerHTML = "RT";
+            picbt2.className = "picbt2";
+            picbt2.id = "picbt2" + i;
+            picbt2.innerHTML = "WT";
+            picbt3.className = "picbt3";
+            picbt3.id = "picbt3" + i;
+            picbt3.innerHTML = "OT";
+            picitem.appendChild(picimg);
+            picitem.appendChild(pictag);
+            pictag.appendChild(picbt1);
+            pictag.appendChild(picbt2);
+            pictag.appendChild(picbt3);
+            taskDetail_pics.appendChild(picitem);
+            if (picConditions[i] == 1) {
+                if (picTags[i] == 1) {
+                    /*var p1=document.getElementById("picbt10");
+                    p1.innerHTML='af';*/
+                    picbt1.style.display = 'none';
+                    picbt3.style.display = 'none';
+                    console.log("find");
+                }
+                else if (picTags[i] == 2) {
+                    picbt2.style.display = 'none';
+                    picbt3.style.display = 'none';
+                }
+                else if (picTags[i] == 3) {
+                    picbt2.style.display = 'none';
+                    picbt1.style.display = 'none';
+                }
+            }
+            else {
+                if (taskTag == 1) {
+                    picbt1.style.display = 'none';
+                    picbt3.style.display = 'none';
+                }
+                else if (taskTag == 2) {
+                    picbt2.style.display = 'none';
+                    picbt3.style.display = 'none';
+                }
+                else if (taskTag == 3) {
+                    picbt2.style.display = 'none';
+                    picbt1.style.display = 'none';
+                }
+
+            }
+            mainbox.appendChild(taskDetail_pics);
+            clickUnderwayTag();
+        }
+        }
+
+        //finish
+        function loadFPics() {
+            for(var i=0;i<picurls.length;i++){
+                var picitem=document.createElement("div");
+                var picimg = document.createElement("img");
+                var pictag = document.createElement("div");
+                var picbt = document.createElement("button");
+                var picinfo=document.createElement("button");
+                picimg.src=picurls[i];
+                picimg.className="picimg";
+                picitem.className="picitem";
+                pictag.className="pictag";
+                picbt.className="picbt";
+                picbt.id="picbt"+i;
+                picbt.innerHTML="EDIT";
+                picinfo.className='picinfo';
+                picinfo.innerText=picLabels[i];
+                picitem.appendChild(picimg);
+                picitem.appendChild(pictag);
+                pictag.appendChild(picbt);
+                pictag.appendChild(picinfo);
+                taskDetail_pics.appendChild(picitem);
+            }
+            mainbox.appendChild(taskDetail_pics);
+            clickEditTag(k);
+        }
+
+        //unfinish
+        function loadXPics() {
+            for (var i = 0; i < picurls.length; i++) {
+                var picitem = document.createElement("div");
+                var picimg = document.createElement("img");
+                var pictag = document.createElement("div");
+                var picbt1 = document.createElement("button");
+                var picbt2 = document.createElement("button");
+                var picbt3 = document.createElement("button");
+                picimg.src = picurls[i];
+                picimg.className = "picimg";
+                picitem.className = "picitem";
+                pictag.className = "pictag";
+                picbt1.className = "picbt1";
+                picbt1.id = "picbt1" + i;
+                picbt1.innerHTML = "RT";
+                picbt2.className = "picbt2";
+                picbt2.id = "picbt2" + i;
+                picbt2.innerHTML = "WT";
+                picbt3.className = "picbt3";
+                picbt3.id = "picbt3" + i;
+                picbt3.innerHTML = "OT";
+                picitem.appendChild(picimg);
+                picitem.appendChild(pictag);
+                pictag.appendChild(picbt1);
+                pictag.appendChild(picbt2);
+                pictag.appendChild(picbt3);
+                taskDetail_pics.appendChild(picitem);
+                if (picConditions[i] == 1) {
+                    if (picTags[i] == 1) {
+                        /*var p1=document.getElementById("picbt10");
+                        p1.innerHTML='af';*/
+                        picbt1.style.display = 'none';
+                        picbt3.style.display = 'none';
+                        console.log("find");
+                    }
+                    else if (picTags[i] == 2) {
+                        picbt2.style.display = 'none';
+                        picbt3.style.display = 'none';
+                    }
+                    else if (picTags[i] == 3) {
+                        picbt2.style.display = 'none';
+                        picbt1.style.display = 'none';
+                    }
+                }
+                else {
+                    picbt1.style.display = 'none';
+                    picbt3.style.display = 'none';
+                    picbt2.style.display = 'none';
+
+                }
+                mainbox.appendChild(taskDetail_pics);
+                clickUnfinishedTag();
+            }
+        }
+
+        //close
+        function loadCPics() {
+            for(var i=0;i<picurls.length;i++){
+                var picitem=document.createElement("div");
+                var picimg = document.createElement("img");
+                var pictag = document.createElement("div");
+                var picbt = document.createElement("button");
+                var picinfo=document.createElement("button");
+                picimg.src=picurls[i];
+                picimg.className="picimg";
+                picitem.className="picitem";
+                pictag.className="pictag";
+                picbt.className="picbt";
+                picbt.id="picbt"+i;
+                picbt.innerHTML="SEE";
+                picinfo.className='picinfo';
+
+                if(isRights[i]==0){
+                    picinfo.innerText=picLabels[i]+" ×";
+                    picinfo.style.color='red';
+                }
+                else if(isRights[i]==1){
+                    picinfo.innerText=picLabels[i]+" √";
+                    picinfo.style.color='green';
+                }
+                picitem.appendChild(picimg);
+                picitem.appendChild(pictag);
+                pictag.appendChild(picbt);
+                pictag.appendChild(picinfo);
+                taskDetail_pics.appendChild(picitem);
+            }
+            mainbox.appendChild(taskDetail_pics);
+            clickCloseTag(k);
+        }
+
+    function clickUnderwayTag(){
+        for(var i=0;i<picurls.length;i++){
+            !function (i) {
+                var btn1=document.getElementById('picbt1'+i);
+                btn1.addEventListener("click",function () {
+                    if(picConditions[i]==0){
+                        localStorage.setItem('order',i);
+                        localStorage.setItem('picIDs',JSON.stringify(picIDs));
+                        localStorage.setItem('picSrcs',JSON.stringify(picurls));
+                        var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
+                        window['filter'] =postData;
+                        window.open("./rectangleLabelPage.html","_blank");
+                    }
+                    else if(picConditions[i]==1){
+                        if(picTags[i]==2){
+                            localStorage.setItem('order',i);
+                            localStorage.setItem('picIDs',JSON.stringify(picIDs));
+                            localStorage.setItem('picSrcs',JSON.stringify(picurls));
+                            var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
+                            window['filter'] =postData;
+                            window.open("./editRectangleLabelPage.html","_blank");
+                        }
+                    }
+                })
+                var btn2=document.getElementById('picbt2'+i);
+                btn2.addEventListener("click",function () {
+                    if(picConditions[i]==0){
+                        localStorage.setItem('order',i);
+                        localStorage.setItem('picIDs',JSON.stringify(picIDs));
+                        localStorage.setItem('picSrcs',JSON.stringify(picurls));
+                        var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
+                        window['filter'] =postData;
+                        window.open("./wholeLabelPage.html","_blank");
+                    }
+                    else if(picConditions[i]==1){
+                        if(picTags[i]==1){
+                            localStorage.setItem('order',i);
+                            localStorage.setItem('picIDs',JSON.stringify(picIDs));
+                            localStorage.setItem('picSrcs',JSON.stringify(picurls));
+                            var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
+                            window['filter'] =postData;
+                            window.open("./EditWholeLabelPage.html","_blank");
+                        }
+                    }
+                })
+                var btn3=document.getElementById('picbt3'+i);
+                btn3.addEventListener("click",function () {
+                    if(picConditions[i]==0){
+                        localStorage.setItem('order',i);
+                        localStorage.setItem('picIDs',JSON.stringify(picIDs));
+                        localStorage.setItem('picSrcs',JSON.stringify(picurls));
+                        var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
+                        window['filter'] =postData;
+                        window.open("./outlineLabelPage.html","_blank");
+                    }
+                    else if(picConditions[i]==1){
+                        if(picTags[i]==3){
+                            localStorage.setItem('order',i);
+                            localStorage.setItem('picIDs',JSON.stringify(picIDs));
+                            localStorage.setItem('picSrcs',JSON.stringify(picurls));
+                            var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
+                            window['filter'] =postData;
+                            window.open("./editOutlineLabelPage.html","_blank");
+                        }
+                    }
+                })
+            }(i);
+        }
+    }
+
+    function clickEditTag(){
+        for(var i=0;i<picurls.length;i++){
+            !function (i) {
+                var btn1=document.getElementById('picbt'+i);
+                btn1.addEventListener("click",function () {
+                    if(picTags[i]==1){
+                        localStorage.setItem('order',i);
+                        localStorage.setItem('picIDs',JSON.stringify(picIDs));
+                        localStorage.setItem('picSrcs',JSON.stringify(picurls));
+                        var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
+                        window['filter'] =postData;
+                        window.open("./EditWholeLabelPage.html","_blank");
+                    }
+                    else if(picTags[i]==2){
+                        localStorage.setItem('order',i);
+                        localStorage.setItem('picIDs',JSON.stringify(picIDs));
+                        localStorage.setItem('picSrcs',JSON.stringify(picurls));
+                        var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
+                        window['filter'] =postData;
+                        window.open("./editRectangleLabelPage.html","_blank");
+                    }
+                    else if(picTags[i]==3){
+                        localStorage.setItem('order',i);
+                        localStorage.setItem('picIDs',JSON.stringify(picIDs));
+                        localStorage.setItem('picSrcs',JSON.stringify(picurls));
+                        var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
+                        window['filter'] =postData;
+                        window.open("./editOutlineLabelPage.html","_blank");
+                    }
+                })
+            }(i);
+        }
+    }
+
+    function clickUnfinishedTag(){
+        for(var i=0;i<picurls.length;i++){
+            !function (i) {
+                var btn1=document.getElementById('picbt1'+i);
+                btn1.addEventListener("click",function () {
+                    localStorage.setItem('order',i);
+                    localStorage.setItem('picIDs',JSON.stringify(picIDs));
+                    localStorage.setItem('picSrcs',JSON.stringify(picurls));
+                    var temp=taskMark.split(":");
+                    var tempm=new Array();
+                    if(temp.length==2){
+                        tempm[0]=temp[0];
+                    }
+                    else if(temp.length==3){
+                        tempm[0]=temp[0];
+                        tempm[1]=temp[1];
+                    }
+                    else if(temp.length==4){
+                        tempm[0]=temp[0];
+                        tempm[1]=temp[1];
+                        tempm[2]=temp[2];
+                    }
+                    localStorage.setItem('taskTags',JSON.stringify(tempm));
+                    var postData ={'picSrc':picurls[i],'picID':picIDs[i],'workerAccount':workerID,'tag':0};
+                    window['filter'] =postData;
+                    window.open("./checkRectangleLabelPage.html","_blank");
+                })
+                var btn2=document.getElementById('picbt2'+i);
+                btn2.addEventListener("click",function () {
+                    localStorage.setItem('order',i);
+                    localStorage.setItem('picIDs',JSON.stringify(picIDs));
+                    localStorage.setItem('picSrcs',JSON.stringify(picurls));
+                    var temp=taskMark.split(":");
+                    var tempm=new Array();
+                    if(temp.length==2){
+                        tempm[0]=temp[0];
+                    }
+                    else if(temp.length==3){
+                        tempm[0]=temp[0];
+                        tempm[1]=temp[1];
+                    }
+                    else if(temp.length==4){
+                        tempm[0]=temp[0];
+                        tempm[1]=temp[1];
+                        tempm[2]=temp[2];
+                    }
+                    localStorage.setItem('taskTags',JSON.stringify(tempm));
+                    var postData ={'picSrc':picurls[i],'picID':picIDs[i],'workerAccount':workerID,'tag':0};
+                    window['filter'] =postData;
+                    window.open("./checkWholeLabelPage.html","_blank");
+                })
+                var btn3=document.getElementById('picbt3'+i);
+                btn3.addEventListener("click",function () {
+                    localStorage.setItem('order',i);
+                    localStorage.setItem('picIDs',JSON.stringify(picIDs));
+                    localStorage.setItem('picSrcs',JSON.stringify(picurls));
+                    var temp=taskMark.split(":");
+                    var tempm=new Array();
+                    if(temp.length==2){
+                        tempm[0]=temp[0];
+                    }
+                    else if(temp.length==3){
+                        tempm[0]=temp[0];
+                        tempm[1]=temp[1];
+                    }
+                    else if(temp.length==4){
+                        tempm[0]=temp[0];
+                        tempm[1]=temp[1];
+                        tempm[2]=temp[2];
+                    }
+                    localStorage.setItem('taskTags',JSON.stringify(tempm));
+                    var postData ={'picSrc':picurls[i],'picID':picIDs[i],'workerAccount':workerID,'tag':0};
+                    window['filter'] =postData;
+                    window.open("./checkOutlineLabelPage.html","_blank");
+                })
+            }(i);
+        }
+    }
+
+    function clickCloseTags() {
+        for(var i=0;i<picurls.length;i++){
+            !function (i) {
+                var btn1=document.getElementById('picbt'+i);
+                btn1.addEventListener("click",function () {
+                    if(picTags[i]==1){
+                        localStorage.setItem('order',i);
+                        localStorage.setItem('picIDs',JSON.stringify(picIDs));
+                        localStorage.setItem('picSrcs',JSON.stringify(picurls));
+                        var temp=taskMark.split(":");
+                        var tempm=new Array();
+                        if(temp.length==2){
+                            tempm[0]=temp[0];
+                        }
+                        else if(temp.length==3){
+                            tempm[0]=temp[0];
+                            tempm[1]=temp[1];
+                        }
+                        else if(temp.length==4){
+                            tempm[0]=temp[0];
+                            tempm[1]=temp[1];
+                            tempm[2]=temp[2];
+                        }
+                        localStorage.setItem('taskTags',JSON.stringify(tempm));
+                        var postData ={'picSrc':picurls[i],'picID':picIDs[i],'workerAccount':workerID,'tag':0};
+                        window['filter'] =postData;
+                        window.open("./checkWholeLabelPage.html","_blank");
+                    }
+                    else if(picTags[i]==2){
+                        localStorage.setItem('order',i);
+                        localStorage.setItem('picIDs',JSON.stringify(picIDs));
+                        localStorage.setItem('picSrcs',JSON.stringify(picurls));
+                        var temp=taskMark.split(":");
+                        var tempm=new Array();
+                        if(temp.length==2){
+                            tempm[0]=temp[0];
+                        }
+                        else if(temp.length==3){
+                            tempm[0]=temp[0];
+                            tempm[1]=temp[1];
+                        }
+                        else if(temp.length==4){
+                            tempm[0]=temp[0];
+                            tempm[1]=temp[1];
+                            tempm[2]=temp[2];
+                        }
+                        localStorage.setItem('taskTags',JSON.stringify(tempm));
+                        var postData ={'picSrc':picurls[i],'picID':picIDs[i],'workerAccount':workerID,'tag':0};
+                        window['filter'] =postData;
+                        window.open("./checkRectangleLabelPage.html","_blank");
+                    }
+                    else if(picTags[i]==3){
+                        localStorage.setItem('order',i);
+                        localStorage.setItem('picIDs',JSON.stringify(picIDs));
+                        localStorage.setItem('picSrcs',JSON.stringify(picurls));
+                        var temp=taskMark.split(":");
+                        var tempm=new Array();
+                        if(temp.length==2){
+                            tempm[0]=temp[0];
+                        }
+                        else if(temp.length==3){
+                            tempm[0]=temp[0];
+                            tempm[1]=temp[1];
+                        }
+                        else if(temp.length==4){
+                            tempm[0]=temp[0];
+                            tempm[1]=temp[1];
+                            tempm[2]=temp[2];
+                        }
+                        localStorage.setItem('taskTags',JSON.stringify(tempm));
+                        var postData ={'picSrc':picurls[i],'picID':picIDs[i],'workerAccount':workerID,'tag':0};
+                        window['filter'] =postData;
+                        window.open("./checkOutlineLabelPage.html","_blank");
+                    }
+                })
+            }(i);
+        }
+    }
+
+
+</script>
+</body>
+</html>

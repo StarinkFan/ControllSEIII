@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/chooseNewTaskCSS.css" type="text/css"/>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script>
+        $(document).ready(function(){
+            clickSelect();
+
+
+            document.getElementById('username').innerText=localStorage.nickname;
+            var username=document.getElementById('username');
+            username.onmouseover=function () {
+                document.getElementById("menu").style.display="inherit";
+            }
+            document.getElementById("userbar").onmouseleave=function (e) {
+                if(e.target.id!="menu"){
+                    document.getElementById("menu").style.display="none";
+                }
+            }
+
+
+        });
+
+
+        function logout(){
+            window.open("./homepage.html","_self");
+        }
+
+        function goPersonalSpace(){
+            window.open("./personalSpacePage.html","_self");
+        }
+
+
+    </script>
+</head>
+<body>
+
+<div id="userbar" class="u1">
+    <li class="u3"><img class="u2" src="../static/pic/logo.png" style=""></li>
+    <li class="u3"><a href="./chooseNewTask.html" class="u5" style="color: darkviolet">任务大厅</a></li>
+    <li class="u3"><a href="#" class="u5">新闻</a></li>
+    <li class="u3"><a href="#" class="u5">联系</a></li>
+    <li class="u3"><a href="#" class="u5">帮助</a></li>
+    <li class="u4"><a href="./myTaskOfWorker.html" class="u6" id="x">我的接取</a></li>
+    <li class="u4"><a href="./myTaskOfRequestor.html" class="u6">我的发布</a></li>
+    <li class="u4"><a href="./taskAnnouncement.html" class="u6">发布任务</a></li>
+    <li class="u4"><a href="./rechargePage.html" class="u6">在线充值</a></li>
+    <li class="u4">
+        <a class="u7">
+            你好，
+            <u id="username" style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">用户</u>
+        </a>
+    </li>
+    <div id="menu" style="margin-left: 82%;margin-top: -3%;z-index: 5;display: none;">
+        <button onclick="goPersonalSpace()" style="border-radius:0;background: black;color:white;font-size: 20px;width: 120px;border-color: white;border-width: 1px;z-index: 5;margin-top: 65px;">个人空间</button><br>
+        <button onclick="logout()" style="border-radius:0;background: black;color:white;font-size: 20px;margin-top: -2px;width:120px;border-color: white;border-width: 1px;">退出账户</button>
+
+    </div>
+</div>
+
+<div class="changebox">
+    <button class="changeBt" id="changeBt1" onclick="clickSelect()">选择新任务</button>
+    <button class="changeBt" id="changeBt2" onclick="clickRecommendation()">推荐任务</button>
+</div>
+
+<!--选择-->
+<div class="menubox" id="menubox">
+    <select class="menu-select" id="menu-select" onchange="sortChange()">
+        <option value ="0" class="menu-opt">默认排序</option>
+        <option value ="1" class="menu-opt">按参与人数排序</option>
+        <option value="2" class="menu-opt">按奖励额度排序</option>
+    </select>
+    <select class="menu-select" id="menu-select2" onchange="sortChange()">
+        <option class="menu-opt" value="全部" selected="">全部</option>
+        <option class="menu-opt" value="自然">自然</option>
+        <option class="menu-opt" value="地理">地理</option>
+        <option class="menu-opt" value="文化">文化</option>
+        <option class="menu-opt" value="历史">历史</option>
+        <option class="menu-opt" value="艺术">艺术</option>
+        <option class="menu-opt" value="人物">人物</option>
+        <option class="menu-opt" value="生活">生活</option>
+        <option class="menu-opt" value="社会">社会</option>
+        <option class="menu-opt" value="体育">体育</option>
+        <option class="menu-opt" value="经济">经济</option>
+        <option class="menu-opt" value="科技">科技</option>
+    </select>
+    <div class="menu-search">
+        <input type="text" id="search-input" class="search-input" value="" placeholder="搜索任务">
+        <button class="search-bt" id="search-bt" onclick="search()">搜索</button>
+    </div>
+</div>
+
+<!--任务详情-->
+<div class="taskDetail" id="taskDetail">
+    <!--<img class="taskDetail-m" id="taskDetail-m">-->
+    <div class="taskDetail-div" id="taskDetail-div">
+        <div class="taskDetail-info" id="taskDetail-info">
+            <img class="task-img" id="task-img">
+            <p class="task-infop1" id="task-infop1">发布者:</p>
+            <p class="task-infop2" id="task-infop2">标注要求:</p>
+            <p class="task-infop3" id="task-infop3">积分:</p>
+            <p class="task-infop4" id="task-infop4">参与人数:</p>
+            <p class="task-infop5" id="task-infop5">要求人数:</p>
+            <p class="task-infop6" id="task-infop6">开始时间:</p>
+            <p class="task-infop7" id="task-infop7">截止时间:</p>
+            <p class="task-infop9" id="task-infop9">种类:</p>
+            <p class="task-infop10" id="task-infop10"></p>
+            <p class="task-infop11" id="task-infop11"></p>
+            <p class="task-infop12" id="task-infop12"></p>
+            <p class="task-infop8" id="task-infop8">要求:</p>
+        </div>
+        <div class="taskDetail-q" id="taskDetail-q">
+            <p class="task-q1" id="task-q1"></p>
+            <button class="task-q2" id="task-q2" onclick="chooseOPT1()"></button>
+            <button class="task-q3" id="task-q3" onclick="chooseOPT2()"></button>
+            <button class="task-q4" id="task-q4" onclick="chooseOPT3()"></button>
+            <button class="task-q5" id="task-q5" onclick="chooseOPT4()"></button>
+            <button class="task-q6" id="task-q6" onclick="taskDetailClose()">确认</button>
+            <p class="task-q7" id="task-q7"></p>
+        </div>
+        <button class="taskDetail-close" id="taskDetail-close" onclick=taskDetailClose()>关闭</button>
+        <button class="taskDetail-gain" id="taskDetail-gain" onclick=gainQuestion()>领取</button>
+    </div>
+</div>
+<script>
+
+    var workerID=localStorage.account;
+    var taskID='';
+
+    //任务加载
+    var maindiv = document.createElement("div");
+    maindiv.className="maindiv";
+    maindiv.id="main";
+
+    var searchWord='';
+    var searchnum=0;
+    var searchKind='全部';
+    var marklist=new Array();
+    var chooseopt='';
+
+    //任务信息
+    var taskIDs=new Array();
+    var taskRequestorIDs=new Array();
+    var taskRequestorNames=new Array();
+    var taskRequests=new Array();
+    var taskTags=new Array();
+    var taskCredits=new Array();
+    var taskPeople=new Array();
+    var taskParticipants=new Array();
+    var taskPicurls=new Array();
+    var taskStarttimes=new Array();
+    var taskDeadlines=new Array();
+    var taskKinds=new Array();
+    var taskMarks=new Array();
+    var taskRequestorHeadshots=new Array();
+
+    //具体任务
+    var picIDs=new Array();
+    var picurls=new Array();
+
+    //问题
+    var isQualified=0;
+    var hasQuestion=0;
+    var questionText='';
+    var questionInput=new Array();
+    var questionAnswer='';
+
+    /*taskIDs[0]='01';
+    taskIDs[1]='02';
+    taskIDs[2]='03';
+    taskIDs[3]='04';
+    taskIDs[4]='05';
+    taskRequestorIDs[0]='001';
+    taskRequestorIDs[1]='002';
+    taskRequestorIDs[2]='003';
+    taskRequestorIDs[3]='004';
+    taskRequestorIDs[4]='005';
+    taskRequestorNames[0]='zz1';
+    taskRequestorNames[1]='zz2';
+    taskRequestorNames[2]='zz3';
+    taskRequestorNames[3]='zz4';
+    taskRequestorNames[4]='zz5';
+    taskRequests[0]='水电费水电费是否水电费水电费贷方金额就过节费打飞机房管局符合规范合格的房间号长水电';
+    taskRequests[1]='水电费水电费是否水电费水电费水电';
+    taskRequests[2]='水电费水电费是否水电费水电费水电';
+    taskRequests[3]='水电费水电费是否水电费水电费水电';
+    taskRequests[4]='水电费水电费是否水电费水电费水电';
+    taskTags[0]='0';
+    taskTags[1]='1';
+    taskTags[2]='1';
+    taskTags[3]='2';
+    taskTags[4]='3';
+    taskCredits[0]='100';
+    taskCredits[1]='100';
+    taskCredits[2]='100';
+    taskCredits[3]='100';
+    taskCredits[4]='100';
+    taskPeople[0]='100';
+    taskPeople[1]='100';
+    taskPeople[2]='100';
+    taskPeople[3]='100';
+    taskPeople[4]='100';
+    taskParticipants[0]='0';
+    taskParticipants[1]='0';
+    taskParticipants[2]='0';
+    taskParticipants[3]='0';
+    taskParticipants[4]='0';
+    taskPicurls[0]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    taskPicurls[1]='http://bizhi.cnanzhi.com/upload/bizhi/2014/1204/14176797213073.jpg';
+    taskPicurls[2]='http://img.pconline.com.cn/images/upload/upc/tx/wallpaper/1306/09/c1/21860139_1370763185267.jpg';
+    taskPicurls[3]='http://dl.bizhi.sogou.com/images/2014/01/15/491195.jpg';
+    taskPicurls[4]='http://pic1.win4000.com/wallpaper/2/5486adf77972d.jpg';
+    taskStarttimes[0]='20180909';
+    taskStarttimes[1]='20180909';
+    taskStarttimes[2]='20180909';
+    taskStarttimes[3]='20180909';
+    taskStarttimes[4]='20180909';
+    taskKinds[0]="2342";
+    taskKinds[1]="2342";
+    taskKinds[2]="2342";
+    taskKinds[3]="2342";
+    taskKinds[4]="2342";
+    taskMarks[0]="十多年健身房康师傅奴隶:23:";
+    taskMarks[1]="23:123:2:";
+    taskMarks[2]="23:";
+    taskMarks[3]="23:345:345:";
+    taskMarks[4]="23433:2342:676:";
+    taskRequestorHeadshots[0]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    taskRequestorHeadshots[1]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    taskRequestorHeadshots[2]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    taskRequestorHeadshots[3]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    taskRequestorHeadshots[4]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+
+
+
+    picIDs[0]='01';
+    picIDs[1]='02';
+    picIDs[2]='03';
+    picIDs[3]='04';
+    picIDs[4]='04';
+    picIDs[5]='04';
+    picIDs[6]='04';
+    picIDs[7]='04';
+    picIDs[8]='04';
+    picIDs[9]='04';
+    picIDs[10]='04';
+    picurls[0]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    picurls[1]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    picurls[2]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    picurls[3]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    picurls[4]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    picurls[5]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    picurls[6]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    picurls[7]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    picurls[8]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    picurls[9]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    picurls[10]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+*/
+
+    function chooseOPT1() {
+        chooseopt='A';
+        answer();
+    }
+    function chooseOPT2() {
+        chooseopt='B';
+        answer();
+    }
+    function chooseOPT3() {
+        chooseopt='C';
+        answer();
+    }
+    function chooseOPT4() {
+        chooseopt='D';
+        answer();
+    }
+
+
+    function clickSelect() {
+        var changebt1=document.getElementById('changeBt1');
+        var changebt2=document.getElementById('changeBt2');
+        var menubox=document.getElementById('menubox');
+        changebt2.style.backgroundColor='white';
+        changebt1.style.backgroundColor='#e9e9e9';
+        changebt1.style.fontWeight='bold';
+        changebt2.style.fontWeight='normal';
+        menubox.style.display='block';
+        searchByID();
+    }
+
+    function clickRecommendation() {
+        var changebt1=document.getElementById('changeBt1');
+        var changebt2=document.getElementById('changeBt2');
+        var menubox=document.getElementById('menubox');
+        changebt1.style.backgroundColor='white';
+        changebt2.style.backgroundColor='#e9e9e9';
+        changebt2.style.fontWeight='bold';
+        changebt1.style.fontWeight='normal';
+        menubox.style.display='none';
+        searchByRecommendation ();
+    }
+
+    function sortChange() {
+        var select=document.getElementById("menu-select");
+        var select2=document.getElementById("menu-select2");
+        sortnum=select.options[select.selectedIndex].value;
+        sortKind=select2.value;
+        console.log(sortKind);
+        console.log(sortnum);
+    }
+
+    function search() {
+        searchWord = document.getElementById('search-input').value;
+        if (sortnum == 0) {
+            /*alert('0'+searchWord);*/
+            searchByID();
+        }
+        else if (sortnum == 1) {
+            //alert('1'+searchWord);
+            searchByCredit();
+        }
+        else if (sortnum == 2) {
+            //alert('2'+searchWord);
+            searchByNum();
+        }
+    }
+
+    /*根据workerID（要求中的）获取该worker的个性化推荐的任务，并且未关闭（截止时间未到并且参与人数未满（按任务id排序
+    （每个任务的id，发布者id、name，任务要求（string）、要求标注类型（0无1整体2方框3描边）、积分、人数、参与者人数、第一张图片的url、开始时间、截止时间、分类、标签（多个标签之间：分隔）*/
+        function searchByRecommendation () {
+            var obj=new Object();
+            obj={
+                workerID:workerID,
+            };
+            var html = $.ajax({
+                type: "Post",
+                url: '/chooseTask/Recommendation',
+                data:JSON.stringify(obj),
+                contentType: "application/json",
+                async: true,
+                success: function(myobj) {
+                    taskIDs=[];
+                    taskRequestorIDs=[];
+                    taskRequestorNames=[];
+                    taskRequests=[];
+                    taskTags=[];
+                    taskCredits=[];
+                    taskPeople=[];
+                    taskParticipants=[];
+                    taskPicurls=[];
+                    taskStarttimes=[];
+                    taskDeadlines=[];
+                    taskKinds=[];
+                    taskMarks=[];
+                    taskRequestorHeadshots=[];
+
+                    taskIDs=myobj.id;
+                    taskRequestorIDs=myobj.Rid;
+                    taskRequestorNames=myobj.Rname;
+                    taskRequests=myobj.request;
+                    taskTags=myobj.tag;
+                    taskCredits=myobj.credit;
+                    taskPeople=myobj.people;
+                    taskParticipants=myobj.participant;
+                    taskPicurls=myobj.picurl;
+                    taskStarttimes=myobj.starttime;
+                    taskDeadlines=myobj.deadline;
+                    taskKinds=myobj.kind;
+                    taskMarks=myobj.marklist;
+                    taskRequestorHeadshots=myobj.rheadshot;
+
+                    $("#main").children("div").remove();
+                    loadtask();
+                },
+                error: function() {
+                    alert("error");
+                }
+            });
+
+            /*$("#main").children("div").remove();
+             loadtask();*/
+    }
+
+    /*根据workerID、关键字、分类（要求中的）获取该worker的所有没有领取的任务，并且未关闭（截止时间未到并且参与人数未满（按任务id排序
+    （每个任务的id，发布者id、name，任务要求（string）、要求标注类型（0无1整体2方框3描边）、积分、人数、参与者人数、第一张图片的url、开始时间、截止时间、分类、标签（多个标签之间：分隔）*/
+    function searchByID () {
+        var obj=new Object();
+        obj={
+            workerID:workerID,
+            searchWord:searchWord,
+            searchKind:searchKind,
+        };
+        var html = $.ajax({
+            type: "Post",
+            url: '/chooseTask/SearchByID',
+            data:JSON.stringify(obj),
+            contentType: "application/json",
+            async: true,
+            success: function(myobj) {
+                taskIDs=[];
+                taskRequestorIDs=[];
+                taskRequestorNames=[];
+                taskRequests=[];
+                taskTags=[];
+                taskCredits=[];
+                taskPeople=[];
+                taskParticipants=[];
+                taskPicurls=[];
+                taskStarttimes=[];
+                taskDeadlines=[];
+                taskKinds=[];
+                taskMarks=[];
+                taskRequestorHeadshots=[];
+
+                taskIDs=myobj.id;
+                taskRequestorIDs=myobj.Rid;
+                taskRequestorNames=myobj.Rname;
+                taskRequests=myobj.request;
+                taskTags=myobj.tag;
+                taskCredits=myobj.credit;
+                taskPeople=myobj.people;
+                taskParticipants=myobj.participant;
+                taskPicurls=myobj.picurl;
+                taskStarttimes=myobj.starttime;
+                taskDeadlines=myobj.deadline;
+                taskKinds=myobj.kind;
+                taskMarks=myobj.marklist;
+                taskRequestorHeadshots=myobj.rheadshot;
+
+                $("#main").children("div").remove();
+                loadtask();
+            },
+            error: function() {
+                alert("error");
+            }
+        });
+        /*$("#main").children("div").remove();
+        loadtask();*/
+    }
+
+    /*根据workerID、关键字（要求中的）获取该worker的所有没有领取的任务，并且未关闭（截止时间未到并且参与人数未满（按任务奖励排序
+    （每个任务的id，发布者id、name，任务要求（string）、要求标注类型（0无1整体2方框3描边）、积分、人数、参与者人数、第一张图片的url、开始时间、截止时间*/
+    function searchByCredit () {
+        var obj=new Object();
+        obj={
+            workerID:workerID,
+            searchWord:searchWord,
+            searchKind:searchKind,
+        };
+        var html = $.ajax({
+            type: "Post",
+            url: '/chooseTask/SearchByCredit',
+            data:JSON.stringify(obj),
+            contentType: "application/json",
+            async: true,
+            success: function(myobj) {
+                taskIDs=[];
+                taskRequestorIDs=[];
+                taskRequestorNames=[];
+                taskRequests=[];
+                taskTags=[];
+                taskCredits=[];
+                taskPeople=[];
+                taskParticipants=[];
+                taskPicurls=[];
+                taskStarttimes=[];
+                taskDeadlines=[];
+                taskKinds=[];
+                taskMarks=[];
+                taskRequestorHeadshots=[];
+
+                taskIDs=myobj.id;
+                taskRequestorIDs=myobj.Rid;
+                taskRequestorNames=myobj.Rname;
+                taskRequests=myobj.request;
+                taskTags=myobj.tag;
+                taskCredits=myobj.credit;
+                taskPeople=myobj.people;
+                taskParticipants=myobj.participant;
+                taskPicurls=myobj.picurl;
+                taskStarttimes=myobj.starttime;
+                taskDeadlines=myobj.deadline;
+                taskKinds=myobj.kind;
+                taskMarks=myobj.marklist;
+                taskRequestorHeadshots=myobj.rheadshot;
+
+                $("#main").children("div").remove();
+                loadtask();
+            },
+            error: function() {
+                alert("error");
+            }
+        });
+        /*        $("#main").children("div").remove();
+                loadtask();*/
+    }
+
+    /*根据workerID、关键字（要求中的）获取该worker的所有没有领取的任务，并且未关闭（截止时间未到并且参与人数未满（按参与人数排序
+    （每个任务的id，发布者id、name，任务要求（string）、要求标注类型（0无1整体2方框3描边）、积分、人数、参与者人数、第一张图片的url、开始时间、截止时间*/
+    function searchByNum () {
+        var obj= new Object();
+        obj={
+            workerID:workerID,
+            searchWord:searchWord,
+            searchKind:searchKind,
+        };
+        var html = $.ajax({
+            type: "Post",
+            url: '/chooseTask/SearchByNum',
+            data:JSON.stringify(obj),
+            contentType: "application/json",
+            async: true,
+            success: function(myobj) {
+                taskIDs=[];
+                taskRequestorIDs=[];
+                taskRequestorNames=[];
+                taskRequests=[];
+                taskTags=[];
+                taskCredits=[];
+                taskPeople=[];
+                taskParticipants=[];
+                taskPicurls=[];
+                taskStarttimes=[];
+                taskDeadlines=[];
+                taskKinds=[];
+                taskMarks=[];
+                taskRequestorHeadshots=[];
+
+                taskIDs=myobj.id;
+                taskRequestorIDs=myobj.Rid;
+                taskRequestorNames=myobj.Rname;
+                taskRequests=myobj.request;
+                taskTags=myobj.tag;
+                taskCredits=myobj.credit;
+                taskPeople=myobj.people;
+                taskParticipants=myobj.participant;
+                taskPicurls=myobj.picurl;
+                taskStarttimes=myobj.starttime;
+                taskDeadlines=myobj.deadline;
+                taskKinds=myobj.kind;
+                taskMarks=myobj.marklist;
+                taskRequestorHeadshots=myobj.rheadshot;
+
+                $("#main").children("div").remove();
+                loadtask();
+            },
+            error: function() {
+                alert("error");
+            }
+        });
+        /*        $("#main").children("div").remove();
+                loadtask();*/
+    }
+
+    function loadtask() {
+        for(var i=0;i<taskPicurls.length;i++){
+            marklist=taskMarks[i].split(":");
+            console.log(marklist);
+            var item=document.createElement("div");
+            var img = document.createElement("img");
+            var tag = document.createElement("div");
+            var infonum=document.createElement("div");
+            var info=document.createElement("div");
+            var inforeq=document.createElement("div");
+            var infokind=document.createElement("a");
+            var infomark1=document.createElement("a");
+            var infomark2=document.createElement("a");
+            var infomark3=document.createElement("a");
+            var bt = document.createElement("button");
+            img.src=taskPicurls[i];
+            item.className="item";
+            tag.className="tag";
+            infonum.className="infonum";
+            infonum.innerHTML="完成度："+taskParticipants[i]+"/"+taskPeople[i];
+            info.className="info";
+            var infocredit = document.createElement("h4");
+            infocredit.innerHTML=taskCredits[i];
+            infocredit.className="infocredit";
+            info.appendChild(infocredit);
+            inforeq.className="inforeq";
+            var inforeqimg=document.createElement("img");
+            inforeqimg.className="inforeqimg";
+            inforeqimg.src=taskRequestorHeadshots[i];
+            inforeq.appendChild(inforeqimg);
+            var inforeqname = document.createElement("h4");
+            inforeqname.innerHTML='&nbsp;&nbsp;'+taskRequestorNames[i];
+            inforeqname.className="inforeqname";
+            inforeq.appendChild(inforeqname);
+            bt.className="bt";
+            bt.id="bt"+i;
+            bt.innerHTML="see";
+            infokind.className='infokind';
+            infokind.innerHTML=taskKinds[i];
+            infomark1.className='infomark1';
+            infomark2.className='infomark2';
+            infomark3.className='infomark3';
+            if(marklist.length==2){
+                infomark1.style.display='block';
+                infomark1.innerHTML=marklist[0];
+            }
+           else if(marklist.length==3){
+                infomark1.style.display='block';
+                infomark1.innerHTML=marklist[0];
+                infomark2.style.display='block';
+                infomark2.innerHTML=marklist[1];
+            }
+            else if(marklist.length==4){
+                infomark1.style.display='block';
+                infomark1.innerHTML=marklist[0];
+                infomark2.style.display='block';
+                infomark2.innerHTML=marklist[1];
+                infomark3.style.display='block';
+                infomark3.innerHTML=marklist[2];
+            }
+            tag.appendChild(infokind);
+            tag.appendChild(infomark1);
+            tag.appendChild(infomark2);
+            tag.appendChild(infomark3);
+            item.appendChild(img);
+            item.appendChild(tag);
+            tag.appendChild(bt);
+            tag.appendChild(infonum);
+            tag.appendChild(info);
+            tag.appendChild(inforeq);
+            maindiv.appendChild(item);
+        }
+        document.body.appendChild(maindiv);
+        clickTaskDetail();
+    }
+
+    function clickTaskDetail() {
+        for(var i=0;i<taskPicurls.length;i++){
+            !function (i) {
+                var btn=document.getElementById('bt'+i);
+                btn.addEventListener("click",function () {
+                    /*根据任务id获取该任务的所有图片（每张图片的id、url）*/
+                    var obj=new Object();
+                    obj={
+                        taskID:taskIDs[i]
+                    };
+                    var html = $.ajax({
+                        type: "Post",
+                        url: '/requestorTask/piclist',
+                        data:JSON.stringify(obj),
+                        dataType:'json',
+                        contentType: "application/json",
+                        async: false,
+                        success: function(myobj) {
+                            picIDs=[];
+                            picurls=[];
+                            picIDs=myobj.id;
+                            picurls=myobj.url;
+                        },
+                        error: function() {
+                            alert("error");
+                        }
+                    });
+                    /*点击展开查看页面*/
+                    taskID=taskIDs[i];
+                    loadTaskDetail(i);
+                })
+            }(i);
+        }
+    }
+
+    var taskDetail_div=document.getElementById("taskDetail-div");
+    var taskdetailinfo=document.getElementById('taskDetail-info');
+    var taskdetailq=document.getElementById('taskDetail-q');
+    var taskdetailclose=document.getElementById('taskDetail-close');
+    var taskdetailgain=document.getElementById('taskDetail-gain');
+    var taskDetail_pics = document.createElement("div");
+    taskDetail_pics.className="taskDetail-pics";
+    taskDetail_pics.id="taskDetail-pics";
+
+    function loadTaskDetail(i) {
+        var x=i;
+        var taskDetail=document.getElementById('taskDetail');
+        /*var taskDetail_m=document.getElementById("taskDetail-m");*/
+        taskDetail.style.display='block';
+        taskdetailinfo.style.display='initial';
+        taskdetailclose.style.display='initial';
+        taskdetailgain.style.display='initial';
+        taskdetailq.style.display='none';
+        /*taskDetail_m.src='https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1521924911473&di=2d53d38fa788e3ce6d440518c3c6372b&imgtype=0&src=http%3A%2F%2Fimg3.fengniao.com%2Fforum%2Fsecpics%2F159%2F154%2F6350761.jpg';
+     */
+        var taskimg=document.getElementById('task-img');
+        taskimg.src=taskRequestorHeadshots[x];
+        var taskinfo1=document.getElementById('task-infop1');
+        taskinfo1.innerText=taskRequestorNames[x];
+        var taskinfo2=document.getElementById('task-infop2');
+        if(taskTags[x]==0){
+            taskinfo2.innerText="标注要求： 都可";
+        }
+        else if(taskTags[x]==1){
+            taskinfo2.innerText="标注要求： 整体标注";
+        }
+        else if(taskTags[x]==2){
+            taskinfo2.innerText="标注要求： 方框标注";
+        }
+        else if(taskTags[x]==3){
+            taskinfo2.innerText="标注要求： 描边标注";
+        }
+        var taskinfo3=document.getElementById('task-infop3');
+        taskinfo3.innerText="积分: "+taskCredits[x];
+        var taskinfo4=document.getElementById('task-infop4');
+        taskinfo4.innerText="参与人数: "+taskParticipants[x];
+        var taskinfo5=document.getElementById('task-infop5');
+        taskinfo5.innerText="要求人数: "+taskPeople[x];
+        var taskinfo6=document.getElementById('task-infop6');
+        taskinfo6.innerText="开始时间: "+taskStarttimes[x];
+        var taskinfo7=document.getElementById('task-infop7');
+        taskinfo7.innerText="截止时间: "+taskDeadlines[x];
+        var taskinfo8=document.getElementById('task-infop8');
+        taskinfo8.innerText="要求: "+taskRequests[x];
+        var taskinfo9=document.getElementById('task-infop9');
+        taskinfo9.innerText="种类: "+taskKinds[x];
+        var tempMarks=taskMarks[x].split(":");
+        var taskinfo10=document.getElementById('task-infop10');
+        var taskinfo11=document.getElementById('task-infop11');
+        var taskinfo12=document.getElementById('task-infop12');
+        if(tempMarks.length==2){
+            taskinfo10.innerText="标签: "+tempMarks[0];
+        }
+        else if(tempMarks.length==3){
+            taskinfo10.innerText="标签: "+tempMarks[0];
+            taskinfo11.innerText=tempMarks[1];
+        }
+        else if(tempMarks.length==4){
+            taskinfo10.innerText="标签: "+tempMarks[0];
+            taskinfo11.innerText=tempMarks[1];
+            taskinfo12.innerText=tempMarks[2];
+        }
+
+        $("#taskDetail-pics").children("div").remove();
+        loadpics(x);
+    }
+
+    function loadpics(x) {
+        for(var i=0;i<picurls.length;i++){
+            var picitem=document.createElement("div");
+            var picimg = document.createElement("img");
+            var pictag = document.createElement("div");
+            picimg.src=picurls[i];
+            picimg.className="picimg";
+            picitem.className="picitem";
+            pictag.className="pictag";
+            picitem.appendChild(picimg);
+            picitem.appendChild(pictag);
+            taskDetail_pics.appendChild(picitem);
+        }
+        taskDetail_div.appendChild(taskDetail_pics);
+    }
+
+    function taskDetailClose() {
+        var taskDetail=document.getElementById('taskDetail');
+        taskDetail.style.display='none';
+    }
+
+
+    var taskq1=document.getElementById('task-q1');
+    var taskq2=document.getElementById('task-q2');
+    var taskq3=document.getElementById('task-q3');
+    var taskq4=document.getElementById('task-q4');
+    var taskq5=document.getElementById('task-q5');
+    var taskq6=document.getElementById('task-q6');
+    var taskq7=document.getElementById('task-q7');
+
+    function gainQuestion() {
+        chooseopt='';
+
+       /* isQualified=0;
+        hasQuestion=1;
+        questionText='324234324';
+        questionInput[0]="ertet";
+        questionInput[1]="ertet";
+        questionInput[2]="erte45";
+        questionInput[3]="ertet";*/
+
+        questionAnswer='A';
+        /*获取问题，是否已经回答错过问题(0无，1已错过)，是否有问题（0无，1有），问题描述，选项（list，答案*/
+        var obj = new Object();
+        obj = {
+            workerID: workerID,
+            taskID: taskID
+        };
+        var html = $.ajax({
+            type: "Post",
+            url: '/chooseTask/gainQuestion',
+            data: JSON.stringify(obj),
+            contentType: "application/json",
+            async: true,
+            success: function (myobj) {
+                isQualified = 0;
+                hasQuestion = 0;
+                questionText = '';
+                questionInput = [];
+                questionAnswer = '';
+                isQualified = myobj.isQualified;
+                hasQuestion = myobj.hasQuestion;
+                questionText = myobj.question;
+                questionInput = myobj.qOptions;
+                questionAnswer = myobj.answer;
+
+                taskdetailinfo.style.display='none';
+                taskdetailclose.style.display='none';
+                taskdetailgain.style.display='none';
+                taskdetailq.style.display='initial';
+                if(hasQuestion==0){
+                    questionSuccess();
+                }
+                else if(isQualified==1){
+                    taskq1.innerText="抱歉，您已回答错过该问题";
+                    taskq6.style.display='initial';
+                    taskq2.style.display='none';
+                    taskq3.style.display='none';
+                    taskq4.style.display='none';
+                    taskq5.style.display='none';
+                }
+                else if(hasQuestion==1&&isQualified==0){
+                    taskq1.innerText="问题"+questionText;
+                    taskq2.style.display='initial';
+                    taskq3.style.display='initial';
+                    taskq4.style.display='initial';
+                    taskq5.style.display='initial';
+                    taskq2.innerText="A"+questionInput[0];
+                    taskq3.innerText="B"+questionInput[1];
+                    taskq4.innerText="C"+questionInput[2];
+                    taskq5.innerText="D"+questionInput[3];
+                }
+
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+        /*taskdetailinfo.style.display='none';
+        taskdetailclose.style.display='none';
+        taskdetailgain.style.display='none';
+        taskdetailq.style.display='initial';
+        if(hasQuestion==0){
+            questionSuccess();
+        }
+        else if(isQualified==1){
+            taskq1.innerText="抱歉，您已回答错过该问题";
+            taskq6.style.display='initial';
+        }
+        else if(hasQuestion==1&&isQualified==0){
+            taskq1.innerText=questionText;
+            taskq2.style.display='initial';
+            taskq3.style.display='initial';
+            taskq4.style.display='initial';
+            taskq5.style.display='initial';
+            taskq2.innerText=questionInput[0];
+            taskq3.innerText=questionInput[1];
+            taskq4.innerText=questionInput[2];
+            taskq5.innerText=questionInput[3];
+        }*/
+    }
+
+    function answer() {
+        if(questionAnswer==chooseopt){
+            questionSuccess();
+        }
+        else{
+            questionFail();
+        }
+    }
+
+    function questionSuccess() {
+        /*根据workerID、taskID成功领取任务*/
+
+        var obj = new Object();
+        obj = {
+            workerID: workerID,
+            taskID: taskID
+        };
+        var html = $.ajax({
+            type: "Post",
+            url: '/chooseTask/gainSuccess',
+            data: JSON.stringify(obj),
+            contentType: "application/json",
+            async: true,
+            success: function (data) {
+                console.log("success");
+                var taskDetail = document.getElementById('taskDetail');
+                taskDetail.style.display = 'none';
+                window.open("./chooseNewTask.html","_self");
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+
+       /* console.log("success");
+        var taskDetail = document.getElementById('taskDetail');
+        taskDetail.style.display = 'none';
+        search();*/
+    }
+    function questionFail() {
+        /*根据workerID、taskID失败领取任务，回答错问题*/
+        var obj = new Object();
+        obj = {
+            workerID: workerID,
+            taskID: taskID
+        };
+        var html = $.ajax({
+            type: "Post",
+            url: '/chooseTask/gainFail',
+            data: JSON.stringify(obj),
+            contentType: "application/json",
+            async: true,
+            success: function (data) {
+                console.log("fail");
+                taskq7.innerText="回答错误，领取失败";
+                taskq6.style.display='initial';
+                taskq2.style.display='none';
+                taskq3.style.display='none';
+                taskq4.style.display='none';
+                taskq5.style.display='none';
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+       /* console.log("fail");
+        taskq7.innerText="回答错误，领取失败";
+        taskq6.style.display='initial';*/
+    }
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

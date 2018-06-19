@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/reviewComplaintsOfManagerCSS.css" type="text/css"/>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script>
+        var account=localStorage.account;
+        var name=localStorage.nickname;
+
+        window.onload=function () {
+            document.getElementById('username').innerText = name;
+            var username = document.getElementById('username');
+            username.onmouseover = function () {
+                document.getElementById("menu").style.display = "inherit";
+            }
+            document.getElementById("userbar").onmouseleave = function (e) {
+                if (e.target.id != "nemu") {
+                    document.getElementById("menu").style.display = "none";
+                }
+            }
+
+            clickComplaints();
+
+        }
+
+        function logout(){
+            window.open("./homepage.html","_self");
+        }
+    </script>
+</head>
+<body>
+<div id="userbar" style="width:100%;position: fixed;z-index: 3;padding-left: 12%;">
+    <li><img src="../static/pic/logo.png" style="height: 60px;margin-left: -465%"></li>
+    <div style=" z-index:3;display: inline-block;float:left;margin-left: 10%;" >
+        <ul>
+            <li><a href="#task"></a></li>
+            <li><a href="#news"></a></li>
+            <li><a href="#contact"></a></li>
+            <li><a href="#about"></a></li>
+        </ul>
+    </div>
+    <br>
+
+    <div style="float: right;z-index:3;margin-right:20px;display: inline-block;padding-right: 22%;margin-top: -65px">
+        <ul>
+            <li style="z-index: 3">
+                <a style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">
+                    你好，管理员
+                    <u id="username" style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">用户</u>
+                </a>
+            </li>
+        </ul>
+
+        <div id="menu" style="margin-left: 62%;margin-top: -13%;z-index: 5;display: none;">
+            <button onclick="logout()" style="border-radius:0;background: black;color:white;font-size: 20px;margin-top: -2px;width:120px;border-color: white;border-width: 1px;">退出账户</button>
+        </div>
+    </div>
+
+
+</div>
+<div style="position: fixed;width: 101%;height:90px;background-color: black;opacity: 1;z-index: 2;margin-top: -1%;margin-left: -1%"></div>
+<br>
+
+<div class="titleBox">
+    <h2 style="padding-top: 2%;color: #232323;padding-left: 11.5%">系统中心</h2>
+    <p style="color: #939393;padding-left: 11.5%">在这里，可以集中查看管理系统的用户、收益、使用情况等信息,也可以处理待审核内容</p>
+</div>
+
+<div class="maincut"></div>
+
+<div class="mainbody">
+    <div class="mainbox">
+        <div class="left_menu_box">
+            <ul class="menus">
+                <li><p>系统数据</p></li>
+                <hr style="margin-top: -2%"/>
+                <li><a href="./systemInformationPage.html" class="" >统计数据</a></li><br>
+            </ul>
+            <hr style=""/>
+            <ul class="menus">
+                <li style="margin-top: -3%"><p>审核处理</p></li>
+                <hr style="margin-top: -2%"/>
+                <li><a href="#" class="">图片审核</a></li><br>
+                <li><a href="./reviewComplaintsOfManager.html" class=""  style="color: violet">投诉审核</a></li><br>
+                <li><a href="./reviewQueryOfManager.html" class="">结果质疑</a></li><br>
+                <li><a href="./reviewArbitrationOfManager.html" class="">结果仲裁</a></li><br>
+                <li><a href="./reviewAppealOfManager.html" class="">申诉审核</a></li>
+            </ul>
+        </div>
+
+        <div class="mainPanel" style="font-size: 20px;">
+            <h3 style="padding-left: 3%;">投诉审核</h3>
+            <hr />
+            <!-- <a href="javascript:void(0)" onclick="clickReview()" class="review" id="review">待审核</a>-->
+            <div class="taskbox" id="taskbox"></div>
+
+        </div>
+
+    </div>
+
+
+
+</div>
+
+<div style="width:101%; float: bottom; background-color: black;margin-left: -0.2%;margin-bottom: -100px;">
+    <img src="../static/pic/logo.png" style="width:8%">
+    <span style="color: white;text-align: center;font-size: 25px;vertical-align: center">让世界的智慧凝聚为你的眼</span>
+    <span style="color: white;text-align: center;font-size: 25px;float: right;padding-top: 20px;margin-right: 0.4%">怎么码都码不队</span>
+</div>
+
+<script>
+
+    var managerID=localStorage.accout;
+
+    var taskbox=document.getElementById('taskbox');
+
+    var taskIDs=new Array();
+    var taskRequestorIDs=new Array();
+    var taskRequestorNames=new Array();
+    var taskRequestorHeadshots=new Array();
+    var taskWorkerIDs=new Array();
+    var taskWorkerNames=new Array();
+    var taskWorkerHeadshots=new Array();
+    var taskMarks=new Array();
+    var taskTags=new Array();
+    var workTaskIDs=new Array();
+    var taskPicurls=new Array();
+    var taskPicIDs=new Array();
+    var taskReasons=new Array();
+
+
+    /*taskIDs[0]='01';
+    taskIDs[1]='02';
+    taskIDs[2]='03';
+    taskIDs[3]='04';
+    taskIDs[4]='05';
+    taskRequestorIDs[0]="43";
+    taskRequestorIDs[1]="43";
+    taskRequestorIDs[2]="43";
+    taskRequestorIDs[3]="43";
+    taskRequestorIDs[4]="43";
+    taskRequestorNames[0]='ds';
+    taskRequestorNames[1]='ds';
+    taskRequestorNames[2]='ds';
+    taskRequestorNames[3]='ds';
+    taskRequestorNames[4]='ds';
+    taskWorkerIDs[0]="43";
+    taskWorkerIDs[1]="43";
+    taskWorkerIDs[2]="43";
+    taskWorkerIDs[3]="43";
+    taskWorkerIDs[4]="43";
+    taskWorkerNames[0]='ds';
+    taskWorkerNames[1]='ds';
+    taskWorkerNames[2]='ds';
+    taskWorkerNames[3]='ds';
+    taskWorkerNames[4]='ds';
+    workTaskIDs[0]='sdfbhsk';
+    workTaskIDs[1]='sdfbhsk';
+    workTaskIDs[2]='sdfbhsk';
+    workTaskIDs[3]='sdfbhsk';
+    workTaskIDs[4]='sdfbhsk';
+    taskTags[0]='1';
+    taskTags[1]='1';
+    taskTags[2]='1';
+    taskTags[3]='2';
+    taskTags[4]='3';
+    taskReasons[0]='';
+    taskReasons[1]='';
+    taskReasons[2]='';
+    taskReasons[3]='';
+    taskReasons[4]='时代峰峻适得府君书的合法史蒂芬霍金思考对方会尽快收到货福克斯阶段花费';
+    taskMarks[0]="十多年健身房康师傅奴隶:23:";
+    taskMarks[1]="23:123:2:";
+    taskMarks[2]="23:";
+    taskMarks[3]="23:345:345:";
+    taskMarks[4]="23433:2342:676:";
+
+    taskPicIDs[0]='01';
+    taskPicIDs[1]='02';
+    taskPicIDs[2]='03';
+    taskPicIDs[3]='04';
+    taskPicIDs[4]='04';
+    taskPicurls[0]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    taskPicurls[1]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    taskPicurls[2]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    taskPicurls[3]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    taskPicurls[4]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';*/
+
+
+
+    var info =document.createElement("info");
+    info.className="info";
+    info.id="info";
+
+    function clickComplaints() {
+        /*审核投诉inittaskid，picid，url，requestorID，name，头像，worktaskid,workerid，name，头像，标签（string，:分隔），标注方式（1整体2方框3描边），投诉原因*/
+        var html = $.ajax({
+             type: "Post",
+             url: '/review/complaint',
+             dataType:'json',
+             success: function(myobj) {
+                 taskIDs=[];
+                 taskRequestorIDs=[];
+                 taskRequestorNames=[];
+                 taskTags=[];
+                 taskMarks=[];
+                 taskRequestorHeadshots=[];
+                 taskWorkerIDs=[];
+                 taskWorkerNames=[];
+                 taskWorkerHeadshots=[];
+                 taskPicurls=[];
+                 taskPicIDs=[];
+                 taskReasons=[];
+                 workTaskIDs=[];
+                 taskIDs=myobj.id;
+                 taskRequestorIDs=myobj.requestorid;
+                 taskRequestorNames=myobj.requestorname;
+                 taskTags=myobj.tag;
+                 taskMarks=myobj.marklist;
+                 taskRequestorHeadshots=myobj.rheadshot;
+                 taskWorkerIDs=myobj.workerid;
+                 taskWorkerNames=myobj.workername;
+                 taskWorkerHeadshots=myobj.wheadshot;
+                 taskPicurls=myobj.picurl;
+                 taskPicIDs=picid;
+                 taskReasons=myobj.reason;
+                 workTaskIDs=myobj.workTaskid;
+                 $("#info").children("div").remove();
+                 loadReview();
+
+             },
+             error: function() {
+                 alert("error");
+             }
+         });
+        /*$("#info").children("div").remove();
+        loadReview();*/
+    }
+
+
+    function loadReview() {
+        for(var i=0;i<taskIDs.length;i++){
+            var item=document.createElement("div");
+            var tag1 = document.createElement("label");
+            var tag2 = document.createElement("label");
+            var tag3 = document.createElement("label");
+            var tag4 = document.createElement("label");
+            var tag5 = document.createElement("label");
+            var tag6 = document.createElement("label");
+            var tag7 = document.createElement("label");
+            var tag8 = document.createElement("label");
+            var tag9 = document.createElement("label");
+            var tag10 = document.createElement("label");
+            var tag11 = document.createElement("label");
+            var bt1 = document.createElement("button");
+            var bt2 = document.createElement("button");
+            var bt3 = document.createElement("button");
+            item.className="item";
+            item.id="item"+i;
+            tag1.className="tag1";
+            tag1.innerHTML="任务ID： "+taskIDs[i];
+            tag2.className="tag2";
+            tag2.innerHTML="发布者ID： "+taskRequestorIDs[i];
+            tag3.className="tag3";
+            tag3.innerHTML="发布者姓名： "+taskRequestorNames[i];
+
+            tag7.className="tag7";
+            if(taskTags[i]==0){
+                tag7.innerHTML="标注类型： 都可";
+            }
+            else if(taskTags[i]==1){
+                tag7.innerHTML="标注类型： 整体标注";
+            }
+            else if(taskTags[i]==2){
+                tag7.innerHTML="标注类型： 方框标注";
+            }
+            else if(taskTags[i]==3){
+                tag7.innerHTML="标注类型： 描边标注";
+            }
+            tag4.className="tag4";
+            tag4.innerHTML="workTaskID： "+workTaskIDs[i];
+            tag5.className="tag5";
+            tag5.innerHTML="标注者ID： "+taskWorkerIDs[i];
+            tag6.className="tag6";
+            tag6.innerHTML="标注者名称： "+taskWorkerNames[i];
+            tag9.className="tag9";
+            tag9.innerHTML="投诉原因： "+taskReasons[i];
+            tag8.className="tag8";
+            var marklist=taskMarks[i].split(":");
+            if(marklist.length==2){
+                tag8.innerHTML="标签： "+marklist[0];
+            }
+            else if(marklist.length==3){
+                tag8.innerHTML="标签： "+marklist[0]+" ; "+marklist[1];
+            }
+            else if(marklist.length==4){
+                tag8.innerHTML="标签： "+marklist[0]+" ; "+marklist[1]+" ; "+marklist[2];
+            }
+
+            bt1.className="bt1";
+            bt1.id="bt1"+i;
+            bt1.innerHTML="查看";
+            bt2.className="bt2";
+            bt2.id="bt2"+i;
+            bt2.innerHTML="通过";
+            bt3.className="bt3";
+            bt3.id="bt3"+i;
+            bt3.innerHTML="否决";
+
+
+            item.appendChild(tag1);
+            item.appendChild(tag2);
+            item.appendChild(tag3);
+            item.appendChild(tag4);
+            item.appendChild(tag5);
+            item.appendChild(tag6);
+            item.appendChild(tag7);
+            item.appendChild(tag8);
+            item.appendChild(tag9);
+            item.appendChild(bt1);
+            item.appendChild(bt2);
+            item.appendChild(bt3);
+            info.appendChild(item);
+        }
+        taskbox.appendChild(info);
+        clickTaskDetail();
+    }
+
+    function clickTaskDetail() {
+        for(var i=0;i<taskIDs.length;i++){
+            !function (i) {
+                var bt1=document.getElementById('bt1'+i);
+                bt1.addEventListener("click",function () {
+                    if (taskTags[i] == 1) {
+                        localStorage.setItem('order',"");
+                        localStorage.setItem('picIDs',"");
+                        localStorage.setItem('picSrcs',"");
+                        var temp=taskMarks[i].split(":");
+                        var tempm=new Array();
+                        if(temp.length==2){
+                           tempm[0]=temp[0];
+                        }
+                        else if(temp.length==3){
+                            tempm[0]=temp[0];
+                            tempm[1]=temp[1];
+                        }
+                        else if(temp.length==4){
+                            tempm[0]=temp[0];
+                            tempm[1]=temp[1];
+                            tempm[2]=temp[2];
+                        }
+                        localStorage.setItem('taskTags',JSON.stringify(tempm));
+                        var postData = {'picSrc': taskPicurls[i], 'picID': taskPicIDs[i], 'workerAccount': managerID, 'tag': 2,'TaskID':taskIDs[i]};
+                        window['filter'] = postData;
+                        window.open("./checkWholeLabelPage.html", "_blank");
+                    }
+                    else if (taskTags[i] == 2) {
+                        var postData = {'picSrc': taskPicurls[i], 'picID': taskPicurls[i], 'workerAccount': managerID, 'tag': 2,'TaskID':taskIDs[i]};
+                        window['filter'] = postData;
+                        window.open("./checkRectangleLabelPage.html", "_blank");
+                    }
+                    else if (taskTags[i] == 3) {
+                        var postData = {'picSrc': taskPicurls[i], 'picID': taskPicurls[i], 'workerAccount': managerID, 'tag': 2,'TaskID':taskIDs[i]};
+                        window['filter'] = postData;
+                        window.open("./checkOutlineLabelPage.html", "_blank");
+                    }
+                })
+                var bt2=document.getElementById('bt2'+i);
+                bt2.addEventListener("click",function () {
+                    /*投诉通过，给任务inittaskid，picid，workerid，worktaskid，（该标注（or任务）作废（？）,通知投诉者（requestor）被投诉者（worker）（？，返回结果成功*/
+                    var obj={
+                        taskID:taskIDs[i],
+                        picID:taskPicIDs[i],
+                        workerID:taskWorkerIDs[i],
+                        worktaskID:workTaskIDs[i]
+                    };
+                    var html = $.ajax({
+                        type: "Post",
+                        url: '/checkComplaint/pass',
+                        data:JSON.stringify(obj),
+                        dataType:'json',
+                        contentType: "application/json",
+                        async: false,
+                        success: function(data) {
+                            clickComplaints();
+                        },
+                        error: function() {
+                            alert("error");
+                        }
+                    });
+                })
+                var bt3=document.getElementById('bt3'+i);
+                bt3.addEventListener("click",function () {
+                    /*投诉失败，给任务inittaskid，picid,通知投诉者（requestor）（？，返回结果成功*/
+                    var obj={
+                        taskID:taskIDs[i],
+                        picID:taskPicIDs[i],
+                        workerID:taskWorkerIDs[i],
+                        requestorID:taskRequestorIDs[i]
+                    };
+                    var html = $.ajax({
+                        type: "Post",
+                        url: '/checkComplaint/nopass',
+                        data:JSON.stringify(obj),
+                        dataType:'json',
+                        contentType: "application/json",
+                        async: false,
+                        success: function(data) {
+                            clickComplaints();
+                        },
+                        error: function() {
+                            alert("error");
+                        }
+                    });
+                })
+            }(i);
+
+        }
+
+    }
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/taskAnnouncementCSS.css" type="text/css"/>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script>
+        window.onload=function () {
+            document.getElementById('username').innerText=localStorage.nickname;
+            var username=document.getElementById('username');
+            username.onmouseover=function () {
+                document.getElementById("menu").style.display="inherit";
+            }
+            document.getElementById("userbar").onmouseleave=function (e) {
+                if(e.target.id!="menu"){
+                    document.getElementById("menu").style.display="none";
+                }
+            }
+        }
+
+        function logout(){
+            window.open("./homepage.html","_self");
+        }
+
+        function goPersonalSpace(){
+            window.open("./personalSpacePage.html","_self");
+        }
+    </script>
+</head>
+<body>
+<div id="userbar" class="u1">
+    <li class="u3"><img class="u2" src="../static/pic/logo.png" style=""></li>
+    <li class="u3"><a href="./chooseNewTask.html" class="u5">任务大厅</a></li>
+    <li class="u3"><a href="#" class="u5">新闻</a></li>
+    <li class="u3"><a href="#" class="u5">联系</a></li>
+    <li class="u3"><a href="#" class="u5">帮助</a></li>
+    <li class="u4"><a href="./myTaskOfWorker.html" class="u6" id="x">我的接取</a></li>
+    <li class="u4"><a href="./myTaskOfRequestor.html" class="u6">我的发布</a></li>
+    <li class="u4"><a href="./taskAnnouncement.html" class="u6" style="color: darkviolet">发布任务</a></li>
+    <li class="u4"><a href="./rechargePage.html" class="u6">在线充值</a></li>
+    <li class="u4">
+        <a class="u7">
+            你好，
+            <u id="username" style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">用户</u>
+        </a>
+    </li>
+    <div id="menu" style="margin-left: 82%;margin-top: -3%;z-index: 5;display: none;">
+        <button onclick="goPersonalSpace()" style="border-radius:0;background: black;color:white;font-size: 20px;width: 120px;border-color: white;border-width: 1px;z-index: 5;margin-top: 65px;">个人空间</button><br>
+        <button onclick="logout()" style="border-radius:0;background: black;color:white;font-size: 20px;margin-top: -2px;width:120px;border-color: white;border-width: 1px;">退出账户</button>
+
+    </div>
+</div>
+
+<div class="menubox">
+    <h1>发布任务</h1>
+</div>
+<div class="mainbox" id="mainbox">
+    <div class="mainbox-1">
+        <label class="form-label" id="form-label6">添加图片</label>
+        <p></p>
+        <a href="javascript:;" class="form-a">选择图片
+            <input type="file" id="form-file" name="file" class="form-file" multiple="multiple" accept="image/png,image/jpg,image/gif,image/JPEG"/>
+        </a>
+        <div class="img-box" id="imgBox"></div>
+        <button class="submit1" id="submit1">提交</button>
+        <div class="warming" id="warming">上传中，请等待……
+        </div>
+    </div>
+</div>
+
+<div class="nextbox" id="nextbox">
+    <form class="taskform" id="taskform">
+        <label class="form-label" id="form-label1">截止时间</label>
+        <input type="date" id="form-data1" class="form-input" name="data" value=''>
+        <p></p>
+        <label class="form-label" id="form-label2">人数</label>
+        <input type="text" id="form-input1" class="form-input" name="people" value="" maxlength="10" placeholder="标注人数(数字)" onkeyup="value=value.replace(/[^\d]/g,'')">
+        <p></p>
+        <label class="form-label" id="form-label3">积分</label>
+        <input type="text" id="form-input2" class="form-input" name="credit" value="" maxlength="10" placeholder="标注一张图片获得的积分(数字)" onkeyup="value=value.replace(/[^\d]/g,'')">
+        <p></p>
+        <label class="form-label" id="form-label4">标注类型</label>
+        <select id="form-select1" class="form-select" name="tag">
+            <option value="0" selected="">都可</option>
+            <option value="1">整体标注</option>
+            <option value="2">方框标注</option>
+            <option value="3">描边标注</option>
+        </select>
+        <p></p>
+        <label class="form-label" id="form-label7">种类</label>
+        <select id="form-select2" class="form-select" name="kind">
+            <option value="自然" selected="">自然</option>
+            <option value="地理">地理</option>
+            <option value="文化">文化</option>
+            <option value="历史">历史</option>
+            <option value="艺术">艺术</option>
+            <option value="人物">人物</option>
+            <option value="生活">生活</option>
+            <option value="社会">社会</option>
+            <option value="体育">体育</option>
+            <option value="经济">经济</option>
+            <option value="科技">科技</option>
+        </select>
+        <p></p>
+        <label class="form-label" id="form-label8">标签</label>
+        <input type="text" id="form-input3" class="form-input" name="mark1" value="" maxlength="10" placeholder="标签1">
+        <button type="button" class="next" id="next1" onclick="clickNextMark()">+</button>
+        <p></p>
+        <input type="text" id="form-input4" class="form-input" name="mark2" value="" maxlength="10" placeholder="标签2">
+        <button type="button" class="next" id="next2" onclick="clickNextNextMark()">+</button>
+        <p></p>
+        <input type="text" id="form-input5" class="form-input" name="mark3" value="" maxlength="10" placeholder="标签3（最多三个哦~）">
+        <p></p>
+        <label class="form-label" id="form-label5">要求</label>
+        <p></p>
+        <textarea class="form-text" id="form-text1" name="request" cols="70" rows="10" value="" placeholder="描述您对标注者的要求"></textarea>
+        <p></p>
+        <label class="form-label" id="form-label9">设置任务问题</label>
+        <input type="radio" id="form-radio1" class="form-radio" name="question" value='1' onclick="editQ()">是
+        <input type="radio" id="form-radio2" class="form-radio" name="question" value='0' checked onclick="noQ()">否
+        <p></p>
+        <div class="qbox" id="qbox">
+            <label class="form-label2" id="form-label10">问题（选择题）</label>
+            <p></p>
+            <textarea class="form-text" id="form-text2" name="question-d" cols="70" rows="3" value="" placeholder="提个问题考验一下标注工人吧"></textarea>
+            <p></p>
+            <label class="form-label2" id="form-label11">选项A</label>
+            <input type="text" id="form-input7" class="form-input" name="markA" value="" maxlength="10" placeholder="选项A">
+
+            <label class="form-label2" id="form-label12">选项B</label>
+            <input type="text" id="form-input8" class="form-input" name="markB" value="" maxlength="10" placeholder="选项B">
+            <p></p>
+            <label class="form-label2" id="form-label13">选项C</label>
+            <input type="text" id="form-input9" class="form-input" name="markC" value="" maxlength="10" placeholder="选项C">
+
+            <label class="form-label2" id="form-label14">选项D</label>
+            <input type="text" id="form-input10" class="form-input" name="markD" value="" maxlength="10" placeholder="选项D">
+            <p></p>
+            <label class="form-label2" id="form-label15">答案</label>
+            <select id="form-select3" class="form-select" name="answer">
+                <option value="A" selected="">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+            </select>
+        </div>
+
+    </form>
+
+    <button type="button" class="submit2" id="submit2" onclick="submit()">提交</button>
+
+</div>
+
+
+<script>
+    var picIDs=new Array();
+    var requestorID=localStorage.account;
+    var requestorName=localStorage.nickname;
+
+    var nextbox=document.getElementById('nextbox');
+    var mainbox=document.getElementById('mainbox');
+    var submint1=document.getElementById('submit1');
+    var warming=document.getElementById('warming');
+    var inputM1=document.getElementById("form-input4");
+    var inputM2=document.getElementById("form-input5");
+    var nextMarkButton1=document.getElementById("next1");
+    var nextMarkButton2=document.getElementById("next2");
+    var qbox=document.getElementById("qbox");
+
+    var imgSrc = [];  //存放图片路径
+    var imgFile = []; //存放文件流
+    var imgName = []; //存放图片名字
+    imgUpload({
+        inputId:'form-file', //input框id
+        imgBox:'imgBox', //图片容器id
+        buttonId:'submit1', //提交按钮id
+        upUrl:'/taskAccouncement/uploadImg',  //提交地址
+        data:'file', //参数名
+        num:"100"//最多上传图片个数
+    })
+    //选择图片的操作
+    function imgUpload(obj) {
+        var oInput = '#' + obj.inputId;
+        var imgBox = '#' + obj.imgBox;
+        var btn = '#' + obj.buttonId;
+        //用on是因为它可以动态的绑定事件
+        $(oInput).on("change", function() {
+            //获取type=file的input
+            var fileImg = $(oInput)[0];
+            //得到所有的图片列表
+            var fileList = fileImg.files;
+            for(var i = 0; i < fileList.length; i++) {
+                //得到每个图片的路径
+                var imgSrcI = getObjectURL(fileList[i]);
+                //向文件名的数组末尾添加此文件名
+                imgName.push(fileList[i].name);
+                //向路径的数组末尾添加路径
+                imgSrc.push(imgSrcI);
+                //在文件流数组的末尾添加文件
+                imgFile.push(fileList[i]);
+            }
+            //将图片展示出去
+            addNewContent(imgBox);
+        })
+
+        $(btn).on('click', function() {
+            if(!limitNum(obj.num)){
+                alert("最多只能上传"+obj.num+"张照片!");
+                return false;
+            }
+            if(imgFile.length==0){
+                alert("请先上传图片");
+                return false;
+            }
+
+            //用FormData对象上传
+            var fd = new FormData();
+            //由于fd对象中已经包含<input type='file'>的input标签，如果不删除，就会造成重复上传
+            //将文件流循环添加到FormData对象中
+            for(var i=0;i<imgFile.length;i++){
+                fd.append(obj.data,imgFile[i]);
+            }
+            //上传所有的图片
+            submitPicture(obj.upUrl, fd);
+        })
+    }
+    //图片展示
+    function addNewContent(obj) {
+        $(imgBox).html("");
+        for(var a = 0; a < imgSrc.length; a++) {
+            var oldBox = $(obj).html();
+            $(obj).html(oldBox + '<div class="imgContainer"><img title=' + imgName[a] + ' alt=' + imgName[a] + ' src=' + imgSrc[a] + ' onclick="imgDisplay(this)"><p onclick="removeImg(this,' + a + ')" class="imgDelete">×</p></div>');
+        }
+    }
+    //删除
+    function removeImg(obj, index) {
+        //向数组中删除元素
+        imgSrc.splice(index, 1);
+        imgFile.splice(index, 1);
+        imgName.splice(index, 1);
+        var boxId = "#" + $(obj).parent('.imgContainer').parent().attr("id");
+        addNewContent(boxId);
+    }
+    //限制图片个数
+    function limitNum(num){
+        if(!num){
+            return true;
+        }else if(imgFile.length>num){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    //上传(将文件流数组传到后台)
+    function submitPicture(url,data) {
+        submint1.disable=true;
+        warming.style.display='block';
+        if(url&&data){
+            $.ajax({
+                type: "post",
+                url: url,
+                async: true,
+                data: data,
+                //下面这两个要写成false，要不然上传不了。
+                processData: false,
+                contentType: false,
+                success: function(dat) {
+                    picIDs=dat.picid;
+                    mainbox.style.display='none';
+                    nextbox.style.display='block';
+                    warming.style.display='none';
+                }
+            });
+        }else{
+            alert('数据格式不正确!');
+        }
+    }
+    //当鼠标移到图片上时，显示x删除
+    function imgDisplay(obj) {
+        var src = $(obj).attr("src");
+        var imgHtml = '<div style="width: 100%;height: 100vh;overflow: auto;background: rgba(0,0,0,0.5);text-align: center;position: fixed;top: 0;left: 0;z-index: 1000;"><img src=' + src + ' style="margin-top: 100px;width: 70%;margin-bottom: 100px;"/><p style="font-size: 50px;position: fixed;top: 30px;right: 30px;color: white;cursor: pointer;" onclick="closePicture(this)">×</p></div>'
+        $('body').append(imgHtml);
+    }
+    //关闭
+    function closePicture(obj) {
+        $(obj).parent("div").remove();
+    }
+    //图片预览路径
+    function getObjectURL(file) {
+        var url = null;
+        if(window.createObjectURL != undefined) { // basic
+            url = window.createObjectURL(file);
+        } else if(window.URL != undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file);
+        } else if(window.webkitURL != undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file);
+        }
+        return url;
+    }
+
+    function editQ() {
+       qbox.style.display='initial';
+    }
+    function noQ() {
+        qbox.style.display='none';
+    }
+
+    function submit() {
+        var taskMarks=new Array();
+        var num=document.getElementById('form-input1').value;
+        var credit=document.getElementById('form-input1').value*document.getElementById('form-input2').value*picIDs.length;
+        var tag=document.getElementById('form-select1').value;
+        var kind=document.getElementById('form-select2').value;
+        var request=document.getElementById('form-text1').value;
+        var date=document.getElementById('form-data1').value;
+        var mark1=document.getElementById('form-input3').value;
+        var mark2=document.getElementById('form-input4').value;
+        var mark3=document.getElementById('form-input5').value;
+        var hasQuestion=0;
+        var questionText='';
+        var questionInput=new Array();
+        var questionAnswer='';
+        if(mark1!=''){
+            console.log(mark1);
+            taskMarks.push(mark1);
+        }
+        if(mark2!=''){
+            console.log(mark2);
+            taskMarks.push(mark2);
+        }
+        if(mark3!=''){
+            console.log(mark3);
+            taskMarks.push(mark3);
+        }
+        console.log(taskMarks);
+        if(document.getElementsByName('question')[0].checked==true){
+            hasQuestion=1;
+            questionText=document.getElementById('form-text2').value;
+            questionInput[0]=document.getElementById('form-input7').value;
+            questionInput[1]=document.getElementById('form-input8').value;
+            questionInput[2]=document.getElementById('form-input9').value;
+            questionInput[3]=document.getElementById('form-input10').value;
+            questionAnswer=document.getElementById('form-select3').value;
+            console.log(questionAnswer);
+        }
+        else{
+            console.log("0");
+        }
+
+
+
+        /*上传图片，先是图片list，然后是requestorid，name，人数，积分，标注类型（1无2整体3方框4描边），要求,截止时间,种类，标签（list），返回结果（成功0积分不够1截止时间在过去2）*/
+       var obj=new Object();
+        obj={
+            picid:picIDs,
+            requestorID:requestorID,
+            requestorName:requestorName,
+            num:num,
+            credit:credit,
+            tag:tag,
+            request:request,
+            date:date,
+            kind:kind,
+            taskMarks:taskMarks,
+            hasQuestion:hasQuestion,//0没有问题，1有
+            question:questionText,
+            options:questionInput,
+            questionAnswer:questionAnswer,
+        }
+        var html = $.ajax({
+             type: "Post",
+             url: '/taskAccouncement/info',
+            dataType:'json',
+            contentType: "application/json",
+            async: true,
+            data:JSON.stringify(obj),
+             success: function(data) {
+                 console.log(data);
+                 window.open("./personalSpacePage.html","_self");
+             },
+             error: function() {
+                 alert("error");
+             }
+         });
+    }
+    //标签搜索，给输入的字，返回可能的结果，result是个list（就像百度搜索那种样子）
+    /*$(function(){
+        $("input[name=mark]").keyup(function(){
+            var uname = $(this).val();
+            if(uname != ""){
+                $.ajax({
+                    url:"/taskAccouncement/search",
+                    type:"post",
+                    data:{"uname":uname},
+                    dataType:"html",
+                    async:true,
+                    success:function(result){
+                        $("#lns").show();
+                        $("#lns").html(result);
+
+                        // 点击模糊列表的值，必须在这里写，其他位置不起作用
+                        $("li").unbind("click").bind("click", function(){
+                            $("input[name=uname]").val($(this).html());
+                            $("input[name=uname]").focus();
+                            $("#lns").hide();
+                        });
+
+                        // 点击其他地方的时候隐藏
+                        //$("input[name=uname]").blur(function(){
+                        //  $("#lns").hide();
+                        //});
+                    }
+                });
+            }else{
+                $("#lns").html("");
+                $("#lns").hide();
+            }
+        });
+    });*/
+    
+    function clickNextMark() {
+        //console.log("123");
+        inputM1.style.display='initial';
+        nextMarkButton1.style.display='none';
+        nextMarkButton2.style.display='initial';
+    }
+    
+    function clickNextNextMark() {
+        nextMarkButton2.style.display='none';
+        inputM2.style.display='initial';
+    }
+
+</script>
+</body>
+</html>

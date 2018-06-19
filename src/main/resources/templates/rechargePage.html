@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+
+    <style>
+        body {
+            background: #222;
+            background-image:url('../static/pic/rechargeBackground.jpg');
+            background-size: cover;
+            background-attachment:fixed;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: transparent;
+        }
+
+        li{
+            display: inline-block;
+        }
+
+        li a {
+            display: block;
+            color: ghostwhite;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 24px;
+            font-family: "Microsoft YaHei UI";
+        }
+
+        li a:hover {
+            background-color: transparent;
+        }
+
+        .mainbox{
+            margin-top:8%;
+            width: 36%;
+            margin-left: 32%;
+        }
+
+        .explainbody{
+            width:31%;
+            height: 700px;
+            position: relative;
+            margin: auto;
+            padding: 35px 30px;
+            color: black;
+            border-radius: 4px;
+            background: #b1b1b1;
+            box-shadow: 1px 1px 4px #767676;
+            opacity: 0.6;
+            margin-left: -10%;
+            font-family: "Microsoft YaHei UI";
+        }
+
+        .rechargebody{
+            width: 72%;
+            height: 700px;
+            position: relative;
+            margin: auto;
+            padding: 35px 30px;
+            color: black;
+            border-radius: 4px;
+            background: white;
+            box-shadow: 1px 1px 4px #767676;
+            opacity: 0.6;
+            margin-top: -770px;
+            margin-left: 30%;
+            font-family: "Microsoft YaHei UI";
+        }
+
+        .rechargebody p{
+            display: inline-block;
+            margin-left: -70%;
+        }
+
+        input{
+            width:50%;
+            height:40px;
+            border-radius: 6px;
+            font-size: 20px;
+            background-color: transparent;
+            border-color: black;
+            align-self: center;
+            margin-top: 5%;
+            margin-left: 30%;
+        }
+        button{
+            width:30%;
+            height:8%;
+            border-radius: 6px;
+            font-size: 20px;
+            margin-top: 8%;
+            margin-left: 29%;
+            background-color: black;
+            border-color: white;
+            color:white;
+        }
+
+
+
+
+    </style>
+
+    <script>
+        window.onload=function () {
+            document.getElementById('username').innerText=localStorage.nickname;
+            var username=document.getElementById('username');
+            username.onmouseover=function () {
+                document.getElementById("menu").style.display="inherit";
+            }
+            document.getElementById("userbar").onmouseleave=function (e) {
+                if(e.target.id!="nemu"){
+                    document.getElementById("menu").style.display="none";
+                }
+            }
+        }
+
+        function agree(){
+            if(document.getElementById('agree').checked==false)
+            {
+                document.getElementById('recharge').disabled=true;
+                document.getElementById('recharge').style.backgroundColor= "gray";
+            }
+            else{
+                document.getElementById('recharge').disabled=false;
+                document.getElementById('recharge').style.backgroundColor= "black";
+            }
+
+        }
+
+        function recharge() {
+            var info=new Object();
+            info.account=document.getElementById('account').value;
+            info.cardID=document.getElementById('cardID').value;
+            info.cardPW=document.getElementById('cardPW').value;
+            info.money=document.getElementById('money').value;
+
+
+            var html = $.ajax({
+                type: "Post",
+                url: '/requestor/recharge',
+                dataType:'json',
+                contentType: "application/json",
+                async: false,
+                data: JSON.stringify(info),
+                success: function(data) {
+                    if(data==0){
+                        alert("充值成功，即将返回首页");
+                        window.open("./personalSpacePage.html","_self");
+                    }
+                    if(data==1){
+                        alert("此账户不存在");
+                    }
+                    if(data==2){
+                        alert("充值卡无效");
+                    }
+                    if(data==3){
+                        alert("充值卡密码错误");
+                    }
+                    if(data==4){
+                        alert("充值卡余额不足");
+                    }
+
+                },
+                error: function() {
+                    alert("error");
+                }
+            });
+        }
+
+        function logout(){
+            window.open("./homepage.html","_self");
+        }
+
+        function goPersonalSpace(){
+            window.open("./personalSpacePage.html","_self");
+        }
+
+    </script>
+
+</head>
+
+
+
+<body>
+
+<div id="userbar" style="position: fixed;width: 1860px;z-index: 3;padding-left: 12%;">
+    <li><img src="../static/pic/logo.png" style="height: 60px;margin-left: -465%"></li>
+    <div style=" z-index:3;display: inline-block;float:left;margin-left: 10%;" >
+        <ul>
+            <li><a href="./chooseNewTask.html">任务大厅</a></li>
+            <li><a href="#news">新闻</a></li>
+            <li><a href="#contact">联系</a></li>
+            <li><a href="#about">帮助</a></li>
+        </ul>
+    </div>
+    <br>
+
+    <div style="float: right;z-index:3;margin-right:20px;display: inline-block;padding-right: 22%;margin-top: -65px">
+        <ul>
+            <li><a href="./myTaskOfWorker.html">我的接取</a></li>
+            <li><a href="./myTaskOfRequestor.html">我的发布</a></li>
+            <li><a href="./taskAnnouncement.html">发布任务</a></li>
+            <li><a href="./rechargePage.html" style="color: darkviolet">在线充值</a></li>
+            <li style="z-index: 3">
+                <a style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">
+                    你好，
+                    <u id="username" style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">用户</u>
+                </a>
+            </li>
+        </ul>
+
+        <div id="menu" style="margin-left: 82%;margin-top: -3%;z-index: 5;display: none;">
+            <button onclick="goPersonalSpace()" style="border-radius:0;background: black;color:white;font-size: 20px;width: 120px;border-color: white;border-width: 1px;z-index: 5;">个人空间</button><br>
+            <button onclick="logout()" style="border-radius:0;background: black;color:white;font-size: 20px;margin-top: -2px;width:120px;border-color: white;border-width: 1px;">退出账户</button>
+
+        </div>
+    </div>
+
+
+</div>
+
+
+<div style="position: fixed;width: 101%;height:90px;background-color: black;opacity: 1;z-index: 2;margin-top: -1%;margin-left: -1%"></div>
+<br>
+
+<div class="mainbox">
+    <div class="explainbody">
+        <h2 style="color: black;float: top;" align="center">C币充值</h2>
+        <hr />
+        <p align="center">1C币/元</p>
+        <p style="color:#080808">
+            C币可以用来购买COUNTS所有特惠服务、发布积分任务。<br>
+            1C币=100积分。<br>
+            C币仅能用于兑换怎么码都码不队直接运营的产品和服务，不能兑换现金，不能进行转账交易，不能兑换怎么码都码不队体系外的产品和服务。<br>
+
+        </p><br>
+
+        <input style="height: 15px;width: 15px;margin-left: auto" type="checkbox" id="agree" checked="checked" onclick="agree()">同意C币服务条款
+    </div>
+
+    <div class="rechargebody">
+        <input id="account"><p>账户：</p><br>
+        <input id="cardID"><p>充值卡号：</p><br>
+        <input id="cardPW"><p>充值密码：</p><br>
+        <input id="money" style="width: 20%">C币（1C币=100积分） <p style="margin-left: -75.5%">充值金额：</p><br>
+        <button id="recharge" onclick="recharge()">充值</button><br>
+        <hr />
+        <h3>温馨提示</h3>
+        <p style="margin-left: auto">
+            1.我司发行充值卡号为9位数字，密码为12位数字，没有英文字母，若您购买的充值卡含有英文字母或位数不够，请联系第三方卖家处理；<br>
+
+            2.购买充值卡可在附近的网吧或报刊亭、电脑城等地购买，请在购买时留意充值卡位数；<br>
+
+            3.充值卡支持分多次充值，但请在有效期内使用，如：30元面值充值卡，可先充值10元，再充20元；<br>
+
+            4.请在充值卡有效期内使用，若超过有效期则无法使用，请勿刮坏充值卡，若刮坏可联系卖家处理；<br>
+
+        </p>
+
+    </div>
+
+
+</div>
+
+<div style="width:100%; float: bottom; background-color: black;margin-top: 5%;margin-bottom: -5px;">
+    <img src="../static/pic/logo.png" style="width:8%">
+    <span style="color: white;text-align: center;font-size: 25px;">让世界的智慧凝聚为你的眼</span>
+    <span style="color: white;text-align: center;font-size: 25px;float: right;padding-top: 20px">怎么码都码不队</span>
+</div>
+
+
+</body>
+</html>

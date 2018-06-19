@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="./echarts.min.js"></script>
+
+    <style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: transparent;
+        }
+
+        li{
+            display: inline-block;
+        }
+
+        li a {
+            display: block;
+            color: ghostwhite;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 24px;
+            font-family: "Microsoft YaHei UI";
+        }
+
+        li a:hover {
+            background-color: transparent;
+        }
+
+        .titleBox{
+            width:101%;
+            height: 140px;
+            position: relative;
+            margin: auto;
+            color: #333333;
+            border-radius: 4px;
+            background: white;
+            box-shadow: 1px 1px 4px #a0a0a0;
+            font-family: "Microsoft YaHei UI";
+            font-size: 20px;
+            margin-left: 0;
+        }
+
+        .mainbody{
+            width: 102%;
+            height: 1500px;
+            background-color: lightblue;
+            margin-left: -1%;
+            font-family: "Microsoft YaHei UI";
+            font-size: 20px;
+            vertical-align: top;
+        }
+
+
+
+        .maincut{
+            width: 102%;
+            height: 30px;
+            background-color: lightblue;
+            margin-left: -1%;
+        }
+
+        .left_menu_box{
+            background: #fff;
+            box-shadow: 0 1px 6px 0 rgba(0, 0, 0, .12), 0 1px 6px 0 rgba(0, 0, 0, .12);
+            border-radius: 3px;
+            height: 520px;
+            min-height: 520px;
+            border-top: 4px solid #2093ff;
+            width: 16%;
+            margin-left: 12.5%;
+            display: inline-block;
+            float: top;
+            vertical-align: top;
+        }
+
+        .menus a{
+            padding-left: 40px;
+            color: black;
+            font-size: 20px;
+
+        }
+        .menus li{
+            padding: 0;
+        }
+
+        .menus p{
+            padding-left: 20px;
+            color: black;
+            font-size: 20px;
+        }
+
+        .mainPanel{
+            background: #fff;
+            -webkit-box-shadow: 0px 0px 8px #c8c8c8;
+            /* box-shadow: 0px 0px 8px #c8c8c8; */
+            box-shadow: 0 1px 6px 0 rgba(0, 0, 0, .12), 0 1px 6px 0 rgba(0, 0, 0, .12);
+            border-radius: 3px;
+            height: 1450px;
+            width:56%;
+            display: inline-block;
+            float: top;
+            margin-left: 3%;
+        }
+
+        hr{height:1px;border:none;border-top:1px solid lightgrey;}
+
+        .mainPanel p{
+            display: inline-block;
+        }
+
+        .mainPanel h4{
+            display: inline-block;
+        }
+
+    </style>
+
+    <script>
+        var complete=1;
+        var undergoing=1;
+        var uncomplete=1;
+        var name="1";
+        var account=0;
+
+        var scores=new Array();
+
+        window.onload=function () {
+            name = localStorage.nickname;
+            account = localStorage.account;
+            document.getElementById('username').innerText=name;
+            var username=document.getElementById('username');
+            username.onmouseover=function () {
+                document.getElementById("menu").style.display="inherit";
+            }
+            document.getElementById("userbar").onmouseleave=function (e) {
+                if(e.target.id!="nemu"){
+                    document.getElementById("menu").style.display="none";
+                }
+            }
+
+            var obj={account:account};
+
+            var html = $.ajax({
+                type: "Post",
+                url: '/personalSpace/getPersonalAchievements',
+                dataType:'json',
+                contentType: "application/json",
+                async: true,
+                data: JSON.stringify(obj),
+                success: function(myobj) {
+                    var data=myobj.data;
+                    var classifications=document.getElementsByClassName('classify');
+                    var i=0;
+                    for(i=0;i<11;i++){
+                        var values=classifications[i].getElementsByTagName('p');
+                        if(data[i][0]==1){
+                            values[1].innerText="已获得";
+                        }else{
+                            values[1].innerText="未获得";
+                        }
+                        values[3].innerText=data[i][1];
+                        values[5].innerText=data[i][2];
+                        values[7].innerText=data[i][3];
+                        values[9].innerText=data[i][4];
+                        scores.push(data[i][4]);
+                    }
+                    setChart();
+                    document.getElementById('radar').style.display="none";
+                },
+                error: function() {
+                    alert("error");
+                }
+            });
+
+
+        }
+
+
+
+
+        function logout(){
+            window.open("./homepage.html","_self");
+        }
+
+        function goPersonalSpace(){
+            window.open("./personalSpacePage.html","_self");
+        }
+
+        function setChart() {
+            var myChart = echarts.init(document.getElementById('radar'));
+
+            // 指定图表的配置项和数据
+            var option = {
+                title: {
+                    text: '成就情况图'
+                },
+                tooltip: {},
+                legend: {
+                    data: ['成就标准', '实际评分']
+                },
+                radar: {
+                    // shape: 'circle',
+                    name: {
+                        textStyle: {
+                            color: '#fff',
+                            backgroundColor: '#999',
+                            borderRadius: 3,
+                            padding: [3, 5]
+                        }
+                    },
+                    indicator: [
+                        { name: '自然（Nature）', max: 2000},
+                        { name: '文化（Culture）', max: 2000},
+                        { name: '地理（Geography）', max: 2000},
+                        { name: '历史（History）', max: 2000},
+                        { name: '生活（Life）', max: 2000},
+                        { name: '社会（Society）', max: 2000},
+                        { name: '艺术（Art）', max: 2000},
+                        { name: '人物（Figure）', max: 2000},
+                        { name: '经济（Economy）', max: 2000},
+                        { name: '科技（Science and technology）', max: 2000},
+                        { name: '体育（Sports）', max: 2000}
+                    ]
+                },
+                series: [{
+                    name: '标准 vs 评分',
+                    type: 'radar',
+                    // areaStyle: {normal: {}},
+                    data : [
+                        {
+                            value : [1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000],
+                            name : '成就标准'
+                        },
+                        {
+                            value : scores,
+                            name : '实际评分'
+                        }
+                    ]
+                }]
+            };
+
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        }
+
+        function showChart() {
+            document.getElementById('details').style.display="none";
+            document.getElementById('radar').style.display="inherit";
+            document.getElementById('mainPanel').style.height="750px";
+            document.getElementById('mainbody').style.height="800px";
+            document.getElementById("shift").innerText="查看详情";
+            document.getElementById("shift").onclick = showDetails;
+        }
+
+        function showDetails() {
+            document.getElementById('details').style.display="inherit";
+            document.getElementById('radar').style.display="none";
+            document.getElementById('mainPanel').style.height="1450px";
+            document.getElementById('mainbody').style.height="1500px";
+            document.getElementById("shift").innerText="纵观全局";
+            document.getElementById("shift").onclick=showChart;
+        }
+    </script>
+
+</head>
+
+
+<body>
+<div id="userbar" style="position: fixed;width: 1860px;z-index: 3;padding-left: 12%;">
+    <li><img src="../static/pic/logo.png" style="height: 60px;margin-left: -465%"></li>
+    <div style=" z-index:3;display: inline-block;float:left;margin-left: 10%;" >
+        <ul>
+            <li><a href="./chooseNewTask.html">任务大厅</a></li>
+            <li><a href="#news">新闻</a></li>
+            <li><a href="#contact">联系</a></li>
+            <li><a href="#about">帮助</a></li>
+        </ul>
+    </div>
+    <br>
+
+    <div style="float: right;z-index:3;margin-right:20px;display: inline-block;padding-right: 22%;;margin-top: -65px">
+        <ul>
+            <li><a href="./myTaskOfWorker.html">我的接取</a></li>
+            <li><a href="./myTaskOfRequestor.html">我的发布</a></li>
+            <li><a href="./taskAnnouncement.html">发布任务</a></li>
+            <li><a href="./rechargePage.html">在线充值</a></li>
+            <li style="z-index: 3">
+                <a style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">
+                    你好，
+                    <u id="username" style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">用户</u>
+                </a>
+            </li>
+        </ul>
+
+        <div id="menu" style="margin-left: 82%;margin-top: -3%;z-index: 5;display: none;">
+            <button onclick="goPersonalSpace()" style="border-radius:0;background: black;color:white;font-size: 20px;width: 120px;border-color: white;border-width: 1px;z-index: 5;">个人空间</button><br>
+            <button onclick="logout()" style="border-radius:0;background: black;color:white;font-size: 20px;margin-top: -2px;width:120px;border-color: white;border-width: 1px;">退出账户</button>
+
+        </div>
+    </div>
+
+
+</div>
+
+
+<div style="position: fixed;width: 101%;height:90px;background-color: black;opacity: 1;z-index: 2;margin-top: -1%;margin-left: -1%"></div>
+<br>
+
+<div class="titleBox">
+    <h2 style="padding-top: 2%;color: #232323;padding-left: 11.5%">个人中心</h2>
+    <p style="color: #939393;padding-left: 11.5%">在这里，可以集中管理维护您的用户、账号等信息,也可以查看您的任务统计数据</p>
+</div>
+
+<div class="maincut"></div>
+
+<div class="mainbody" id="mainbody">
+    <div class="mainbox">
+        <div class="left_menu_box">
+            <ul class="menus">
+                <li><p>基础资料</p></li>
+                <hr style="margin-top: -2%"/>
+                <li><a href="./personalSpacePage.html">用户信息</a></li><br>
+                <li><a href="./personalSkill.html">擅长领域</a></li>
+            </ul>
+            <hr style=""/>
+            <ul class="menus">
+                <li style="margin-top: -3%"><p>统计信息</p></li>
+                <hr style="margin-top: -2%"/>
+                <li><a href="./personalCompletionSituation.html">完成情况</a></li><br>
+                <li><a href="./personalRequestSituation.html">发布情况</a></li><br>
+                <li><a href="./personalAchievements.html" style="color: violet">称号一览</a></li>
+            </ul>
+        </div>
+
+        <div class="mainPanel" id="mainPanel" style="font-size: 20px;">
+            <h3 style="padding-left: 3%;">称号一览</h3>
+            <a id="shift" onclick="showChart()" style="float: right;margin-top: -5%;margin-right: 2%;color: blue;cursor: pointer">纵观全局</a>
+            <hr />
+            <div id="details">
+                <div id="nature" class="classify" style="padding-left: 5%;color: #333333;display: inline-block;vertical-align: top;margin-top: -10px">
+                    <h4>自然专家</h4>
+                    <p style="padding-left: 20px">获得情况：</p>
+                    <p>未获得</p>
+                    <br>
+                    <div style="margin-top: -20px">
+                        <p>准确率：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">效率：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">完成数：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">综评：</p>
+                        <p>0</p>/1000
+                    </div>
+                </div>
+
+                <div id="cuture" class="classify" style="padding-left: 5%;color: #333333;display: inline-block;vertical-align: top;margin-top: -10px">
+                    <h4>文化专家</h4>
+                    <p style="padding-left: 20px">获得情况：</p>
+                    <p>未获得</p>
+                    <br>
+                    <div style="margin-top: -20px">
+                        <p>准确率：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">效率：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">完成数：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">综评：</p>
+                        <p>0</p>/1000
+                    </div>
+                </div>
+
+                <div id="geography" class="classify" style="padding-left: 5%;color: #333333;display: inline-block;vertical-align: top;margin-top: -10px">
+                    <h4>地理专家</h4>
+                    <p style="padding-left: 20px">获得情况：</p>
+                    <p>未获得</p>
+                    <br>
+                    <div style="margin-top: -20px">
+                        <p>准确率：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">效率：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">完成数：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">综评：</p>
+                        <p>0</p>/1000
+                    </div>
+                </div>
+
+                <div id="history" class="classify" style="padding-left: 5%;color: #333333;display: inline-block;vertical-align: top;margin-top: -10px">
+                    <h4>历史专家</h4>
+                    <p style="padding-left: 20px">获得情况：</p>
+                    <p>未获得</p>
+                    <br>
+                    <div style="margin-top: -20px">
+                        <p>准确率：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">效率：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">完成数：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">综评：</p>
+                        <p>0</p>/1000
+                    </div>
+                </div>
+
+                <div id="life" class="classify" style="padding-left: 5%;color: #333333;display: inline-block;vertical-align: top;margin-top: -10px">
+                    <h4>生活专家</h4>
+                    <p style="padding-left: 20px">获得情况：</p>
+                    <p>未获得</p>
+                    <br>
+                    <div style="margin-top: -20px">
+                        <p>准确率：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">效率：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">完成数：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">综评：</p>
+                        <p>0</p>/1000
+                    </div>
+                </div>
+
+                <div id="society" class="classify" style="padding-left: 5%;color: #333333;display: inline-block;vertical-align: top;margin-top: -10px">
+                    <h4>社会专家</h4>
+                    <p style="padding-left: 20px">获得情况：</p>
+                    <p>未获得</p>
+                    <br>
+                    <div style="margin-top: -20px">
+                        <p>准确率：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">效率：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">完成数：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">综评：</p>
+                        <p>0</p>/1000
+                    </div>
+                </div>
+
+                <div id="art" class="classify" style="padding-left: 5%;color: #333333;display: inline-block;vertical-align: top;margin-top: -10px">
+                    <h4>艺术专家</h4>
+                    <p style="padding-left: 20px">获得情况：</p>
+                    <p>未获得</p>
+                    <br>
+                    <div style="margin-top: -20px">
+                        <p>准确率：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">效率：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">完成数：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">综评：</p>
+                        <p>0</p>/1000
+                    </div>
+                </div>
+
+                <div id="figure" class="classify" style="padding-left: 5%;color: #333333;display: inline-block;vertical-align: top;margin-top: -10px">
+                    <h4>人物专家</h4>
+                    <p style="padding-left: 20px">获得情况：</p>
+                    <p>未获得</p>
+                    <br>
+                    <div style="margin-top: -20px">
+                        <p>准确率：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">效率：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">完成数：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">综评：</p>
+                        <p>0</p>/1000
+                    </div>
+                </div>
+
+                <div id="economy" class="classify" style="padding-left: 5%;color: #333333;display: inline-block;vertical-align: top;margin-top: -10px">
+                    <h4>经济专家</h4>
+                    <p style="padding-left: 20px">获得情况：</p>
+                    <p>未获得</p>
+                    <br>
+                    <div style="margin-top: -20px">
+                        <p>准确率：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">效率：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">完成数：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">综评：</p>
+                        <p>0</p>/1000
+                    </div>
+                </div>
+
+                <div id="science" class="classify" style="padding-left: 5%;color: #333333;display: inline-block;vertical-align: top;margin-top: -10px">
+                    <h4>科技专家</h4>
+                    <p style="padding-left: 20px">获得情况：</p>
+                    <p>未获得</p>
+                    <br>
+                    <div style="margin-top: -20px">
+                        <p>准确率：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">效率：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">完成数：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">综评：</p>
+                        <p>0</p>/1000
+                    </div>
+                </div>
+
+                <div id="sports" class="classify" style="padding-left: 5%;color: #333333;display: inline-block;vertical-align: top;margin-top: -10px">
+                    <h4>体育专家</h4>
+                    <p style="padding-left: 20px">获得情况：</p>
+                    <p>未获得</p>
+                    <br>
+                    <div style="margin-top: -20px">
+                        <p>准确率：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">效率：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">完成数：</p>
+                        <p>0</p>
+                        <p style="margin-left: 100px">综评：</p>
+                        <p>0</p>/1000
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
+
+<div style="width:101%; float: bottom; background-color: black;margin-left: -0.2%;margin-bottom: -100px;">
+    <img src="../static/pic/logo.png" style="width:8%">
+    <span style="color: white;text-align: center;font-size: 25px;vertical-align: center">让世界的智慧凝聚为你的眼</span>
+    <span style="color: white;text-align: center;font-size: 25px;float: right;padding-top: 20px;margin-right: 0.4%">怎么码都码不队</span>
+</div>
+
+<div id="radar" style="position: absolute;top:330px;right:270px;width:1000px;height:600px;z-index: 100;display: none"></div>
+
+</body>
+</html>

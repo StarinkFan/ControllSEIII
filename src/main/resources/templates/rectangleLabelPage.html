@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<!--    <link href="./css/wholeLabelPageCSS.css" rel="stylesheet">-->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <style>
+
+        .sidebar {
+            position: absolute;
+            top: 140px;
+            right: 0;
+            min-height: 85%;
+            background: #f6f6f6;
+            width: 300px;
+            font-family: "Microsoft YaHei UI";
+            font-size: 20px;
+        }
+
+        .content {
+            position: absolute;
+            left: 300px;
+            top: 160px;
+            z-index: -1;
+            width:1000px;
+            height:600px;
+            align-items: center;
+            text-align: center;
+        }
+
+
+        body {
+            background: white;
+            background-size: cover;
+            background-attachment:fixed;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+
+
+        .right_box{
+            background: #fff;
+            box-shadow: 0 1px 6px 0 rgba(0, 0, 0, .12), 0 1px 6px 0 rgba(0, 0, 0, .12);
+            border-radius: 3px;
+            height: 250px;
+            border-top: 1px solid #2093ff;
+            width: 96%;
+            margin-left: 2%;
+            display: inline-block;
+            float: top;
+            vertical-align: top;
+            margin-top: 10px;
+        }
+
+        input{
+            font-family: SimSun-ExtB;
+        }
+
+        .color{
+            height: 20px;
+            width: 20px;
+            display: inline-block;
+            border: 1px solid gray;
+        }
+
+        hr{height:1px;border:none;border-top:1px solid lightgrey;}
+
+        .tag{
+            background-color: lightyellow;
+            font-size: 18px;
+            border-radius: 5px;
+            margin-top:5px ;
+            width:250px;
+            text-align: center;
+            margin-left: 20px;
+        }
+    </style>
+
+    <style type="text/css">
+        .box {
+            border: 1px solid yellow;
+            width: 0px;
+            height: 0px;
+            position: absolute;
+            opacity: 0.9;
+            //cursor: move;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var clickX = new Array();
+        var clickY = new Array();
+        var boxs=new Array();
+        var deletedBoxs=new Array();
+        var deletedX=new Array();
+        var deletedY=new Array();
+        var color="black";
+        var order=localStorage.order;
+        var picIDs= JSON.parse(localStorage.getItem('picIDs'));
+        var picSrcs=JSON.parse(localStorage.getItem('picSrcs'));
+        var picNum=picIDs.length;
+        var workerAccount;
+
+        function previousPic(){
+            if(order==0){
+                alert("已是第一张图片！");
+            }else{
+                document.getElementById('label').value="";
+                document.getElementById('description').value="";
+                clickX = new Array();
+                clickY = new Array();
+                deletedX=new Array();
+                deletedY=new Array();
+
+                for(var i=0;i<boxs.length;i++){
+                    var a=boxs[i];
+                    document.getElementById('body').removeChild(a);
+                }
+                for(var i=0;i<deletedBoxs.length;i++){
+                    var a=deletedBoxs[i];
+                    document.getElementById('body').removeChild(a);
+                }
+                boxs=new Array();
+                deletedBoxs=new Array();
+
+                order--;
+                var picID=picIDs[order];
+                document.getElementById("picture").src=picSrcs[order];
+                document.getElementById("picID").value=picIDs[order];
+
+                var c=document.getElementById('myCanvas');
+                var ctx=c.getContext('2d');
+                var img=new Image();
+                img.src=hostIp;
+                img.onload=function(){
+                    var height=img.height;
+                    var width=img.width;
+                    c.height=height;
+                    c.width=width;
+                    ctx.drawImage(img,0,0);
+                }
+            }
+
+        }
+
+        function nextPic() {
+            if (order == picNum - 1) {
+                alert("已是最后一张图片！");
+            } else {
+                document.getElementById('label').value="";
+                document.getElementById('description').value="";
+                clickX = new Array();
+                clickY = new Array();
+                deletedX=new Array();
+                deletedY=new Array();
+
+                for(var i=0;i<boxs.length;i++){
+                    var a=boxs[i];
+                    document.getElementById('body').removeChild(a);
+                }
+                for(var i=0;i<deletedBoxs.length;i++){
+                    var a=deletedBoxs[i];
+                    document.getElementById('body').removeChild(a);
+                }
+                boxs=new Array();
+                deletedBoxs=new Array();
+
+                order--;
+                var picID = picIDs[order];
+                document.getElementById("picture").src = picSrcs[order];
+                document.getElementById("picID").value = picIDs[order];
+
+                var c=document.getElementById('myCanvas');
+                var ctx=c.getContext('2d');
+                var img=new Image();
+                img.src=hostIp;
+                img.onload=function(){
+                    var height=img.height;
+                    var width=img.width;
+                    c.height=height;
+                    c.width=width;
+                    ctx.drawImage(img,0,0);
+                }
+            }
+        }
+
+        window.onload = function(e) {
+            myFunction();
+            e = e || window.event;
+            // startX, startY 为鼠标点击时初始坐标
+            // diffX, diffY 为鼠标初始坐标与 box 左上角坐标之差，用于拖动
+            var startX, startY, diffX, diffY;
+            // 是否拖动，初始为 false
+            var dragging = false;
+
+
+            // 鼠标按下
+            document.getElementById("myCanvas").onmousedown = function(e) {
+                startX = e.pageX;
+                startY = e.pageY;
+                addClick(e.pageX , e.pageY);
+
+
+                // 在页面创建 box
+                var active_box = document.createElement("div");
+                active_box.id = "active_box";
+                active_box.className = "box";
+                active_box.style.top = startY + 'px';
+                active_box.style.left = startX + 'px';
+                active_box.style.borderColor=color;
+                document.body.appendChild(active_box);
+                active_box = null;
+
+            };
+
+            // 鼠标移动
+            document.onmousemove = function(e) {
+                // 更新 box 尺寸
+                if(document.getElementById("active_box") !== null&&(e.target.id=="myCanvas"||e.target.className.match(/box/))) {
+                    var ab = document.getElementById("active_box");
+                    ab.style.width = e.pageX - startX + 'px';
+                    ab.style.height = e.pageY - startY + 'px';
+                }
+            };
+
+
+
+
+
+
+
+            // 鼠标抬起
+            document.onmouseup = function(e) {
+                // 禁止拖动
+                dragging = false;
+                if(document.getElementById("active_box") !== null) {
+
+                    addClick(e.pageX , e.pageY);
+                    var ab = document.getElementById("active_box");
+                    boxs.push(ab);
+                    ab.removeAttribute("id");
+                    deletedY=new Array();
+                    deletedY=new Array();
+                    deletedBoxs=new Array();
+                    document.getElementById("redo").disabled=true;
+                    document.getElementById("undo").disabled=false;
+
+                    // 如果长宽均小于 3px，移除 box
+                    if(ab.offsetWidth < 3 || ab.offsetHeight < 3) {
+                        document.body.removeChild(ab);
+                    }
+                }
+            };
+
+            function addClick(x, y)
+            {
+                clickX.push(x);
+                clickY.push(y);
+            }
+        };
+
+        function myFunction(){
+            var data = window.opener['filter'];
+            var hostIp = data['picSrc'];
+            document.getElementById("picID").value=data["picID"];
+
+            var c=document.getElementById('myCanvas');
+            var ctx=c.getContext('2d');
+            var img=new Image();
+            img.src=hostIp;
+            img.onload=function(){
+                var height=img.height;
+                var width=img.width;
+                c.height=height;
+                c.width=width;
+                ctx.drawImage(img,0,0);
+            }
+            document.getElementById('demand').value=data['demand'];
+            document.getElementById('category').innerText="分类："+data['category'];
+            showTags();
+
+        }
+
+        function add() {
+            var partLabel=new Object();
+            partLabel.info=document.getElementById("label").value;
+            var description={'c':document.getElementById("description").value};
+            partLabel.d=description;
+            partLabel.pID=document.getElementById("picID").value;
+            partLabel.lis=new Array();
+            for(var i=0;i<clickY.length;i++){
+                var point={'x':clickX[i],'y':clickY[i]};
+                partLabel.lis.push(point);
+            }
+            partLabel.tag=2;
+            partLabel.workerAccount=localStorage.account;
+            partLabel.TaskID=window.opener['filter']['TaskID'];
+
+            partLabel.color=color;
+
+
+            var html = $.ajax({
+                type: "Post",
+                url: '/partLabel/save',
+                dataType:'json',
+                contentType: "application/json",
+                async: false,
+                data: JSON.stringify(partLabel),
+                success: function(data) {
+                    if(data==true){
+                        alert("success");
+                        window.opener.location.reload();
+
+                        window.close();
+                    }
+
+                },
+                error: function() {
+                    alert("error");
+                }
+            });
+
+        }
+
+        function undo() {
+            var b=boxs.pop();
+            b.style.display="none";
+            deletedBoxs.push(b);
+            for(var i=0;i<4;i++){
+                var x=clickX.pop();
+                var y=clickY.pop();
+                deletedX.push(x);
+                deletedY.push(y);
+            }
+            document.getElementById("redo").disabled=false;
+            if(boxs.length==0){
+                document.getElementById("undo").disabled=true;
+            }
+
+        }
+
+        function  redo() {
+            var b=deletedBoxs.pop();
+            b.style.display="inherit";
+            boxs.push(b);
+            for(var i=0;i<4;i++){
+                var x=deletedX.pop();
+                var y=deletedY.pop();
+                clickX.push(x);
+                clickY.push(y);
+            }
+            document.getElementById("undo").disabled=false;
+            if(deletedBoxs.length==0){
+                document.getElementById("redo").disabled=true;
+            }
+        }
+
+        function black() {
+            color="black";
+            document.getElementById("bla").style.border="1px solid red";
+            document.getElementById("blu").style.border="none";
+            document.getElementById("whi").style.border="none";
+            document.getElementById("yel").style.border="none";
+            changeColor();
+        }
+
+        function white() {
+            color="white";
+            document.getElementById("whi").style.border="1px solid red";
+            document.getElementById("bla").style.border="none";
+            document.getElementById("blu").style.border="none";
+            document.getElementById("yel").style.border="none";
+            changeColor();
+        }
+
+        function blue() {
+            color="blue";
+            document.getElementById("blu").style.border="1px solid red";
+            document.getElementById("bla").style.border="none";
+            document.getElementById("whi").style.border="none";
+            document.getElementById("yel").style.border="none";
+            changeColor();
+        }
+
+        function yellow() {
+            color="yellow";
+            document.getElementById("yel").style.border="1px solid red";
+            document.getElementById("bla").style.border="none";
+            document.getElementById("whi").style.border="none";
+            document.getElementById("blu").style.border="none";
+            changeColor();
+        }
+
+        function changeColor() {
+            var boxs1=document.getElementsByClassName("box");
+            var i;
+            for (i = 0; i < boxs1.length; i++) {
+                boxs1[i].style.borderColor = color;
+            }
+        }
+
+        function showTags() {
+            var tags=JSON.parse(localStorage.getItem('taskTags'));
+            alert(tags.length);
+            var i;
+            for(i=0;i<tags.length;i++){
+                var tag=document.createElement('div');
+                tag.className='tag';
+                tag.innerText=tags[i];
+                document.getElementById('taskInfo').appendChild(tag);
+            }
+            if(tags.length==1){
+                document.getElementById('taskInfo').style.height="285px";
+            }else if(tags.length==2){
+                document.getElementById('taskInfo').style.height="310px";
+            }else if(tags.length==3){
+                document.getElementById('taskInfo').style.height="335px";
+            }
+        }
+
+        function cancel() {
+            window.close();
+        }
+
+        function close1() {
+            window.opener=null;
+            window.open('','_self');
+            window.close();
+        }
+
+    </script>
+
+
+</head>
+<body>
+
+<div id="userbar" style="position: fixed;width: 1860px;z-index: 3;padding-left: 20px;top:0;float:top;z-index: 4">
+    <img src="../static/pic/logo.png" style="height: 60px;margin-left: -1%;max-width: 300px">
+    <p style="font-family: 'Microsoft YaHei UI Light';font-size: 36px;color: white;display: inline-block;vertical-align:20%;margin-top: -6px;margin-left: 700px;">方框标注</p>
+    <div style="color: white;font-size: 25px;font-family: 'Microsoft YaHei UI';right:0;z-index: 4;position: fixed;display: inline-block;vertical-align: 40%">
+        <p id="laber" style="display: inline-block;margin-right: 50px">标注者:Starink    </p>
+        <a onclick="close1()" style="display: inline-block;cursor: pointer">返回目录</a>
+    </div>
+
+</div>
+
+<div style="position: fixed;width: 101%;height:80px;background-color: skyblue;opacity: 1;z-index: 3;margin-top: -1%;margin-left: -1%"></div>
+<br>
+
+<div class="sidebar" style="margin-top: -70px;position: fixed">
+    <div class="right_box" id="taskInfo">
+        <p style="padding-left: 5px">任务信息</p>
+        <hr style="margin-top: -2%">
+        <p id="category" style="padding-left: 20px;margin-top: -5px">类别：动物</p>
+        <p style="padding-left: 20px;margin-top: -5px">要求：</p>
+        <textarea id="demand" style="text-align: left; font-size:19px; width:86%;height: 80px;margin-top:-10px; margin-left: 20px;" name="demand" readonly="readonly">无</textarea>
+    </div>
+
+    <div class="right_box" style="height: 340px">
+        <p style="padding-left: 5px">标注详情：</p>
+        <hr style="margin-top: -2%">
+        <p style="padding-left: 20px;margin-top: -5px">标注：</p>
+        <input type="text" id="label" style="height:30px;font-family: SimSun-ExtB;font-size:20px;margin-left: 20px;width: 86%;margin-top:-100px" value="苟利">
+        <p style="padding-left: 20px;">描述：</p>
+        <textarea id="description" style="text-align: left; font-size:19px; width:86%;height: 100px;margin-top:-10px; margin-left: 20px;" name="description">无</textarea>
+    </div>
+
+    <input id="picID"   style="display: none" name="picID"></input>
+    <input id="flag"   style="display: none" name="flag" value=0></input>
+    <input id="labelID"   style="display: none" name="labelID"></input>
+
+    <button onclick="add()" style=" font-family: 'Microsoft YaHei UI';font-size:20px; width:100px; margin-top: 20px; margin-left: 30px; color: black; background-color: white;height: 36px;">确定标注</button>
+    <button onclick="cancel()" style=" font-family: 'Microsoft YaHei UI';font-size:20px; width:100px; margin-top: 20px; margin-left: 30px; color: black; background-color: white;height: 36px;">取消标注</button>
+
+</div>
+<div class="content">
+    <canvas id="myCanvas" style="max-height: 600px; max-width: 900px;min-height: 580px; z-index:10;"></canvas>
+</div>
+
+<img src="../static/pic/leftArrow.png" style="left: 20px;top: 360px;position: fixed;max-width: 100px" onclick="previousPic()">
+<img src="../static/pic/rightArrow.png" style="right:320px;top: 360px;position: fixed;max-width: 100px" onclick="nextPic()">
+
+<div style="width:100%; bottom:0px; background-color: skyblue;margin-left: -0.2%;position: fixed;">
+    <img src="../static/pic/logo.png" style="width:8%">
+    <span style="color: white;text-align: center;font-size: 25px;vertical-align: center">让世界的智慧凝聚为你的眼</span>
+    <span style="color: white;text-align: center;font-size: 25px;float: right;padding-top: 20px;margin-right: 0.4%">怎么码都码不队</span>
+</div>
+
+<div class="colorSelector" style="text-align: center;position: fixed;left: 750px;bottom:100px">
+    <div class="color" onclick="black()" id="bla" style="background-color: black"></div>
+    <div class="color" onclick="white()" id="whi" style="background-color: white"></div>
+    <div class="color" onclick="yellow()" id="yel" style="background-color: yellow"></div>
+    <div class="color" onclick="blue()" id="blu" style="background-color: blue"></div>
+</div>
+
+
+<button id="undo" disabled="true" style="left: 620px;bottom: 90px;position: fixed;background-color: transparent;border-color: white;font-size: 24px;color: white;width: 80px;padding: 8px;font-family: SimSun-ExtB" onclick="undo()">撤销</button>
+<button id="redo" sisabled="true" style="left: 900px;bottom: 90px;position: fixed;background-color: transparent;border-color: white;font-size: 24px;color: white;width: 80px;padding: 8px;font-family: SimSun-ExtB" onclick="redo()">重做</button>
+</body>
+</html>

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+
+    <style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: transparent;
+        }
+
+        li{
+            display: inline-block;
+        }
+
+        li a {
+            display: block;
+            color: ghostwhite;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 24px;
+            font-family: "Microsoft YaHei UI";
+        }
+
+        li a:hover {
+            background-color: transparent;
+        }
+
+        .titleBox{
+            width:101%;
+            height: 140px;
+            position: relative;
+            margin: auto;
+            color: #333333;
+            border-radius: 4px;
+            background: white;
+            box-shadow: 1px 1px 4px #a0a0a0;
+            font-family: "Microsoft YaHei UI";
+            font-size: 20px;
+            margin-left: 0;
+        }
+
+        .mainbody{
+            width: 102%;
+            height: 900px;
+            background-color: lightblue;
+            margin-left: -1%;
+            font-family: "Microsoft YaHei UI";
+            font-size: 20px;
+            vertical-align: top;
+        }
+
+
+
+        .maincut{
+            width: 102%;
+            height: 30px;
+            background-color: lightblue;
+            margin-left: -1%;
+        }
+
+        .left_menu_box{
+            background: #fff;
+            box-shadow: 0 1px 6px 0 rgba(0, 0, 0, .12), 0 1px 6px 0 rgba(0, 0, 0, .12);
+            border-radius: 3px;
+            height: 520px;
+            min-height: 520px;
+            border-top: 4px solid #2093ff;
+            width: 16%;
+            margin-left: 12.5%;
+            display: inline-block;
+            float: top;
+            vertical-align: top;
+        }
+
+        .menus a{
+            padding-left: 40px;
+            color: black;
+            font-size: 20px;
+
+        }
+        .menus li{
+            padding: 0;
+        }
+
+        .menus p{
+            padding-left: 20px;
+            color: black;
+            font-size: 20px;
+        }
+
+        .mainPanel{
+            background: #fff;
+            -webkit-box-shadow: 0px 0px 8px #c8c8c8;
+            /* box-shadow: 0px 0px 8px #c8c8c8; */
+            box-shadow: 0 1px 6px 0 rgba(0, 0, 0, .12), 0 1px 6px 0 rgba(0, 0, 0, .12);
+            border-radius: 3px;
+            height: 800px;
+            width:56%;
+            display: inline-block;
+            float: top;
+            margin-left: 3%;
+        }
+
+        hr{height:1px;border:none;border-top:1px solid lightgrey;}
+
+        .photoPart{
+            margin-left: 64%;
+            margin-top: 2%;
+            float: top;
+            text-align: center;
+        }
+
+
+        input{
+            width:50%;
+            height:40px;
+            border-radius: 8px;
+            font-size: 20px;
+        }
+
+        textarea{
+            width:88%;
+            height:200px;
+            border-radius: 5px;
+            font-size: 20px;
+        }
+
+        button{
+            width: 20%;
+            height: 40px;
+            border-color: lightgrey;
+            border-radius: 5px;
+            font-size: 20px;
+            font-family: "Microsoft YaHei UI";
+            margin-top: 20px;
+            margin-left: 16%;
+        }
+
+        #photo{
+            display: inline-block;
+            width: 200px;
+            height: 200px;
+            border-radius: 100px;
+            cursor: pointer;
+            background-size: cover;
+            background-image: url("../static/pic/photo.jpg");
+        }
+
+
+
+    </style>
+
+    <script>
+        var name="1";
+        var account=0;
+
+        var photoSrc;
+
+        var imgSrc ;  //存放图片路径
+        var imgFile ; //存放文件流
+        var imgName ; //存放图片名字
+
+        var upUrl='/editPersonalInformation/uploadPhoto';  //提交地址
+
+        window.onload=function () {
+            name = localStorage.nickname;
+            account = localStorage.account;
+            document.getElementById('username').innerText=name;
+            var username=document.getElementById('username');
+            username.onmouseover=function () {
+                document.getElementById("menu").style.display="inherit";
+            }
+            document.getElementById("userbar").onmouseleave=function (e) {
+                if(e.target.id!="nemu"){
+                    document.getElementById("menu").style.display="none";
+                }
+            };
+
+            var obj={account:account};
+            var html = $.ajax({
+                type: "Post",
+                url: '/personalSpace/getPersonalInformation',
+                dataType:'json',
+                contentType: "application/json",
+                async: true,
+                data: JSON.stringify(obj),
+                success: function(myobj) {
+                    document.getElementById("nickname").value=myobj.nickname;
+                    document.getElementById("address").value=myobj.address;
+                    document.getElementById("wechat").value=myobj.wechat;
+                    document.getElementById("introduction").value=myobj.introduction;
+                    document.getElementById("photo").style.backgroundImage="url('"+myobj.photoSrc+"')";
+                    photoSrc=myobj.photoSrc;
+                    if(myobj.sex=="男"){
+                        document.getElementById("man").checked=true;
+                    }else{
+                        document.getElementById("woman").checked=true;
+
+                    }
+
+
+                },
+                error: function() {
+                    alert("error");
+                }
+            });
+
+            document.getElementById("")
+
+        };
+
+        function logout(){
+            window.open("./homepage.html","_self");
+        }
+
+        function goPersonalSpace(){
+            window.open("./personalSpacePage.html","_self");
+        }
+
+        function man() {
+            if(document.getElementById("woman").checked==true) {
+                document.getElementById("woman").checked=false;
+            }
+        }
+
+        function woman() {
+            if(document.getElementById("man").checked==true) {
+                document.getElementById("man").checked=false;
+            }
+        }
+
+        function cancel() {
+            window.open("./personalSpacePage.html", "_self");
+        }
+
+        function save() {
+            if(document.getElementById('nickname').value.length<2){
+                alert("昵称过短");
+            }
+            else if(document.getElementById('nickname').value.length>15){
+                alert("昵称过长");
+            }
+            else if (document.getElementById("man").checked==false&&document.getElementById("woman").checked==false){
+                alert("请选择性别");
+            }
+
+            else{
+                var si=new Object();
+                si.account=localStorage.account;
+                si.nickname=document.getElementById('nickname').value;
+                si.wechat=document.getElementById('wechat').value;
+                si.address=document.getElementById('address').value;
+                si.description=document.getElementById('introduction').value;
+                si.photoSrc=photoSrc;
+                if(document.getElementById("man").checked==true){
+                    si.sex="男";
+                }else{
+                    si.sex="女";
+                }
+                var html = $.ajax({
+                    type: "Post",
+                    url: '/personalSpace/editPersonalInformation',
+                    dataType:'json',
+                    contentType: "application/json",
+                    async: false,
+                    data: JSON.stringify(si),
+                    success: function(data) {
+                        if(data==true){
+                            alert("保存成功");
+                            window.open("./personalSpacePage.html", "_self");
+                        }
+                        else {
+                            alert("操作失败");
+                        }
+
+
+                    },
+                    error: function() {
+                        alert("error");
+                    }
+                });
+            }
+        }
+
+
+        //选择图片的操作xdq
+
+        function uploadPhoto(obj){
+            //获取type=file的input
+            var fileImg = $("#picChoose")[0];
+            //得到所有的图片列表
+            var fileList = fileImg.files;
+            var imgSrcI = getObjectURL(fileList[0]);
+
+            //向文件名的数组末尾添加此文件名
+            imgName=fileList[0].name;
+            //向路径的数组末尾添加路径
+            imgSrc=imgSrcI;
+            //在文件流数组的末尾添加文件
+            imgFile=fileList[0];
+            //将图片展示出去
+            document.getElementById("photo").style.backgroundImage="url("+imgSrc+")";
+
+            var fd = new FormData();
+            //由于fd对象中已经包含<input type='file'>的input标签，如果不删除，就会造成重复上传
+            //将文件流循环添加到FormData对象中
+            fd.append("file",imgFile);
+            //上传所有的图片
+            submitPicture(upUrl, fd);
+            var nf = obj.cloneNode(true);
+            obj.parentNode.replaceChild(nf, obj);
+        }
+
+        function submitPicture(url,data) {
+            document.getElementById('photo').disable=true;
+            //warming.style.display='block';
+            if(url&&data){
+                $.ajax({
+                    type: "post",
+                    url: url,
+                    async: true,
+                    data: data,
+                    //下面这两个要写成false，要不然上传不了。
+                    processData: false,
+                    contentType: false,
+                    success: function(dat) {
+                        photoSrc=dat.photoSrc;
+                        alert("上传成功");
+                        //warming.style.display='none';
+                    },
+                    error: function () {
+                        alert("上传失败");
+                        document.getElementById("photo").style.backgroundImage="url('"+photoSrc+"')";
+
+                    }
+
+                });
+            }else{
+                alert('数据格式不正确!');
+            }
+        }
+
+        //图片预览路径
+        function getObjectURL(file) {
+            var url = null;
+            if(window.createObjectURL != undefined) { // basic
+                url = window.createObjectURL(file);
+            } else if(window.URL != undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file);
+            } else if(window.webkitURL != undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file);
+            }
+            return url;
+        }
+    </script>
+
+</head>
+
+
+<body>
+<div id="userbar" style="width: 1860px;position: fixed;z-index: 3;padding-left: 12%;">
+    <li><img src="../static/pic/logo.png" style="height: 60px;margin-left: -465%"></li>
+    <div style=" z-index:3;display: inline-block;float:left;margin-left: 10%;" >
+        <ul>
+            <li><a href="./chooseNewTask.html">任务大厅</a></li>
+            <li><a href="#news">新闻</a></li>
+            <li><a href="#contact">联系</a></li>
+            <li><a href="#about">帮助</a></li>
+        </ul>
+    </div>
+    <br>
+
+    <div style="float:right;right:0;z-index:3;margin-right:20px;display: inline-block;padding-right: 22%;margin-top: -65px">
+        <ul>
+            <li><a href="./myTaskOfWorker.html">我的接取</a></li>
+            <li><a href="./myTaskOfRequestor.html">我的发布</a></li>
+            <li><a href="./taskAnnouncement.html">发布任务</a></li>
+            <li><a href="./rechargePage.html">在线充值</a></li>
+            <li style="z-index: 3">
+                <a style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">
+                    你好，
+                    <u id="username" style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">用户</u>
+                </a>
+            </li>
+        </ul>
+
+        <div id="menu" style="margin-left: 82%;margin-top: -3%;z-index: 5;display: none;">
+            <button onclick="goPersonalSpace()" style="border-radius:0;background: black;color:white;font-size: 20px;width: 120px;border-color: white;border-width: 1px;z-index: 5;">个人空间</button><br>
+            <button onclick="logout()" style="border-radius:0;background: black;color:white;font-size: 20px;margin-top: -2px;width:120px;border-color: white;border-width: 1px;">退出账户</button>
+
+        </div>
+    </div>
+
+
+</div>
+
+
+<div style="position: fixed;width: 101%;height:90px;background-color: black;opacity: 1;z-index: 2;margin-top: -1%;margin-left: -1%"></div>
+<br>
+
+<div class="titleBox">
+    <h2 style="padding-top: 2%;color: #232323;padding-left: 11.5%">个人中心</h2>
+    <p style="color: #939393;padding-left: 11.5%">在这里，可以集中管理维护您的用户、账号等信息,也可以查看您的任务统计数据</p>
+</div>
+
+<div class="maincut"></div>
+
+<div class="mainbody">
+    <div class="mainbox">
+        <div class="left_menu_box">
+            <ul class="menus">
+                <li><p>基础资料</p></li>
+                <hr style="margin-top: -2%"/>
+                <li><a href="./personalSpacePage.html" style="color: violet">用户信息</a></li><br>
+                <li><a href="#/skill" class="">技能信息</a></li>
+            </ul>
+            <hr style=""/>
+            <ul class="menus">
+                <li style="margin-top: -3%"><p>统计信息</p></li>
+                <hr style="margin-top: -2%"/>
+                <li><a href="./personalCompletionSituation.html">完成情况</a></li><br>
+                <li><a href="./personalRequestSituation.html">发布情况</a></li>
+            </ul>
+        </div>
+
+        <div class="mainPanel" style="font-size: 20px;">
+            <h3 style="padding-left: 3%;">编辑基本信息</h3>
+            <hr />
+            <div class="photoPart">
+                <input type="file" class="picChoose" id="picChoose" accept="image/png,image/jpg,image/gif,image/JPEG" style="display: none;" onchange="uploadPhoto(this)"/>
+                <label id="photo" for="picChoose"></label>
+                <p>点击上传头像</p>
+            </div>
+            <div style="padding-left: 10%;color: #333333;margin-top: -27%">
+                <p style="padding-top: 20px;display: inline-block">昵称：</p>
+                <input id="nickname" style="display: inline-block;width: 40%" placeholder="请输入昵称，长度在2到15个字符之间"><br>
+                <p style="display: inline-block">性别：</p>
+                <input id="man" type="radio" style="width: 20px;height: 20px;display: inline-block" onclick="man()">男&nbsp;&nbsp;&nbsp;&nbsp;<input id="woman" type="radio" style="width: 20px;height: 20px;" onclick="woman()">女<br>
+                <p style="display: inline-block">微信：</p>
+                <input id="wechat" style="display: inline-block;width: 40%" placeholder="请输入您的微信号"><br>
+                <p >地址：</p>
+                <input id="address" style="width: 60%" placeholder="请输入昵称您的公司/家庭住址"><br>
+                <p>简介：</p>
+                <textarea id="introduction" placeholder="为了彼此更好地了解，做个自我介绍吧"></textarea>
+                <button id="save" style="background-color: deepskyblue;color: white;" onclick="save()">保 存</button>
+                <button id="cancal" style="background-color: transparent;margin-left: 6%" onclick="cancel()">取 消</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div style="width:101%; float: bottom; background-color: black;margin-left: -0.2%;height: 80px;">
+    <img src="../static/pic/logo.png" style="width:8%;">
+    <span style="color: white;text-align: center;font-size: 25px;vertical-align: center">让世界的智慧凝聚为你的眼</span>
+    <span style="color: white;text-align: center;font-size: 25px;float: right;padding-top: 20px;margin-right: 0.4%">怎么码都码不队</span>
+</div>
+
+
+</body>
+</html>
