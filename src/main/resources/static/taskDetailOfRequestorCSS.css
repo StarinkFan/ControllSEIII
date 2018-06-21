@@ -92,7 +92,7 @@ h4{
 
 .mainbox{
     min-width: 1583px;
-    min-height: 800px;
+    min-height: 0px;
     /*background: #CFD9DF; !* For browsers that do not support gradients *!
     background: -webkit-linear-gradient(#CFD9DF, #E2EBF0); !* For Safari 5.1 to 6.0 *!
     background: -o-linear-gradient(#CFD9DF, #E2EBF0); !* For Opera 11.1 to 12.0 *!
@@ -117,7 +117,6 @@ h4{
     -webkit-font-smoothing: antialiased;
     height: 200px;
     min-width: 30px;
-    width: 300px;
     float: left;
     margin-left: 30px;
     margin-top: 30px;
@@ -178,18 +177,18 @@ h4{
 
 .sliding-menu a.back:before { content: '\3008'; float: left; margin-right: 1em; }
 
-*,
-*:before,
-*:after
+.sliding-menu,.sliding-menu ul,
+.sliding-menu,.sliding-menu ul:before,
+.sliding-menu,.sliding-menu ul:after
 { border-radius: 0; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; margin: 0; outline: none; padding: 0; }
 
-body { background: #FFF; color: #2C3E50; cursor: default; font: 300 1.4em/1 'Helvetica Neue', Arial, sans-serif; }
+.menux { background: #FFF; color: #2C3E50; cursor: default; font: 300 1.4em/1 'Helvetica Neue', Arial, sans-serif; }
 
-a { color: #16A085; text-decoration: none; -webkit-transition: all 300ms ease; -moz-transition: all 300ms ease; -o-transition: all 300ms ease; transition: all 300ms ease; }
+.sliding-menu a { color: grey; text-decoration: none; -webkit-transition: all 300ms ease; -moz-transition: all 300ms ease; -o-transition: all 300ms ease; transition: all 300ms ease; }
 
-a:hover { color: #1ABC9C; }
+.sliding-menu a:hover { color: #ffffff; }
 
-h1 { font-weight: 300; }
+/*h1 { font-weight: 300; }
 
 h2 { font-weight: 300; margin: 3em 0 1em 0; }
 
@@ -204,33 +203,39 @@ td { font-weight: 300; line-height: 1; padding: 1em; text-align: left; vertical-
 
 tbody th { font-family: 'Consolas', monospace; }
 
-tbody tr:nth-child(2n+1) { background: #ECF0F1; }
+tbody tr:nth-child(2n+1) { background: #ECF0F1; }*/
 
-header,
-section,
-footer { margin: 5em auto; max-width: 90%; width: 40em; }
 
-#social { margin: 1rem auto; overflow: hidden; }
-
-#github,
-#tweet { float: left; }
-
-footer { background: #7F8C8D; color: #BDC3C7; font-size: 1rem; margin: 0; max-width: 100%; padding: 2em; text-align: center; width: 100%; }
-
-footer a { color: #ECF0F1; }
 
 /* menu */
 
-#menux { background: #7F8C8D; }
+#menux {
+    background: #e9e9e9;
+    height: 334px;
+    color: #2C3E50;
+    cursor: default;
+    border-radius: 0;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    outline: none;
+    padding: 0;
+}
 
-#menux a { color: #FFF; }
+/*#menux a { color: grey; }*/
 
 /* responsive */
 
-@media (max-width: 64rem) {
 
-    body { font-size: 1em; }
-
-    h2 { margin-top: 2em; }
-
+.xx{
+    width: 1100px;
+    left: 250px;
+    position: absolute;
+    top: 600px;
+}
+.zz{
+    height: 80px;
+    width: 800px;
+    background-color: white;
 }
