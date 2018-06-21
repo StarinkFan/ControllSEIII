@@ -95,108 +95,93 @@
         var storeY=new Array();
         var color;
         var tID;
-        var order=localStorage.order;
-        var picIDs= JSON.parse(localStorage.getItem('picIDs'));
-        var picSrcs=JSON.parse(localStorage.getItem('picSrcs'));
-        var picNum=picIDs.length;
         var workerAccount;
 
         function previousPic(){
-            if(order==0){
-                alert("已是第一张图片！");
-            }else{
-                order--;
-                var picID = picIDs[order];
-                var picSrc=picSrcs[order];
-                document.getElementById("picture").src = picSrcs[order];
-                document.getElementById("picID").value = picIDs[order];
+            var obj = new Object();
+            obj.picID=document.getElementById("picID").value;
+            obj.TaskID=tID;
+            obj.workerAccount=workerAccount;
 
-                var c=document.getElementById('myCanvas');
-                var ctx=c.getContext('2d');
-                var img=new Image();
-                img.src=picSrc;
-
-                img.onload=function(){
-                    var height=img.height;
-                    var width=img.width;
-                    c.height=height;
-                    c.width=width;
-                    ctx.drawImage(img,0,0);
-
-                    var obj=new Object();
-                    obj.workerAccount=workerAccount;
-                    obj.picID=picID;
-
-                    var html = $.ajax({
-                        type: "Post",
-                        url: '/editLabel/partLabel',
-                        dataType:'json',
-                        contentType: "application/json",
-                        async: true,
-                        data: JSON.stringify(obj),
-                        success: function(myobj) {
-                            loadLabel(myobj.pl,myobj.answer);
-                        },
-                        error: function() {
-                            alert("error");
+            var html = $.ajax({
+                type: "Post",
+                url: '/previousPic/check',
+                dataType:'json',
+                contentType: "application/json",
+                async: true,
+                data: JSON.stringify(obj),
+                success: function(myobj) {
+                    if(myobj.result==false){
+                        alert("已是第一张图片");
+                    }
+                    else{
+                        var postData ={'picSrc':myobj.picSrc,'picID':myobj.picID,'TaskID':tID, 'tag':position,'workerAccount':workerAccount,
+                            'demand':document.getElementById('demand').value, 'category':document.getElementById('category').innerText.substr(3)};
+                        postData = JSON.stringify(postData); //转化为JSON字符串
+                        localStorage.setItem("filter", postData);
+                        if(myobj.kind==1){
+                            window.open("./checkWholeLabelPage.html","_blank");
+                        }else  if(myobj.kind==2){
+                            window.open("./checkRectangleLabelPage.html","_blank");
+                        }else{
+                            window.open("./OutlineLabelPage.html","_blank");
                         }
-                    });
+
+                    }
+
+                },
+                error: function() {
+                    alert("error");
                 }
-            }
+            });
 
         }
 
         function nextPic() {
-            if (order == picNum - 1) {
-                alert("已是第一张图片！");
-            } else {
-                order--;
-                var picID = picIDs[order];
-                var picSrc=picSrcs[order];
-                document.getElementById("picture").src = picSrcs[order];
-                document.getElementById("picID").value = picIDs[order];
+            var obj = new Object();
+            obj.picID=document.getElementById("picID").value;
+            obj.TaskID=tID;
+            obj.workerAccount=workerAccount;
 
-                var c=document.getElementById('myCanvas');
-                var ctx=c.getContext('2d');
-                var img=new Image();
-                img.src=picSrc;
-
-                img.onload=function(){
-                    var height=img.height;
-                    var width=img.width;
-                    c.height=height;
-                    c.width=width;
-                    ctx.drawImage(img,0,0);
-
-                    var obj=new Object();
-                    obj.workerAccount=workerAccount;
-                    obj.picID=picID;
-
-                    var html = $.ajax({
-                        type: "Post",
-                        url: '/editLabel/partLabel',
-                        dataType:'json',
-                        contentType: "application/json",
-                        async: true,
-                        data: JSON.stringify(obj),
-                        success: function(myobj) {
-                            loadLabel(myobj.pl,myobj.answer);
-                        },
-                        error: function() {
-                            alert("error");
+            var html = $.ajax({
+                type: "Post",
+                url: '/nextPic/check',
+                dataType:'json',
+                contentType: "application/json",
+                async: true,
+                data: JSON.stringify(obj),
+                success: function(myobj) {
+                    if(myobj.result==false){
+                        alert("已是最后一张图片");
+                    }
+                    else{
+                        var postData ={'picSrc':myobj.picSrc,'picID':myobj.picID,'TaskID':tID, 'tag':position,'workerAccount':workerAccount,
+                            'demand':document.getElementById('demand').value, 'category':document.getElementById('category').innerText.substr(3)};
+                        postData = JSON.stringify(postData); //转化为JSON字符串
+                        localStorage.setItem("filter", postData);
+                        if(myobj.kind==1){
+                            window.open("./checkWholeLabelPage.html","_blank");
+                        }else  if(myobj.kind==2){
+                            window.open("./checkRectangleLabelPage.html","_blank");
+                        }else{
+                            window.open("./OutlineLabelPage.html","_blank");
                         }
-                    });
-                }
-            }
 
+                    }
+
+                },
+                error: function() {
+                    alert("error");
+                }
+            });
         }
 
         function myFunction(){
-            var data = window.opener['filter'];
+            var data = JSON.parse(localStorage.getItem("filter"));
             var picSrc = data['picSrc'];
             document.getElementById("picID").value=data['picID'];
             var picID=data['picID'];
-            tID=window.opener['filter']['TaskID'];
+            tID=data['TaskID'];
             var c=document.getElementById('myCanvas');
             var ctx=c.getContext('2d');
             var img=new Image();
