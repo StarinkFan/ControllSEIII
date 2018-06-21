@@ -34,12 +34,26 @@ public class CheckQueryServlet {
     public boolean pass(@RequestBody Map<String,Object> requestMap){
         Integer taskID= Integer.valueOf(requestMap.get("taskID").toString());
         InitTask initTask = initTaskBLService.getSingleITask(taskID);
+        List<String> listOfWorker=JSON.parseArray(initTask.getListOfWoker(),String.class);
+        for(String id:listOfWorker){
+            try {
+                SendTextMessage.sendAnswerChange(id);
+            } catch (ClientException e) {
+                e.printStackTrace();
+            }
+        }
+        String initorID=initTask.getInitorID();
+        try {
+            SendTextMessage.sendQuery(initorID,"成功");
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
         List<Integer> pic_ids = JSON.parseArray(initTask.getListOfP(), Integer.class);
         double value = (double)initTask.getCredit()/initTask.getNum()/pic_ids.size();
         Integer picID= Integer.valueOf(requestMap.get("picID").toString());
         List<String> answer= (List<String>) requestMap.get("answer");
-        userBLService.modify_picTitle(picID,initTask.getKind(),answer,true,value,initTask.getInitorID());
-        userBLService.modify_picTitle(picID,initTask.getKind(),answer,false,value,initTask.getInitorID());
+        userBLService.modify_picTitle(picID,initTask.getKind(),answer,true,value,initTask.getID());
+        userBLService.modify_picTitle(picID,initTask.getKind(),answer,false,value,initTask.getID());
         return true;
     }
 
