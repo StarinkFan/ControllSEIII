@@ -384,7 +384,9 @@ function loadTask() {
             pictag.appendChild(picbt1);
             pictag.appendChild(picbt2);
             pictag.appendChild(picbt3);
-            taskDetail_pics.appendChild(picitem);
+            taskDetail_pics.appendChild(picitem)
+            console.log(picConditions);
+            console.log(picTags)
             if (picConditions[i] == 1) {
                 if (picTags[i] == 1) {
                     /*var p1=document.getElementById("picbt10");
@@ -543,10 +545,12 @@ function loadTask() {
         }
 
     function clickUnderwayTag(){
+
         for(var i=0;i<picurls.length;i++){
             !function (i) {
                 var btn1=document.getElementById('picbt1'+i);
                 btn1.addEventListener("click",function () {
+                    console.log(picConditions);
                     if(picConditions[i]==0){
                         localStorage.setItem('order',i);
                         localStorage.setItem('picIDs',JSON.stringify(picIDs));
