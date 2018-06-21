@@ -116,6 +116,7 @@
         <div class="taskDetail" id="taskDetail">
             <!--<img class="taskDetail-m" id="taskDetail-m">-->
             <div class="taskDetail-div" id="taskDetail-div">
+                <img class="taskimg" id="taskimg">
                 <label class="menu-label1" id="menu-label2">标注情况:</label>
 
                 <button class="taskDetail-close" id="taskDetail-close" onclick=taskDetailClose()>×</button>
@@ -160,6 +161,7 @@
 
     var marklist=new Array();
     var oldanswer='';
+    var num=0;
 
 
     labelIDs[0]='01';
@@ -167,21 +169,21 @@
     labelIDs[2]='03';
     labelIDs[3]='04';
     labelIDs[4]='05';
-    labelInfos[0]='right';
-    labelInfos[1]='right';
-    labelInfos[2]='sd';
-    labelInfos[3]='sd';
-    labelInfos[4]='sd';
+    labelInfos[0]='right342342342342';
+    labelInfos[1]='righ34r34fvbnlkbt';
+    labelInfos[2]='sddfvdfnbldfknlek';
+    labelInfos[3]='dfvdfvfdvdfvdfvsd';
+    labelInfos[4]='fdvdfvdfvdfvdfvdfvdfvdfvdfvdfvdfvdfsd';
     isRight[0]='1';
     isRight[1]='1';
     isRight[2]='0';
     isRight[3]='0';
     isRight[4]='0';
-    peoples[0]='2';
-    peoples[1]='2';
-    peoples[2]='3';
-    peoples[3]='3';
-    peoples[4]='3';
+    peoples[0]='1';
+    peoples[1]='1';
+    peoples[2]='1';
+    peoples[3]='1';
+    peoples[4]='1';
     workerIDs[0]='c';
     workerIDs[1]='c';
     workerIDs[2]='c';
@@ -194,7 +196,7 @@
     workerNames[4]='w05';
 
 
-    taskIDs[0]='01';
+    /*taskIDs[0]='01';
     taskIDs[1]='02';
     taskIDs[2]='03';
     taskIDs[3]='04';
@@ -233,13 +235,13 @@
     taskReasons[1]="ebvieshvilwejfledmcldkmvkldfnvldkfnvldfvn";
     taskReasons[2]="ebvieshvilwejfledmcldkmvkldfnvldkfnvldfvn";
     taskReasons[3]="ebvieshvilwejfledmcldkmvkldfnvldkfnvldfvn";
-    taskReasons[4]="ebvieshvilwejfledmcldkmvkldfnvldkfnvldfvn";
+    taskReasons[4]="ebvieshvilwejfledmcldkmvkldfnvldkfnvldfvn";*/
 
 
 
 function clickAppeal() {
     /*审核申诉列表 inittaskid，requestorID，name，workerid,name,picid,url,申诉原因*/
-    /*var html = $.ajax({
+    var html = $.ajax({
         type: "Post",
         url: '/review/appeal',
         dataType:'json',
@@ -269,9 +271,9 @@ function clickAppeal() {
         error: function() {
             alert("error");
         }
-    });*/
-    $("#info").children("div").remove();
-    loadReview();
+    });
+    /*$("#info").children("div").remove();
+    loadReview();*/
 }
 
     var info =document.createElement("info");
@@ -324,6 +326,7 @@ function clickAppeal() {
         clickTaskDetail();
     }
     var taskDetail_div=document.getElementById("taskDetail-div");
+    var taskimg=document.getElementById('taskimg');
     var taskDetail_pics = document.createElement("div");
     taskDetail_pics.className="taskDetail-pics";
     taskDetail_pics.id="taskDetail-pics";
@@ -332,10 +335,12 @@ function clickAppeal() {
             !function (i) {
                 var bt1=document.getElementById('bt1'+i);
                 bt1.addEventListener("click",function () {
+                    taskimg.src=taskPicurls[i];
+                    num=i;
                     /* 给图片id，获取list含标注id，标注information，人数（标注该information的人数），对应的workerid，workername*/
-                    /*var obj=new Object();
+                    var obj=new Object();
                     obj={
-                        picID:picID
+                        picID:picIDs[i],
                     };
                     var html = $.ajax({
                         type: "Post",
@@ -364,13 +369,14 @@ function clickAppeal() {
                         error: function() {
                             alert("error");
                         }
-                    });*/
+                    });
 
                     /*点击展开查看页面*/
                     $("#taskDetail-pics").children("span").remove();
                     var taskDetail=document.getElementById('taskDetail');
                     taskDetail.style.display='block';
                     var m=0;
+                    marklist=[];
                     while(m<labelInfos.length){
                         marklist.push(labelInfos[m]);
                         m=parseInt(m)+parseInt(peoples[m]);
@@ -413,49 +419,74 @@ function clickAppeal() {
     }
 
 
-    /*申诉通过，给任务inittaskid，picid，正确答案list（可能0，也可能大于1，修改答案,通知发起者（requestor）申诉者（worker）（？，返回结果成功*/
-   /* var obj={
-        taskID:taskIDs[i],
-        picID:taskPicIDs[i],
-        answer:answerlist,
-    };
-    var html = $.ajax({
-        type: "Post",
-        url: '/checkAppeal/pass',
-        data:JSON.stringify(obj),
-        dataType:'json',
-        contentType: "application/json",
-        async: false,
-        success: function(data) {
-            clickReview();
-        },
-        error: function() {
-            alert("error");
+
+
+
+    function taskDetailSubmit() {
+        obj=document.getElementsByName("answer");
+        check_val=[];
+        for(k in obj){
+            if(obj[k].checked){
+                check_val.push(obj[k].value);
+            }
         }
-    });*/
-
-    /*申诉失败，给任务inittaskid，picid,workerid,通知申诉者（worker）（？，返回结果成功*/
-   /* var obj={
-        taskID:taskIDs[i],
-        picID:taskPicIDs[i],
-        workerID:taskWorkerIDs[i],
-    };
-    var html = $.ajax({
-        type: "Post",
-        url: '/checkAppeal/nopass',
-        data:JSON.stringify(obj),
-        dataType:'json',
-        contentType: "application/json",
-        async: false,
-        success: function(data) {
-            clickReview();
-        },
-        error: function() {
-            alert("error");
+        if(check_val.length==1&&check_val[0]==oldanswer){
+            console.log("no"+num);
+            /*申诉失败，给任务inittaskid，picid,workerid,通知申诉者（worker）（？，返回结果成功*/
+            var obj={
+                 taskID:taskIDs[num],
+                 picID:taskPicIDs[num],
+                 workerID:taskWorkerIDs[num],
+             };
+             var html = $.ajax({
+                 type: "Post",
+                 url: '/checkAppeal/nopass',
+                 data:JSON.stringify(obj),
+                 dataType:'json',
+                 contentType: "application/json",
+                 async: false,
+                 success: function(data) {
+                     var taskDetail=document.getElementById('taskDetail');
+                     taskDetail.style.display='none';
+                     clickAppeal();
+                 },
+                 error: function() {
+                     alert("error");
+                 }
+             });
+            /*var taskDetail=document.getElementById('taskDetail');
+            taskDetail.style.display='none';
+            clickAppeal();*/
         }
-    });*/
-
-
+        else{
+            console.log("submit");
+            /*申诉通过，给任务inittaskid，picid，正确答案list（可能0，也可能大于1，修改答案,通知发起者（requestor）申诉者（worker）（？，返回结果成功*/
+            var obj={
+                 taskID:taskIDs[num],
+                 picID:taskPicIDs[num],
+                 answer:check_val,,
+             };
+             var html = $.ajax({
+                 type: "Post",
+                 url: '/checkAppeal/pass',
+                 data:JSON.stringify(obj),
+                 dataType:'json',
+                 contentType: "application/json",
+                 async: false,
+                 success: function(data) {
+                     var taskDetail=document.getElementById('taskDetail');
+                     taskDetail.style.display='none';
+                     clickAppeal();
+                 },
+                 error: function() {
+                     alert("error");
+                 }
+             });
+            /*var taskDetail=document.getElementById('taskDetail');
+            taskDetail.style.display='none';
+            clickAppeal();*/
+        }
+    }
 
     function taskDetailClose() {
         var taskDetail=document.getElementById('taskDetail');

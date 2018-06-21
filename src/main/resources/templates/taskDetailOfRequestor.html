@@ -213,13 +213,19 @@
         var taskinfo1=document.getElementById('task-infop1');
         var taskimg=document.getElementById('task-img');
         var rightAnswer="";
-        for(var s=0;s<isRight.length;s++){
-            if(isRight==1){
-                rightAnswer=rightAnswer+" "+labelInfos[s];
+        if(isRight[0]==0){
+            taskinfo1.innerText="正确答案： 【无】";
+        }
+        else{
+            for(var s=0;s<isRight.length;s++){
+                if(isRight==1){
+                    rightAnswer=rightAnswer+" "+labelInfos[s];
+                }
             }
+
+            taskinfo1.innerText="正确答案： 【"+rightAnswer+"】";
         }
 
-        taskinfo1.innerText="正确答案： 【"+rightAnswer+"】";
         taskimg.src=picurl;
 
 
