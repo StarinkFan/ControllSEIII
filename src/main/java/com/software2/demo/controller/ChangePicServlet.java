@@ -1,11 +1,21 @@
 package com.software2.demo.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.software2.demo.bean.InitTask;
+import com.software2.demo.bean.WorkTask;
+import com.software2.demo.bean.picture;
+import com.software2.demo.service.InitTaskBLService;
+import com.software2.demo.service.PictureBLService;
+import com.software2.demo.service.WorkTaskBLService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,13 +25,72 @@ import java.util.Map;
 @Controller
 @Transactional
 public class ChangePicServlet {
+
+
+    @Autowired
+    WorkTaskBLService workTaskBLService;
+    @Autowired
+    InitTaskBLService initTaskBLService;
+    @Autowired
+    PictureBLService pictureBLService;
+
     /**
-     * @Description：
+     * @Description：查看已关闭的任务的某张图片的上一张图片
      */
     @RequestMapping("/previousPic/check")
     @ResponseBody
     public Map<String,Object> checkPreviousPic(@RequestBody Map<String,Object> requestMap){
+        Map<String,Object> resultMap=new HashMap<>();
         int picID= Integer.parseInt(requestMap.get("picID").toString());
-        return null;
+        int TaskID= Integer.parseInt(requestMap.get("TaskID").toString());
+        String workerID=requestMap.get("workerAccount").toString();
+        WorkTask workTask=workTaskBLService.getSingleWTask(TaskID);
+        InitTask initTask=initTaskBLService.getSingleITask(workTask.getInitTaskID());
+        List<Integer> listOfPicID= JSON.parseArray(initTask.getListOfP(),Integer.class);
+        for(int i=0;i<listOfPicID.size();i++){
+            if(listOfPicID.get(i)==picID){
+                if(i==0){
+                    resultMap.put("result",false);
+                }
+                else{
+                    picture p=pictureBLService.getSinglePicture(listOfPicID.get(i-1));
+                    resultMap.put("result",true);
+                    resultMap.put("picSrc","http://"+p.getUrl());
+                    resultMap.put("picID",p.getID());
+                    resultMap.put("kind",p.getTag());
+                }
+            }
+        }
+        return resultMap;
+    }
+
+    /**
+     * @Description：查看已关闭任务的某张图片的下一张图片
+     */
+    @RequestMapping("/nextPic/check")
+    @ResponseBody
+    public Map<String,Object> checkNextPic(@RequestBody Map<String,Object> requestMap){
+        Map<String,Object> resultMap=new HashMap<>();
+        int picID= Integer.parseInt(requestMap.get("picID").toString());
+        int TaskID= Integer.parseInt(requestMap.get("TaskID").toString());
+        String workerID=requestMap.get("workerAccount").toString();
+        WorkTask workTask=workTaskBLService.getSingleWTask(TaskID);
+        InitTask initTask=initTaskBLService.getSingleITask(workTask.getInitTaskID());
+        List<Integer> listOfPicID= JSON.parseArray(initTask.getListOfP(),Integer.class);
+        for(int i=0;i<listOfPicID.size();i++){
+            if(listOfPicID.get(i)==picID){
+                if(i==listOfPicID.size()-1){
+                    resultMap.put("result",false);
+                }
+                else{
+                    picture p=pictureBLService.getSinglePicture(listOfPicID.get(i+1));
+                    resultMap.put("result",true);
+                    resultMap.put("picSrc","http://"+p.getUrl());
+                    resultMap.put("picID",p.getID());
+                    resultMap.put("kind",p.getTag());
+                }
+            }
+        }
+        return resultMap;
     }
 }
