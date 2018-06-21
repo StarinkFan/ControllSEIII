@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 @Transactional
 @Service
@@ -25,10 +26,14 @@ public class WorkTaskBLImpl implements WorkTaskBLService{
     @Autowired
     pictureDataService pD;
     public WorkTask addWTask(WorkTask w) {
+        Date day = new Date();
+        w.setStarttime(day);
         return wD.save(w);
     }
 
     public ResultMessage modifyTask(WorkTask w) {
+        Date date = new Date();
+        w.setEndtime(date);
         wD.save(w);
         return ResultMessage.SUCCESS;
     }

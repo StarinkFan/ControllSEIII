@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Map;
-
+/**
+ * @Author：Wang Mo
+ * @Description：用于质疑检查
+ */
 @Controller
 @Transactional
 public class CheckQueryServlet {

@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.*;
-
+/**
+ * @Author：Wang Mo
+ * @Description：用于标注检查
+ */
 @Controller
 @Transactional
 @RequestMapping("/check")
