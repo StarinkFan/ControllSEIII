@@ -295,6 +295,7 @@ function loadTask() {
                 picTags=myobj.tag;
                 picLabels=myobj.label;
                 if(taskCondition==0){
+                    console.log(picIDs);
                     loadUPics();
                 }
                 else if(taskCondition==1){
@@ -308,7 +309,7 @@ function loadTask() {
                 alert("error");
             }
         });
-        console.log(picIDs);
+
         /*if(taskCondition==0){
             console.log("ok");
             loadUPics();
@@ -358,6 +359,7 @@ function loadTask() {
     function loadUPics() {
         console.log("ok1");
         for (var i = 0; i < picurls.length; i++) {
+            console.log(picurls);
             var picitem = document.createElement("div");
             var picimg = document.createElement("img");
             var pictag = document.createElement("div");
@@ -415,9 +417,10 @@ function loadTask() {
                 }
 
             }
-            mainbox.appendChild(taskDetail_pics);
-            clickUnderwayTag();
+
         }
+        mainbox.appendChild(taskDetail_pics);
+        clickUnderwayTag();
         }
 
         //finish
@@ -498,9 +501,10 @@ function loadTask() {
                     picbt2.style.display = 'none';
 
                 }
-                mainbox.appendChild(taskDetail_pics);
-                clickUnfinishedTag();
+
             }
+            mainbox.appendChild(taskDetail_pics);
+            clickUnfinishedTag();
         }
 
         //close
@@ -535,7 +539,7 @@ function loadTask() {
                 taskDetail_pics.appendChild(picitem);
             }
             mainbox.appendChild(taskDetail_pics);
-            clickCloseTag(k);
+            clickCloseTags();
         }
 
     function clickUnderwayTag(){
