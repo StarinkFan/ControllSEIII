@@ -24,7 +24,20 @@
 
 
         function logout(){
-            window.open("./homepage.html","_self");
+            var html = $.ajax({
+                type: "Post",
+                url: '/logout',
+                dataType: 'json',
+                contentType: "application/json",
+                async: true,
+                data: JSON.stringify(obj),
+                success: function () {
+                    window.open("./homepage.html","_self");
+                },
+                error: function () {
+                    window.open("./homepage.html","_self");
+                }
+            });
         }
 
         function goPersonalSpace(){
@@ -160,7 +173,7 @@
     var workerNames=new Array();
     var workerTags=new Array();
 
-    taskIDs[0]='01';
+    /*taskIDs[0]='01';
     taskIDs[1]='02';
     taskIDs[2]='03';
     taskIDs[3]='04';
@@ -243,7 +256,7 @@
     picurls[7]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
     picurls[8]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
     picurls[9]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
-    picurls[10]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';
+    picurls[10]='http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg';*/
 
     function sortChange() {
         var select=document.getElementById("menu-select");
@@ -283,7 +296,7 @@
     /*根据requestorID（？）获取该发布者的进行中任务的信息（inittask任务的id，任务要求（string）、要求标注类型（0无1整体2方框3描边）、
     积分、人数、参与者人数、第一张图片的url、开始时间、截止时间、分类、标签(分隔:)*/
     function clickUnfinished () {
-        /*var obj=new Object();
+        var obj=new Object();
         obj={
             requestorID:requestorID,
             sortNum:sortnum,//排序方式按id，1参与人数，2奖励
@@ -331,15 +344,15 @@
             error: function() {
                 alert("error");
             }
-        });*/
-        $("#main").children("div").remove();
-        loadtask();
+        });
+        /*$("#main").children("div").remove();
+        loadtask();*/
     }
 
     /*根据requestorID（？）获取该发布者的已关闭任务的信息（inittask任务的id，任务要求（string）、要求标注类型（0无1整体2方框3描边）、
    积分、人数、参与者人数、第一张图片的url、开始时间、截止时间 */
     function clickEnd () {
-       /* var obj=new Object();
+       var obj=new Object();
         obj={
             requestorID:requestorID,
             sortNum:sortnum,//排序方式按id，1参与人数，2奖励
@@ -389,14 +402,14 @@
             error: function() {
                 alert("error");
             }
-        });*/
-        $("#main").children("div").remove();
-        loadtask();
+        });
+        /*$("#main").children("div").remove();
+        loadtask();*/
     }
 
     /*根据requestorID（？）获取该worker的已完成任务的信息任务的id，任务要求（string）、要求标注类型（0无1整体2方框3描边）、积分、人数、参与人数、第一张图片的url、开始时间、结束时间*/
     function clickFinished () {
-        /*var obj=new Object();
+        var obj=new Object();
         obj={
             requestorID:requestorID,
             sortNum:sortnum,//排序方式按id，1参与人数，2奖励
@@ -447,14 +460,14 @@
             error: function() {
                 alert("error");
             }
-        });*/
-        $("#main").children("div").remove();
-        loadtask();
+        });
+        /*$("#main").children("div").remove();
+        loadtask();*/
     }
 
     /*根据requestorID（？）获取该worker的审核中任务的信息（任务的id，任务要求（string）、要求标注类型（0无1整体2方框3描边）、积分、人数、第一张图片的url*/
     function clickReview () {
-       /* var obj=new Object();
+       var obj=new Object();
         obj={
             requestorID:requestorID,
             sortKind:sortKind,//分类,string,全部+所有分类
@@ -501,14 +514,14 @@
             error: function() {
                 alert("error");
             }
-        });*/
-        $("#main").children("div").remove();
-        loadtask();
+        });
+       /* $("#main").children("div").remove();
+        loadtask();*/
     }
 
     /*根据requestorID（？）获取该worker的未通过审核任务的信息（任务的id，任务要求（string）、要求标注类型（0无1整体2方框3描边）、积分、人数、第一张图片的url、未通过原因*/
     function clickNopass () {
-       /* var obj=new Object();
+       var obj=new Object();
         obj={
             requestorID:requestorID
         };
@@ -554,9 +567,9 @@
             error: function() {
                 alert("error");
             }
-        });*/
-        $("#main").children("div").remove();
-        loadtask();
+        });
+        /*$("#main").children("div").remove();
+        loadtask();*/
     }
 
     function loadtask() {
@@ -647,7 +660,7 @@
                 var btn=document.getElementById('bt'+i);
                 btn.addEventListener("click",function () {
                     /*根据任务inittaskid获取该任务的所有图片（每张图片的id、url）*/
-                   /* var obj=new Object();
+                   var obj=new Object();
                     obj={
                         taskID:taskIDs[i]
                     };
@@ -667,7 +680,7 @@
                         error: function() {
                             alert("error");
                         }
-                   });*/
+                   });
                     /*点击展开查看页面*/
                     if(taskConditions[i]==2){
                         console.log("unf");

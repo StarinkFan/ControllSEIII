@@ -3,6 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="../static/reviewComplaintsOfManagerCSS.css" type="text/css"/>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script>
+        var account=localStorage.account;
+        var name=localStorage.nickname;
+
+        window.onload=function () {
+            document.getElementById('username').innerText = name;
+            var username = document.getElementById('username');
+            username.onmouseover = function () {
+                document.getElementById("menu").style.display = "inherit";
+            }
+            document.getElementById("userbar").onmouseleave = function (e) {
+                if (e.target.id != "nemu") {
+                    document.getElementById("menu").style.display = "none";
+                }
+            }
+
+            clickComplaints();
+
+        }
+
+        function logout(){
+            window.open("./homepage.html","_self");
+        }
+    </script>
 </head>
 <body>
 <script>
