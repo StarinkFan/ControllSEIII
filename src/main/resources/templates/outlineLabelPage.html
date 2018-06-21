@@ -105,6 +105,8 @@
         var workerAccount;
         var picSrc;
 
+        var tID;
+
         function previousPic(){
             if(order==0){
                 alert("已是第一张图片！");
@@ -190,9 +192,10 @@
 
 
         function myFunction(){
-            var data = window.opener['filter'];
+            var data = JSON.parse(localStorage.getItem("filter"));
             picSrc = data['picSrc'];
             document.getElementById("picID").value=data['picID'];
+            tID=data['TaskID']
 
             var c=document.getElementById('myCanvas');
             var ctx=c.getContext('2d');
@@ -206,7 +209,7 @@
                 c.height=height;
                 c.width=width;
                 ctx.drawImage(img,0,0);
-            }
+            };
 
 
             document.getElementById('demand').value=data['demand'];
@@ -228,7 +231,7 @@
             }
             partLabel.tag=3;
             partLabel.workerAccount=localStorage.account;
-            partLabel.TaskID=window.opener['filter']['TaskID'];
+            partLabel.TaskID=tID;
             partLabel.color=color;
 
 

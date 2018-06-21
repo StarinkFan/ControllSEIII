@@ -191,13 +191,13 @@
         }
 
         function myFunction(){
-            var data = window.opener['filter'];
+            var data = JSON.parse(localStorage.getItem("filter"));
             var picSrc = data['picSrc'];
             document.getElementById("picID").value=data['picID'];
             document.getElementById('demand').value=data['demand'];
             document.getElementById('category').innerText="分类："+data['category'];
             showTags();
-            tID=window.opener['filter']['TaskID'];
+            tID=data['TaskID'];
             var picID=data['picID'];
             var c=document.getElementById('myCanvas');
             var ctx=c.getContext('2d');

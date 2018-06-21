@@ -101,6 +101,7 @@
         var picSrcs=JSON.parse(localStorage.getItem('picSrcs'));
         var picNum=picIDs.length;
         var workerAccount;
+        var tID;
 
         function previousPic(){
             if(order==0){
@@ -261,9 +262,10 @@
         };
 
         function myFunction(){
-            var data = window.opener['filter'];
+            var data = JSON.parse(localStorage.getItem("filter"));
             var hostIp = data['picSrc'];
             document.getElementById("picID").value=data["picID"];
+            tID=data['TaskID']
 
             var c=document.getElementById('myCanvas');
             var ctx=c.getContext('2d');
@@ -275,7 +277,7 @@
                 c.height=height;
                 c.width=width;
                 ctx.drawImage(img,0,0);
-            }
+            };
             document.getElementById('demand').value=data['demand'];
             document.getElementById('category').innerText="分类："+data['category'];
             showTags();
@@ -295,7 +297,7 @@
             }
             partLabel.tag=2;
             partLabel.workerAccount=localStorage.account;
-            partLabel.TaskID=window.opener['filter']['TaskID'];
+            partLabel.TaskID=tID;
 
             partLabel.color=color;
 

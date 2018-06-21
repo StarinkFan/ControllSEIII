@@ -76,6 +76,7 @@
         var picSrcs=JSON.parse(localStorage.getItem('picSrcs'));
         var picNum=picIDs.length;
         var workerAccount;
+        var tID;
 
         function previousPic(){
             if(order==0){
@@ -101,10 +102,11 @@
         }
 
         function myFunction(){
-            var data = window.opener['filter'];
+            var data = JSON.parse(localStorage.getItem("filter"));
             var picSrc = data['picSrc'];
             document.getElementById("picture").src=picSrc;
             document.getElementById("picID").value=data['picID'];
+            tID=data['TaskID']
 
 
             document.getElementById('demand').value=data['demand'];
@@ -119,7 +121,7 @@
             wholeLabel.d=description;
             wholeLabel.pID=document.getElementById("picID").value;
             wholeLabel.workerAccount=localStorage.account;
-            wholeLabel.TaskID=window.opener['filter']['TaskID'];
+            wholeLabel.TaskID=tID;
 
             var html = $.ajax({
                 type: "Post",
