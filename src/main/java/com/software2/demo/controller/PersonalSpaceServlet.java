@@ -120,7 +120,7 @@ public class PersonalSpaceServlet {
             a[i++] = t.toArray();
         }
         Map<String,Object> resultMap=new HashMap<>();
-        requestMap.put("data",a);
+        resultMap.put("data",a);
         return resultMap;
     }
 
