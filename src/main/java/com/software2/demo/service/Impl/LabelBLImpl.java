@@ -75,4 +75,22 @@ public class LabelBLImpl implements LabelBLService{
     public List<Label> getAll() {
         return labelData.findAll();
     }
+
+    @Override
+    public WorkTask getWTask(int id) {
+        Label l=labelData.findById(id).get();
+        String workerID=l.getGiverID();
+        User worker=userDataService.findById(workerID).get();
+        List<Integer> listOfWorkTask=JSON.parseArray(worker.getListOfWTask(),Integer.class);
+        for(int i:listOfWorkTask){
+            WorkTask workTask=workTaskDataService.findById(i).get();
+            List<Integer> listOfLabel=JSON.parseArray(workTask.getListOfLabel(),Integer.class);
+            for(int labelID:listOfLabel){
+                if(labelID==id){
+                    return workTask;
+                }
+            }
+        }
+        return null;
+    }
 }

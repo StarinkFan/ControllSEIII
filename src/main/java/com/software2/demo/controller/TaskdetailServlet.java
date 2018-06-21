@@ -21,6 +21,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @Author:Wang Mo
+ * @Description：实现返回图片的详细标注结果；生成质疑
+ */
+
 @Controller
 @Transactional
 public class TaskdetailServlet {
@@ -32,6 +37,10 @@ public class TaskdetailServlet {
     UserBLService userBLService;
     @Autowired
     QueryBLService queryBLService;
+
+    /**
+     * @Description：根据图片Id，查看图片的标注结果。返回标注id、标注information、是否正确、人数（标注该information的人数、对应的workerid、workername、该工人的标注方式（第一个放正确的）、workTaskID
+     */
     @RequestMapping("/taskDetail")
     @ResponseBody
     public Map<String,Object> taskDetail(@RequestBody Map<String,Object> requestMap){
@@ -48,40 +57,98 @@ public class TaskdetailServlet {
         List<String> workerid=new ArrayList<>();
         List<String> workername=new ArrayList<>();
         List<Integer> right=new ArrayList<>();
+        List<Integer> tag=new ArrayList<>();
+        List<Integer> worktaskid=new ArrayList<>();
         int count=0;
         for(int i=0;i<listOflabel.size();i++){
             Label l=listOflabel.get(i);
             boolean in=false;
-            for(String str:info){
-                if(str.equals(l.getInfo())){
-                    in=true;
-                }
-            }
-            if(in){
-                break;
-            }
-            else{
-                labelid.add(l.getID());
-                info.add(l.getInfo());
-                count++;
-                workerid.add(l.getGiverID());
-                workername.add(userBLService.getSingle(l.getGiverID()).getName());
-                for(int n=i+1;n<listOflabel.size();n++){
-                    Label temp=listOflabel.get(n);
-                    if(temp.getInfo().equals(l.getInfo())){
-                        labelid.add(temp.getID());
-                        info.add(temp.getInfo());
-                        count++;
-                        right.add(0);//因自动评估暂未实现，此处全部设为0，待改
-                        workerid.add(temp.getGiverID());
-                        workername.add(userBLService.getSingle(temp.getGiverID()).getName());
+
+            //判断同样内容的标注是否已添加进入info
+            //先将正确的标注信息加入
+            if(l.getState()==1) {
+                for (String str : info) {
+                    if (str.equals(l.getInfo())) {
+                        in = true;
+                        break;
                     }
                 }
+                if (in) {
+                    break;
+                } else {
+                    labelid.add(l.getID());
+                    info.add(l.getInfo());
+                    count++;
+                    workerid.add(l.getGiverID());
+                    workername.add(userBLService.getSingle(l.getGiverID()).getName());
+                    tag.add(l.getTag());
+                    worktaskid.add(lS.getWTask(l.getID()).getID());
+
+                    //从当前标注开始，向后查找同内容标注
+                    for (int n = i + 1; n < listOflabel.size(); n++) {
+                        Label temp = listOflabel.get(n);
+                        if (temp.getInfo().equals(l.getInfo())) {
+                            labelid.add(temp.getID());
+                            info.add(temp.getInfo());
+                            count++;
+                            right.add(l.getState());
+                            workerid.add(temp.getGiverID());
+                            workername.add(userBLService.getSingle(temp.getGiverID()).getName());
+                            tag.add(temp.getTag());
+                            worktaskid.add(lS.getWTask(l.getID()).getID());
+                        }
+                    }
+                }
+                for (int m = 0; m < count; m++) {
+                    num.add(count);
+                }
+                count = 0;
             }
-            for(int m=0;m<count;m++){
-                num.add(count);
+        }
+        for(int i=0;i<listOflabel.size();i++){
+            Label l=listOflabel.get(i);
+            boolean in=false;
+
+            //判断同样内容的标注是否已添加进入info
+            //再将错误的标注信息加入
+            if(l.getState()==2) {
+                for (String str : info) {
+                    if (str.equals(l.getInfo())) {
+                        in = true;
+                        break;
+                    }
+                }
+                if (in) {
+                    break;
+                } else {
+                    labelid.add(l.getID());
+                    info.add(l.getInfo());
+                    count++;
+                    workerid.add(l.getGiverID());
+                    workername.add(userBLService.getSingle(l.getGiverID()).getName());
+                    tag.add(l.getTag());
+                    worktaskid.add(lS.getWTask(l.getID()).getID());
+
+                    //从当前标注开始，向后查找同内容标注
+                    for (int n = i + 1; n < listOflabel.size(); n++) {
+                        Label temp = listOflabel.get(n);
+                        if (temp.getInfo().equals(l.getInfo())) {
+                            count++;
+                            labelid.add(temp.getID());
+                            info.add(temp.getInfo());
+                            right.add(l.getState());
+                            workerid.add(temp.getGiverID());
+                            workername.add(userBLService.getSingle(temp.getGiverID()).getName());
+                            tag.add(temp.getTag());
+                            worktaskid.add(lS.getWTask(l.getID()).getID());
+                        }
+                    }
+                }
+                for (int m = 0; m < count; m++) {
+                    num.add(count);
+                }
+                count = 0;
             }
-            count=0;
         }
         Map<String,Object> resultMap=new HashMap<>();
         resultMap.put("labelid",labelid);
@@ -90,9 +157,14 @@ public class TaskdetailServlet {
         resultMap.put("right",right);
         resultMap.put("workerid",workerid);
         resultMap.put("workername",workername);
+        resultMap.put("tag",tag);
+        resultMap.put("worktaskid",worktaskid);
         return resultMap;
     }
 
+    /**
+     *@Description：根据initTaskID、图片ID、质疑理由、质疑用户ID，生成质疑
+     */
     @RequestMapping("/taskDetail/query")
     @ResponseBody
     public boolean query(@RequestBody Map<String,Object> requestMap){
