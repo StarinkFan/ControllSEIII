@@ -379,7 +379,7 @@
                         localStorage.setItem('taskTags',JSON.stringify(tempm));
                         localStorage.setItem('demand',taskRequest);
                         localStorage.setItem('category',taskKind);
-                        var postData = {'picSrc': taskPicurls[i], 'picID': taskPicurls[i], 'workerAccount': managerID, 'tag': 2,'TaskID':workTaskIDs[i]};
+                        var postData = {'picSrc': taskPicurls[i], 'picID': taskPicIDs[i], 'workerAccount': managerID, 'tag': 2,'TaskID':workTaskIDs[i]};
                         localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./checkRectangleLabelPage.html", "_blank");
                     }
@@ -404,7 +404,7 @@
                         localStorage.setItem('taskTags',JSON.stringify(tempm));
                         localStorage.setItem('demand',taskRequest);
                         localStorage.setItem('category',taskKind);
-                        var postData = {'picSrc': taskPicurls[i], 'picID': taskPicurls[i], 'workerAccount': managerID, 'tag': 2,'TaskID':workTaskIDs[i]};
+                        var postData = {'picSrc': taskPicurls[i], 'picID': taskPicIDs[i], 'workerAccount': managerID, 'tag': 2,'TaskID':workTaskIDs[i]};
                         localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./checkOutlineLabelPage.html", "_blank");
                     }
