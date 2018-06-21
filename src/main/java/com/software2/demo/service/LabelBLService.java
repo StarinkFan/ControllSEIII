@@ -2,6 +2,7 @@ package com.software2.demo.service;
 
 import com.software2.demo.ResultMessage;
 import com.software2.demo.bean.Label;
+import com.software2.demo.bean.WorkTask;
 
 import java.util.List;
 
@@ -12,4 +13,5 @@ public interface LabelBLService {
     public ResultMessage modifyLabel(Label l);
     public Label getSingleLabel(int id);
     public List<Label> getAll();
+    public WorkTask getWTask(int id);
 }

@@ -43,6 +43,7 @@ public class WholeLabelServlet {
         l.setD(JSON.toJSONString(d));
         l.setPID(Integer.parseInt(pID));
         l.setState(0);
+        l.setTag(1);
         ResultMessage result=service.addLabel(l,Integer.parseInt(workTaskID));
         CheckStateUtil.checkWT(Integer.parseInt(workTaskID));
         if(result==ResultMessage.SUCCESS)
