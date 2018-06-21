@@ -547,6 +547,8 @@ function loadTask() {
                         localStorage.setItem('order',i);
                         localStorage.setItem('picIDs',JSON.stringify(picIDs));
                         localStorage.setItem('picSrcs',JSON.stringify(picurls));
+                        localStorage.setItem('demand',taskRequest);
+                        localStorage.setItem('category',taskKind);
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
                         localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./rectangleLabelPage.html","_blank");
@@ -556,6 +558,8 @@ function loadTask() {
                             localStorage.setItem('order',i);
                             localStorage.setItem('picIDs',JSON.stringify(picIDs));
                             localStorage.setItem('picSrcs',JSON.stringify(picurls));
+                            localStorage.setItem('demand',taskRequest);
+                            localStorage.setItem('category',taskKind);
                             var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
                             localStorage.setItem('filter',JSON.stringify(postData));
                             window.open("./editRectangleLabelPage.html","_blank");
@@ -568,6 +572,8 @@ function loadTask() {
                         localStorage.setItem('order',i);
                         localStorage.setItem('picIDs',JSON.stringify(picIDs));
                         localStorage.setItem('picSrcs',JSON.stringify(picurls));
+                        localStorage.setItem('demand',taskRequest);
+                        localStorage.setItem('category',taskKind);
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
                         localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./wholeLabelPage.html","_blank");
@@ -577,6 +583,8 @@ function loadTask() {
                             localStorage.setItem('order',i);
                             localStorage.setItem('picIDs',JSON.stringify(picIDs));
                             localStorage.setItem('picSrcs',JSON.stringify(picurls));
+                            localStorage.setItem('demand',taskRequest);
+                            localStorage.setItem('category',taskKind);
                             var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
                             localStorage.setItem('filter',JSON.stringify(postData));
                             window.open("./EditWholeLabelPage.html","_blank");
@@ -589,6 +597,8 @@ function loadTask() {
                         localStorage.setItem('order',i);
                         localStorage.setItem('picIDs',JSON.stringify(picIDs));
                         localStorage.setItem('picSrcs',JSON.stringify(picurls));
+                        localStorage.setItem('demand',taskRequest);
+                        localStorage.setItem('category',taskKind);
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
                         localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./outlineLabelPage.html","_blank");
@@ -597,7 +607,9 @@ function loadTask() {
                         if(picTags[i]==3){
                             localStorage.setItem('order',i);
                             localStorage.setItem('picIDs',JSON.stringify(picIDs));
-                            localStorage.setItem('picSrcs',JSON.stringify(picurls));
+                            localStorage.setItem('picSrcs',JSON.stringify(picurls))
+                            localStorage.setItem('demand',taskRequest);
+                            localStorage.setItem('category',taskKind);
                             var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
                             localStorage.setItem('filter',JSON.stringify(postData));
                             window.open("./editOutlineLabelPage.html","_blank");
@@ -617,6 +629,8 @@ function loadTask() {
                         localStorage.setItem('order',i);
                         localStorage.setItem('picIDs',JSON.stringify(picIDs));
                         localStorage.setItem('picSrcs',JSON.stringify(picurls));
+                        localStorage.setItem('demand',taskRequest);
+                        localStorage.setItem('category',taskKind);
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
                         localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./EditWholeLabelPage.html","_blank");
@@ -625,6 +639,8 @@ function loadTask() {
                         localStorage.setItem('order',i);
                         localStorage.setItem('picIDs',JSON.stringify(picIDs));
                         localStorage.setItem('picSrcs',JSON.stringify(picurls));
+                        localStorage.setItem('demand',taskRequest);
+                        localStorage.setItem('category',taskKind);
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
                         localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./editRectangleLabelPage.html","_blank");
@@ -633,6 +649,8 @@ function loadTask() {
                         localStorage.setItem('order',i);
                         localStorage.setItem('picIDs',JSON.stringify(picIDs));
                         localStorage.setItem('picSrcs',JSON.stringify(picurls));
+                        localStorage.setItem('demand',taskRequest);
+                        localStorage.setItem('category',taskKind);
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
                         localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./editOutlineLabelPage.html","_blank");
@@ -665,6 +683,8 @@ function loadTask() {
                         tempm[2]=temp[2];
                     }
                     localStorage.setItem('taskTags',JSON.stringify(tempm));
+                    localStorage.setItem('demand',taskRequest);
+                    localStorage.setItem('category',taskKind);
                     var postData ={'picSrc':picurls[i],'picID':picIDs[i],'workerAccount':workerID,'tag':0};
                     localStorage.setItem('filter',JSON.stringify(postData));
                     window.open("./checkRectangleLabelPage.html","_blank");
@@ -689,6 +709,8 @@ function loadTask() {
                         tempm[2]=temp[2];
                     }
                     localStorage.setItem('taskTags',JSON.stringify(tempm));
+                    localStorage.setItem('demand',taskRequest);
+                    localStorage.setItem('category',taskKind);
                     var postData ={'picSrc':picurls[i],'picID':picIDs[i],'workerAccount':workerID,'tag':0};
                     localStorage.setItem('filter',JSON.stringify(postData));
                     window.open("./checkWholeLabelPage.html","_blank");
@@ -745,6 +767,8 @@ function loadTask() {
                             tempm[2]=temp[2];
                         }
                         localStorage.setItem('taskTags',JSON.stringify(tempm));
+                        localStorage.setItem('demand',taskRequest);
+                        localStorage.setItem('category',taskKind);
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'workerAccount':workerID,'tag':0};
                         localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./checkWholeLabelPage.html","_blank");
@@ -768,6 +792,8 @@ function loadTask() {
                             tempm[2]=temp[2];
                         }
                         localStorage.setItem('taskTags',JSON.stringify(tempm));
+                        localStorage.setItem('demand',taskRequest);
+                        localStorage.setItem('category',taskKind);
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'workerAccount':workerID,'tag':0};
                         localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./checkRectangleLabelPage.html","_blank");
@@ -791,6 +817,8 @@ function loadTask() {
                             tempm[2]=temp[2];
                         }
                         localStorage.setItem('taskTags',JSON.stringify(tempm));
+                        localStorage.setItem('demand',taskRequest);
+                        localStorage.setItem('category',taskKind);
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'workerAccount':workerID,'tag':0};
                         localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./checkOutlineLabelPage.html","_blank");

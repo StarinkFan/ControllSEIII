@@ -352,6 +352,8 @@
                             tempm[2]=temp[2];
                         }
                         localStorage.setItem('taskTags',JSON.stringify(tempm));
+                        localStorage.setItem('demand',taskRequest);
+                        localStorage.setItem('category',taskKind);
                         var postData = {'picSrc': taskPicurls[i], 'picID': taskPicIDs[i], 'workerAccount': managerID, 'tag': 2,'TaskID':taskIDs[i]};
                         localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./checkWholeLabelPage.html", "_blank");
