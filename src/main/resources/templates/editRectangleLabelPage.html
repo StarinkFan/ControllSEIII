@@ -212,8 +212,8 @@
             var data = JSON.parse(localStorage.getItem("filter"));
             var picSrc = data['picSrc'];
             document.getElementById("picID").value=data['picID'];
-            document.getElementById('demand').value=data['demand'];
-            document.getElementById('category').innerText="分类："+data['category'];
+            document.getElementById('demand').value=localStorage.demand;
+            document.getElementById('category').innerText="分类："+localStorage.category;
             showTags();
             tID=data['TaskID'];
             var picID=data['picID'];
@@ -406,9 +406,9 @@
         <p style="padding-left: 5px">标注详情：</p>
         <hr style="margin-top: -2%">
         <p style="padding-left: 20px;margin-top: -5px">标注：</p>
-        <input type="text" id="label" style="height:30px;font-family: SimSun-ExtB;font-size:20px;margin-left: 20px;width: 86%;margin-top:-100px" value="苟利">
+        <input type="text" id="label" style="height:30px;font-family: SimSun-ExtB;font-size:20px;margin-left: 20px;width: 86%;margin-top:-100px">
         <p style="padding-left: 20px;">描述：</p>
-        <textarea id="description" style="text-align: left; font-size:19px; width:86%;height: 100px;margin-top:-10px; margin-left: 20px;" name="description">无</textarea>
+        <textarea id="description" style="text-align: left; font-size:19px; width:86%;height: 100px;margin-top:-10px; margin-left: 20px;" name="description"></textarea>
     </div>
 
     <input id="picID"   style="display: none" name="picID"></input>

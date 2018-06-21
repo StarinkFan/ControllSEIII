@@ -295,6 +295,7 @@ function loadTask() {
                 picTags=myobj.tag;
                 picLabels=myobj.label;
                 if(taskCondition==0){
+                    console.log(picIDs);
                     loadUPics();
                 }
                 else if(taskCondition==1){
@@ -308,7 +309,7 @@ function loadTask() {
                 alert("error");
             }
         });
-        console.log(picIDs);
+
         /*if(taskCondition==0){
             console.log("ok");
             loadUPics();
@@ -358,6 +359,7 @@ function loadTask() {
     function loadUPics() {
         console.log("ok1");
         for (var i = 0; i < picurls.length; i++) {
+            console.log(picurls);
             var picitem = document.createElement("div");
             var picimg = document.createElement("img");
             var pictag = document.createElement("div");
@@ -382,7 +384,9 @@ function loadTask() {
             pictag.appendChild(picbt1);
             pictag.appendChild(picbt2);
             pictag.appendChild(picbt3);
-            taskDetail_pics.appendChild(picitem);
+            taskDetail_pics.appendChild(picitem)
+            console.log("1"+picConditions);
+            console.log("2"+picTags)
             if (picConditions[i] == 1) {
                 if (picTags[i] == 1) {
                     /*var p1=document.getElementById("picbt10");
@@ -415,9 +419,10 @@ function loadTask() {
                 }
 
             }
-            mainbox.appendChild(taskDetail_pics);
-            clickUnderwayTag();
+
         }
+        mainbox.appendChild(taskDetail_pics);
+        clickUnderwayTag();
         }
 
         //finish
@@ -498,9 +503,10 @@ function loadTask() {
                     picbt2.style.display = 'none';
 
                 }
-                mainbox.appendChild(taskDetail_pics);
-                clickUnfinishedTag();
+
             }
+            mainbox.appendChild(taskDetail_pics);
+            clickUnfinishedTag();
         }
 
         //close
@@ -535,14 +541,16 @@ function loadTask() {
                 taskDetail_pics.appendChild(picitem);
             }
             mainbox.appendChild(taskDetail_pics);
-            clickCloseTag(k);
+            clickCloseTags();
         }
 
     function clickUnderwayTag(){
+
         for(var i=0;i<picurls.length;i++){
             !function (i) {
                 var btn1=document.getElementById('picbt1'+i);
                 btn1.addEventListener("click",function () {
+                    console.log(picConditions);
                     if(picConditions[i]==0){
                         localStorage.setItem('order',i);
                         localStorage.setItem('picIDs',JSON.stringify(picIDs));
@@ -551,6 +559,21 @@ function loadTask() {
                         localStorage.setItem('category',taskKind);
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
                         localStorage.setItem('filter',JSON.stringify(postData));
+                        var temp=taskMark.split(":");
+                        var tempm=new Array();
+                        if(temp.length==2){
+                            tempm[0]=temp[0];
+                        }
+                        else if(temp.length==3){
+                            tempm[0]=temp[0];
+                            tempm[1]=temp[1];
+                        }
+                        else if(temp.length==4){
+                            tempm[0]=temp[0];
+                            tempm[1]=temp[1];
+                            tempm[2]=temp[2];
+                        }
+                        localStorage.setItem('taskTags',JSON.stringify(tempm));
                         window.open("./rectangleLabelPage.html","_blank");
                     }
                     else if(picConditions[i]==1){
@@ -560,6 +583,21 @@ function loadTask() {
                             localStorage.setItem('picSrcs',JSON.stringify(picurls));
                             localStorage.setItem('demand',taskRequest);
                             localStorage.setItem('category',taskKind);
+                            var temp=taskMark.split(":");
+                            var tempm=new Array();
+                            if(temp.length==2){
+                                tempm[0]=temp[0];
+                            }
+                            else if(temp.length==3){
+                                tempm[0]=temp[0];
+                                tempm[1]=temp[1];
+                            }
+                            else if(temp.length==4){
+                                tempm[0]=temp[0];
+                                tempm[1]=temp[1];
+                                tempm[2]=temp[2];
+                            }
+                            localStorage.setItem('taskTags',JSON.stringify(tempm));
                             var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
                             localStorage.setItem('filter',JSON.stringify(postData));
                             window.open("./editRectangleLabelPage.html","_blank");
@@ -574,6 +612,21 @@ function loadTask() {
                         localStorage.setItem('picSrcs',JSON.stringify(picurls));
                         localStorage.setItem('demand',taskRequest);
                         localStorage.setItem('category',taskKind);
+                        var temp=taskMark.split(":");
+                        var tempm=new Array();
+                        if(temp.length==2){
+                            tempm[0]=temp[0];
+                        }
+                        else if(temp.length==3){
+                            tempm[0]=temp[0];
+                            tempm[1]=temp[1];
+                        }
+                        else if(temp.length==4){
+                            tempm[0]=temp[0];
+                            tempm[1]=temp[1];
+                            tempm[2]=temp[2];
+                        }
+                        localStorage.setItem('taskTags',JSON.stringify(tempm));
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
                         localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./wholeLabelPage.html","_blank");
@@ -599,6 +652,21 @@ function loadTask() {
                         localStorage.setItem('picSrcs',JSON.stringify(picurls));
                         localStorage.setItem('demand',taskRequest);
                         localStorage.setItem('category',taskKind);
+                        var temp=taskMark.split(":");
+                        var tempm=new Array();
+                        if(temp.length==2){
+                            tempm[0]=temp[0];
+                        }
+                        else if(temp.length==3){
+                            tempm[0]=temp[0];
+                            tempm[1]=temp[1];
+                        }
+                        else if(temp.length==4){
+                            tempm[0]=temp[0];
+                            tempm[1]=temp[1];
+                            tempm[2]=temp[2];
+                        }
+                        localStorage.setItem('taskTags',JSON.stringify(tempm));
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
                         localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./outlineLabelPage.html","_blank");
@@ -610,6 +678,21 @@ function loadTask() {
                             localStorage.setItem('picSrcs',JSON.stringify(picurls))
                             localStorage.setItem('demand',taskRequest);
                             localStorage.setItem('category',taskKind);
+                            var temp=taskMark.split(":");
+                            var tempm=new Array();
+                            if(temp.length==2){
+                                tempm[0]=temp[0];
+                            }
+                            else if(temp.length==3){
+                                tempm[0]=temp[0];
+                                tempm[1]=temp[1];
+                            }
+                            else if(temp.length==4){
+                                tempm[0]=temp[0];
+                                tempm[1]=temp[1];
+                                tempm[2]=temp[2];
+                            }
+                            localStorage.setItem('taskTags',JSON.stringify(tempm));
                             var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
                             localStorage.setItem('filter',JSON.stringify(postData));
                             window.open("./editOutlineLabelPage.html","_blank");
@@ -631,6 +714,21 @@ function loadTask() {
                         localStorage.setItem('picSrcs',JSON.stringify(picurls));
                         localStorage.setItem('demand',taskRequest);
                         localStorage.setItem('category',taskKind);
+                        var temp=taskMark.split(":");
+                        var tempm=new Array();
+                        if(temp.length==2){
+                            tempm[0]=temp[0];
+                        }
+                        else if(temp.length==3){
+                            tempm[0]=temp[0];
+                            tempm[1]=temp[1];
+                        }
+                        else if(temp.length==4){
+                            tempm[0]=temp[0];
+                            tempm[1]=temp[1];
+                            tempm[2]=temp[2];
+                        }
+                        localStorage.setItem('taskTags',JSON.stringify(tempm));
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
                         localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./EditWholeLabelPage.html","_blank");
@@ -641,6 +739,21 @@ function loadTask() {
                         localStorage.setItem('picSrcs',JSON.stringify(picurls));
                         localStorage.setItem('demand',taskRequest);
                         localStorage.setItem('category',taskKind);
+                        var temp=taskMark.split(":");
+                        var tempm=new Array();
+                        if(temp.length==2){
+                            tempm[0]=temp[0];
+                        }
+                        else if(temp.length==3){
+                            tempm[0]=temp[0];
+                            tempm[1]=temp[1];
+                        }
+                        else if(temp.length==4){
+                            tempm[0]=temp[0];
+                            tempm[1]=temp[1];
+                            tempm[2]=temp[2];
+                        }
+                        localStorage.setItem('taskTags',JSON.stringify(tempm));
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
                         localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./editRectangleLabelPage.html","_blank");
@@ -651,6 +764,21 @@ function loadTask() {
                         localStorage.setItem('picSrcs',JSON.stringify(picurls));
                         localStorage.setItem('demand',taskRequest);
                         localStorage.setItem('category',taskKind);
+                        var temp=taskMark.split(":");
+                        var tempm=new Array();
+                        if(temp.length==2){
+                            tempm[0]=temp[0];
+                        }
+                        else if(temp.length==3){
+                            tempm[0]=temp[0];
+                            tempm[1]=temp[1];
+                        }
+                        else if(temp.length==4){
+                            tempm[0]=temp[0];
+                            tempm[1]=temp[1];
+                            tempm[2]=temp[2];
+                        }
+                        localStorage.setItem('taskTags',JSON.stringify(tempm));
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
                         localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./editOutlineLabelPage.html","_blank");
