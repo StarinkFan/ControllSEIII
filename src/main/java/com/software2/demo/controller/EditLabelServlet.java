@@ -39,11 +39,23 @@ public class EditLabelServlet {
             Label l=lS.getSingleLabel(id);
             if(l.getTag()==1)
                 if(l.getGiverID().equals(workerID)) {
-                    Description d=JSON.parseObject(l.getD(),Description.class);
-                    l.setD(d.getC());
-                    resultMap.put("wl",l);
+                    Label temp=new Label();
+                    temp.setD(l.getD());
+                    temp.setTag(l.getTag());
+                    temp.setState(l.getState());
+                    temp.setInfo(l.getInfo());
+                    temp.setPID(l.getPID());
+                    temp.setGiverID(l.getGiverID());
+                    temp.setLis(l.getLis());
+                    temp.setLis(l.getLis());
+                    temp.setColor(l.getColor());
+                    temp.setID(l.getID());
+                    Description d=JSON.parseObject(temp.getD(),Description.class);
+                    temp.setD(d.getC());
+                    resultMap.put("wl",temp);
                     resultMap.put("id",l.getID());
                     System.out.println(resultMap.toString());
+/*                    l.setD(JSON.toJSONString(d));*/
                     return resultMap;
                 }
         }
