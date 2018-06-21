@@ -548,7 +548,7 @@ function loadTask() {
                         localStorage.setItem('picIDs',JSON.stringify(picIDs));
                         localStorage.setItem('picSrcs',JSON.stringify(picurls));
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
-                        window['filter'] =postData;
+                        localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./rectangleLabelPage.html","_blank");
                     }
                     else if(picConditions[i]==1){
@@ -557,7 +557,7 @@ function loadTask() {
                             localStorage.setItem('picIDs',JSON.stringify(picIDs));
                             localStorage.setItem('picSrcs',JSON.stringify(picurls));
                             var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
-                            window['filter'] =postData;
+                            localStorage.setItem('filter',JSON.stringify(postData));
                             window.open("./editRectangleLabelPage.html","_blank");
                         }
                     }
@@ -569,7 +569,7 @@ function loadTask() {
                         localStorage.setItem('picIDs',JSON.stringify(picIDs));
                         localStorage.setItem('picSrcs',JSON.stringify(picurls));
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
-                        window['filter'] =postData;
+                        localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./wholeLabelPage.html","_blank");
                     }
                     else if(picConditions[i]==1){
@@ -578,7 +578,7 @@ function loadTask() {
                             localStorage.setItem('picIDs',JSON.stringify(picIDs));
                             localStorage.setItem('picSrcs',JSON.stringify(picurls));
                             var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
-                            window['filter'] =postData;
+                            localStorage.setItem('filter',JSON.stringify(postData));
                             window.open("./EditWholeLabelPage.html","_blank");
                         }
                     }
@@ -590,7 +590,7 @@ function loadTask() {
                         localStorage.setItem('picIDs',JSON.stringify(picIDs));
                         localStorage.setItem('picSrcs',JSON.stringify(picurls));
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
-                        window['filter'] =postData;
+                        localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./outlineLabelPage.html","_blank");
                     }
                     else if(picConditions[i]==1){
@@ -599,7 +599,7 @@ function loadTask() {
                             localStorage.setItem('picIDs',JSON.stringify(picIDs));
                             localStorage.setItem('picSrcs',JSON.stringify(picurls));
                             var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
-                            window['filter'] =postData;
+                            localStorage.setItem('filter',JSON.stringify(postData));
                             window.open("./editOutlineLabelPage.html","_blank");
                         }
                     }
@@ -618,7 +618,7 @@ function loadTask() {
                         localStorage.setItem('picIDs',JSON.stringify(picIDs));
                         localStorage.setItem('picSrcs',JSON.stringify(picurls));
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
-                        window['filter'] =postData;
+                        localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./EditWholeLabelPage.html","_blank");
                     }
                     else if(picTags[i]==2){
@@ -626,7 +626,7 @@ function loadTask() {
                         localStorage.setItem('picIDs',JSON.stringify(picIDs));
                         localStorage.setItem('picSrcs',JSON.stringify(picurls));
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
-                        window['filter'] =postData;
+                        localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./editRectangleLabelPage.html","_blank");
                     }
                     else if(picTags[i]==3){
@@ -634,7 +634,7 @@ function loadTask() {
                         localStorage.setItem('picIDs',JSON.stringify(picIDs));
                         localStorage.setItem('picSrcs',JSON.stringify(picurls));
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
-                        window['filter'] =postData;
+                        localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./editOutlineLabelPage.html","_blank");
                     }
                 })
@@ -666,7 +666,7 @@ function loadTask() {
                     }
                     localStorage.setItem('taskTags',JSON.stringify(tempm));
                     var postData ={'picSrc':picurls[i],'picID':picIDs[i],'workerAccount':workerID,'tag':0};
-                    window['filter'] =postData;
+                    localStorage.setItem('filter',JSON.stringify(postData));
                     window.open("./checkRectangleLabelPage.html","_blank");
                 })
                 var btn2=document.getElementById('picbt2'+i);
@@ -690,7 +690,7 @@ function loadTask() {
                     }
                     localStorage.setItem('taskTags',JSON.stringify(tempm));
                     var postData ={'picSrc':picurls[i],'picID':picIDs[i],'workerAccount':workerID,'tag':0};
-                    window['filter'] =postData;
+                    localStorage.setItem('filter',JSON.stringify(postData));
                     window.open("./checkWholeLabelPage.html","_blank");
                 })
                 var btn3=document.getElementById('picbt3'+i);
@@ -714,7 +714,7 @@ function loadTask() {
                     }
                     localStorage.setItem('taskTags',JSON.stringify(tempm));
                     var postData ={'picSrc':picurls[i],'picID':picIDs[i],'workerAccount':workerID,'tag':0};
-                    window['filter'] =postData;
+                    localStorage.setItem('filter',JSON.stringify(postData));
                     window.open("./checkOutlineLabelPage.html","_blank");
                 })
             }(i);
@@ -746,7 +746,7 @@ function loadTask() {
                         }
                         localStorage.setItem('taskTags',JSON.stringify(tempm));
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'workerAccount':workerID,'tag':0};
-                        window['filter'] =postData;
+                        localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./checkWholeLabelPage.html","_blank");
                     }
                     else if(picTags[i]==2){
@@ -769,7 +769,7 @@ function loadTask() {
                         }
                         localStorage.setItem('taskTags',JSON.stringify(tempm));
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'workerAccount':workerID,'tag':0};
-                        window['filter'] =postData;
+                        localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./checkRectangleLabelPage.html","_blank");
                     }
                     else if(picTags[i]==3){
@@ -792,7 +792,7 @@ function loadTask() {
                         }
                         localStorage.setItem('taskTags',JSON.stringify(tempm));
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'workerAccount':workerID,'tag':0};
-                        window['filter'] =postData;
+                        localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./checkOutlineLabelPage.html","_blank");
                     }
                 })

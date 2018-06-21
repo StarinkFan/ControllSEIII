@@ -353,17 +353,17 @@
                         }
                         localStorage.setItem('taskTags',JSON.stringify(tempm));
                         var postData = {'picSrc': taskPicurls[i], 'picID': taskPicIDs[i], 'workerAccount': managerID, 'tag': 2,'TaskID':taskIDs[i]};
-                        window['filter'] = postData;
+                        localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./checkWholeLabelPage.html", "_blank");
                     }
                     else if (taskTags[i] == 2) {
                         var postData = {'picSrc': taskPicurls[i], 'picID': taskPicurls[i], 'workerAccount': managerID, 'tag': 2,'TaskID':taskIDs[i]};
-                        window['filter'] = postData;
+                        localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./checkRectangleLabelPage.html", "_blank");
                     }
                     else if (taskTags[i] == 3) {
                         var postData = {'picSrc': taskPicurls[i], 'picID': taskPicurls[i], 'workerAccount': managerID, 'tag': 2,'TaskID':taskIDs[i]};
-                        window['filter'] = postData;
+                        localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./checkOutlineLabelPage.html", "_blank");
                     }
                 })
