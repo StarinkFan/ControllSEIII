@@ -21,17 +21,140 @@
                 }
             }
 
-            clickComplaints();
+            clickAppeal();
 
         }
 
         function logout(){
-            window.open("./homepage.html","_self");
+            var html = $.ajax({
+                type: "Post",
+                url: '/logout',
+                dataType: 'json',
+                contentType: "application/json",
+                async: true,
+                data: JSON.stringify(obj),
+                success: function () {
+                    window.open("./homepage.html","_self");
+                },
+                error: function () {
+                    window.open("./homepage.html","_self");
+                }
+            });
         }
     </script>
 </head>
 <body>
+<div id="userbar" style="width:100%;position: fixed;z-index: 3;padding-left: 12%;">
+    <li><img src="../static/pic/logo.png" style="height: 60px;margin-left: -465%"></li>
+    <div style=" z-index:3;display: inline-block;float:left;margin-left: 10%;" >
+        <ul>
+            <li><a href="#task"></a></li>
+            <li><a href="#news"></a></li>
+            <li><a href="#contact"></a></li>
+            <li><a href="#about"></a></li>
+        </ul>
+    </div>
+    <br>
+
+    <div style="float: right;z-index:3;margin-right:20px;display: inline-block;padding-right: 22%;margin-top: -65px">
+        <ul>
+            <li style="z-index: 3">
+                <a style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">
+                    你好，管理员
+                    <u id="username" style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">用户</u>
+                </a>
+            </li>
+        </ul>
+
+        <div id="menu" style="margin-left: 62%;margin-top: -13%;z-index: 5;display: none;">
+            <button onclick="logout()" style="border-radius:0;background: black;color:white;font-size: 20px;margin-top: -2px;width:120px;border-color: white;border-width: 1px;">退出账户</button>
+        </div>
+    </div>
+
+
+</div>
+<div style="position: fixed;width: 101%;height:90px;background-color: black;opacity: 1;z-index: 2;margin-top: -1%;margin-left: -1%"></div>
+<br>
+
+<div class="titleBox">
+    <h2 style="padding-top: 2%;color: #232323;padding-left: 11.5%">系统中心</h2>
+    <p style="color: #939393;padding-left: 11.5%">在这里，可以集中查看管理系统的用户、收益、使用情况等信息,也可以处理待审核内容</p>
+</div>
+
+<div class="maincut"></div>
+
+<div class="mainbody">
+    <div class="mainbox">
+        <div class="left_menu_box">
+            <ul class="menus">
+                <li><p>系统数据</p></li>
+                <hr style="margin-top: -2%"/>
+                <li><a href="./systemInformationPage.html" class="" >统计数据</a></li><br>
+            </ul>
+            <hr style=""/>
+            <ul class="menus">
+                <li style="margin-top: -3%"><p>审核处理</p></li>
+                <hr style="margin-top: -2%"/>
+                <li><a href="./reviewTaskOfManager.html" class="" >图片审核</a></li><br>
+                <li><a href="./reviewComplaintsOfManager.html" class="">投诉审核</a></li><br>
+                <li><a href="./reviewQueryOfManager.html" class="">结果质疑</a></li><br>
+                <li><a href="./reviewArbitrationOfManager.html" class="">结果仲裁</a></li><br>
+                <li><a href="#" class="" style="color: violet">申诉审核</a></li>
+            </ul>
+        </div>
+
+        <div class="mainPanel" style="font-size: 20px;">
+            <h3 style="padding-left: 3%;">申诉审核</h3>
+            <hr />
+            <!-- <a href="javascript:void(0)" onclick="clickReview()" class="review" id="review">待审核</a>-->
+            <div class="taskbox" id="taskbox">
+
+            </div>
+
+        </div>
+
+        <div class="taskDetail" id="taskDetail">
+            <!--<img class="taskDetail-m" id="taskDetail-m">-->
+            <div class="taskDetail-div" id="taskDetail-div">
+                <label class="menu-label1" id="menu-label2">完成情况:</label>
+                <span class="menu-span">
+                       <input type="checkbox" id="menu-radio1" class="menu-radio" name="answer" value='0' onclick="clickChoose()" checked>
+                        <label for="menu-radio1"></label><em>全部</em>
+                 </span>
+                <button class="taskDetail-close" id="taskDetail-close" onclick=taskDetailClose()>×</button>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+</div>
+
+<div style="width:101%; float: bottom; background-color: black;margin-left: -0.2%;margin-bottom: -100px;">
+    <img src="../static/pic/logo.png" style="width:8%">
+    <span style="color: white;text-align: center;font-size: 25px;vertical-align: center">让世界的智慧凝聚为你的眼</span>
+    <span style="color: white;text-align: center;font-size: 25px;float: right;padding-top: 20px;margin-right: 0.4%">怎么码都码不队</span>
+</div>
+
 <script>
+    var managerID=localStorage.accout;
+
+    var taskID='';
+
+    var taskbox=document.getElementById('taskbox');
+    var taskIDs=new Array();
+    var taskRequestorIDs=new Array();
+    var taskRequestorNames=new Array();
+    var taskWorkerIDs=new Array();
+    var taskWorkerNames=new Array();
+    var taskPicIDs=new Array();
+    var taskPicurls=new Array();
+    var taskReasons=new Array();
+
+
+function clickAppeal() {
     /*审核申诉列表 inittaskid，requestorID，name，workerid,name,picid,url,申诉原因*/
     var html = $.ajax({
         type: "Post",
@@ -67,6 +190,10 @@
     /*$("#info").children("div").remove();
     loadReview();*/
 
+    var info =document.createElement("info");
+    info.className="info";
+    info.id="info";
+}
 
     /*申诉通过，给任务inittaskid，picid，正确答案list（可能0，也可能大于1，修改答案,通知发起者（requestor）申诉者（worker）（？，返回结果成功*/
     var obj={
