@@ -354,17 +354,57 @@
                         localStorage.setItem('taskTags',JSON.stringify(tempm));
                         localStorage.setItem('demand',taskRequest);
                         localStorage.setItem('category',taskKind);
-                        var postData = {'picSrc': taskPicurls[i], 'picID': taskPicIDs[i], 'workerAccount': managerID, 'tag': 2,'TaskID':taskIDs[i]};
+                        var postData = {'picSrc': taskPicurls[i], 'picID': taskPicIDs[i], 'workerAccount': managerID, 'tag': 2,'TaskID':workTaskIDs[i]};
                         localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./checkWholeLabelPage.html", "_blank");
                     }
                     else if (taskTags[i] == 2) {
-                        var postData = {'picSrc': taskPicurls[i], 'picID': taskPicurls[i], 'workerAccount': managerID, 'tag': 2,'TaskID':taskIDs[i]};
+                        localStorage.setItem('order',"");
+                        localStorage.setItem('picIDs',"");
+                        localStorage.setItem('picSrcs',"");
+                        var temp=taskMarks[i].split(":");
+                        var tempm=new Array();
+                        if(temp.length==2){
+                            tempm[0]=temp[0];
+                        }
+                        else if(temp.length==3){
+                            tempm[0]=temp[0];
+                            tempm[1]=temp[1];
+                        }
+                        else if(temp.length==4){
+                            tempm[0]=temp[0];
+                            tempm[1]=temp[1];
+                            tempm[2]=temp[2];
+                        }
+                        localStorage.setItem('taskTags',JSON.stringify(tempm));
+                        localStorage.setItem('demand',taskRequest);
+                        localStorage.setItem('category',taskKind);
+                        var postData = {'picSrc': taskPicurls[i], 'picID': taskPicurls[i], 'workerAccount': managerID, 'tag': 2,'TaskID':workTaskIDs[i]};
                         localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./checkRectangleLabelPage.html", "_blank");
                     }
                     else if (taskTags[i] == 3) {
-                        var postData = {'picSrc': taskPicurls[i], 'picID': taskPicurls[i], 'workerAccount': managerID, 'tag': 2,'TaskID':taskIDs[i]};
+                        localStorage.setItem('order',"");
+                        localStorage.setItem('picIDs',"");
+                        localStorage.setItem('picSrcs',"");
+                        var temp=taskMarks[i].split(":");
+                        var tempm=new Array();
+                        if(temp.length==2){
+                            tempm[0]=temp[0];
+                        }
+                        else if(temp.length==3){
+                            tempm[0]=temp[0];
+                            tempm[1]=temp[1];
+                        }
+                        else if(temp.length==4){
+                            tempm[0]=temp[0];
+                            tempm[1]=temp[1];
+                            tempm[2]=temp[2];
+                        }
+                        localStorage.setItem('taskTags',JSON.stringify(tempm));
+                        localStorage.setItem('demand',taskRequest);
+                        localStorage.setItem('category',taskKind);
+                        var postData = {'picSrc': taskPicurls[i], 'picID': taskPicurls[i], 'workerAccount': managerID, 'tag': 2,'TaskID':workTaskIDs[i]};
                         localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./checkOutlineLabelPage.html", "_blank");
                     }
