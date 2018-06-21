@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
-
+/**
+ * @Author：Wang Mo
+ * @Description：用于标注界面切换图片
+ */
 @Controller
 @Transactional
 public class CheckReviewServlet {

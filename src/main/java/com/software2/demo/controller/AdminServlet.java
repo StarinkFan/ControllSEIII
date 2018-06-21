@@ -11,6 +11,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @Author：Wang Mo
+ * @Description：用于管理员得到数据
+ */
 @Controller
 @Transactional
 public class AdminServlet {
