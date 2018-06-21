@@ -26,7 +26,20 @@
         }
 
         function logout(){
-            window.open("./homepage.html","_self");
+            var html = $.ajax({
+                type: "Post",
+                url: '/logout',
+                dataType: 'json',
+                contentType: "application/json",
+                async: true,
+                data: JSON.stringify(obj),
+                success: function () {
+                    window.open("./homepage.html","_self");
+                },
+                error: function () {
+                    window.open("./homepage.html","_self");
+                }
+            });
         }
     </script>
 </head>
