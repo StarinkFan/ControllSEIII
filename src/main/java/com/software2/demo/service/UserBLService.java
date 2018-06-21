@@ -20,5 +20,5 @@ public interface UserBLService {
     public List<Integer> getPersonalCompletion(String uid);
     public void rank(int rank);
     void modifyTitle(InitTask initTask);//对title修改
-    public void modify_picTitle(int pic_id,String kind,List<String> anslis,boolean isComplaint,double value,String initorID);//修改单个图片
+    public void modify_picTitle(int pic_id,String kind,List<String> anslis,boolean isComplaint,double value,int inittaskID);//修改单个图片
 }

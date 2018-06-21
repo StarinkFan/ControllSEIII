@@ -91,7 +91,6 @@ public class CheckStateUtil {
         if(time>=i.getDeadline()){
             w.setState(2);
         }
-        w.setEndtime(day);
 //        c.userBLService.modifyUser(u);
 //        c.userBLService.modifyUser(u2);
         c.wS.modifyTask(w);

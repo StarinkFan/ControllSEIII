@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * @Author：Wang Mo
+ * @Description：用于检查申诉检查
+ */
 @Controller
 @Transactional
 public class CheckAppealServlet {

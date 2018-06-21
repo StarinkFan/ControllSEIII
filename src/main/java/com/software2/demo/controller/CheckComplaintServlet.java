@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Map;
-
+/**
+ * @Author：Wang Mo
+ * @Description：用于投诉检查
+ */
 @Controller
 @Transactional
 public class CheckComplaintServlet {

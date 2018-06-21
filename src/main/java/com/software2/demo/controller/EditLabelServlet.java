@@ -39,6 +39,8 @@ public class EditLabelServlet {
             Label l=lS.getSingleLabel(id);
             if(l.getTag()==1)
                 if(l.getGiverID().equals(workerID)) {
+                    Description d=JSON.parseObject(l.getD(),Description.class);
+                    l.setD(d.getC());
                     resultMap.put("wl",l);
                     resultMap.put("id",l.getID());
                     System.out.println(resultMap.toString());
@@ -127,6 +129,8 @@ public class EditLabelServlet {
             Label pl=lS.getSingleLabel(id);
             if(pl.getTag()!=1)
                 if(pl.getGiverID().equals(workerID)) {
+                    Description d=JSON.parseObject(pl.getD(),Description.class);
+                    pl.setD(d.getC());
                     List<String> answer=JSON.parseArray(p.getListOfAnswers(),String.class);
                     resultMap.put("pl",pl);
                     resultMap.put("id",pl.getID());

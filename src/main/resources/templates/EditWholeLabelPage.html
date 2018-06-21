@@ -260,8 +260,6 @@
                 wholeLabel.labelID=document.getElementById("labelID").value;
                 wholeLabel.TaskID=tID;
 
-                document.getElementById('demand').value=data['demand'];
-                document.getElementById('category').innerText="分类："+data['category'];
                 var html = $.ajax({
                     type: "Post",
                     url: '/editLabel/deleteLabel',
@@ -271,9 +269,11 @@
                     data: JSON.stringify(wholeLabel),
                     success: function(data) {
                         if(data==true){
-                            alert("success");
+                            alert("删除成功");
                             window.opener.location.reload();
                             window.close();
+                        }else{
+                            alert("删除失败")
                         }
 
                     },
@@ -287,13 +287,12 @@
 
         function loadLabel(obj,id){
             document.getElementById("label").value=obj.info;
-            document.getElementById("description").value=obj.d.c;
+            document.getElementById("description").value=obj.d;
             document.getElementById("labelID").value=id;
         }
 
         function showTags() {
             var tags=JSON.parse(localStorage.getItem('taskTags'));
-            alert(tags.length);
             var i;
             for(i=0;i<tags.length;i++){
                 var tag=document.createElement('div');
