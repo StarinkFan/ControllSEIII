@@ -22,7 +22,7 @@ import java.util.List;
 @Transactional
 @Component("userBLService")
 public class UserBLImpl implements UserBLService{
-    //获得专家称号的标准分
+    //获得专家称号的标准分s
     private static int standard = 1000;
     @Autowired
     UserDataService uS;
@@ -197,7 +197,7 @@ public class UserBLImpl implements UserBLService{
                 AutoIntegrationUtil autoIntegrationUtil = new AutoIntegrationUtil();
                 List<String> anslist = getAutoAnswers(pic_id, kind,autoIntegrationUtil);
                 if(!autoIntegrationUtil.isNeed_human_judge())
-                    modify_picTitle(pic_id,kind,anslist,false,value,initTask.getInitorID());
+                    modify_picTitle(pic_id,kind,anslist,false,value,initTask.getID());
         }
 
     }
@@ -210,8 +210,9 @@ public class UserBLImpl implements UserBLService{
 
     title修改可能是task完成后自动评估造成的，也可能是申诉造成的，也可能是申诉结束新答案造成的
      */
-    public void modify_picTitle(int pic_id,String kind,List<String> anslis,boolean isComplaint,double value,String initID) {
+    public void modify_picTitle(int pic_id,String kind,List<String> anslis,boolean isComplaint,double value,int initID) {
             picture pic = ps.getSinglePicture(pic_id);
+            String initorID = pic.getPID();
             List<Integer> label_ids = JSON.parseArray(pic.getLID(),Integer.class);
             if(isComplaint){
                 anslis = JSON.parseArray(pic.getListOfAnswers(),String .class);
@@ -236,11 +237,20 @@ public class UserBLImpl implements UserBLService{
                         for(String answer:anslis) {
                             if (label.getInfo().equals(answer)) {
                                 flag = 1;
+                                WorkTask thisWT = new WorkTask();
+                                List<WorkTask> lis = wD.findByWorkerID(label.getGiverID());
+                                for(WorkTask workTask:lis){
+                                    if(workTask.getInitTaskID()==initID){
+                                        thisWT = workTask;
+                                        break;
+                                    }
+                                }
                                 if(isComplaint)
-                                    { title.setNum_of_right(title.getNum_of_right()-1);change_score(-value,label.getGiverID());change_score(value,initID);}
+                                    { title.setNum_of_right(title.getNum_of_right()-1);thisWT.setActualCredit(thisWT.getActualCredit()-(int)value);change_score(-value,label.getGiverID());change_score(value,initorID);}
                                 else
-                                    {title.setNum_of_right(title.getNum_of_right() + 1); label.setState(1);change_score(value,label.getGiverID());change_score(-value,initID);}
-                                break;
+                                    {title.setNum_of_right(title.getNum_of_right() + 1); thisWT.setActualCredit(thisWT.getActualCredit()+(int)value);label.setState(1);change_score(value,label.getGiverID());change_score(-value,initorID);}
+                                    wD.save(thisWT);
+                                    break;
                             }
                         }
                         if(flag==0){
