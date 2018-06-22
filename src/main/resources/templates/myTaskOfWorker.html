@@ -31,7 +31,7 @@
                 dataType: 'json',
                 contentType: "application/json",
                 async: true,
-                data: JSON.stringify(obj),
+                data: JSON.stringify(),
                 success: function () {
                     window.open("./homepage.html","_self");
                 },
@@ -487,7 +487,7 @@
                     var taskrequestorheadshotc=localStorage.taskrequestorheadshotc;
                     localStorage.setItem('taskrequestorheadshotc',taskRequestorHeadshots[i]);
                     console.log(localStorage);
-                    window.open("./myTaskDetailOfWorker.html","_blank");
+                    window.open("./myTaskDetailOfWorker.html","_self");
                 })
             }(i);
         }

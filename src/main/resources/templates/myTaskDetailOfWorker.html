@@ -30,7 +30,7 @@
                 dataType: 'json',
                 contentType: "application/json",
                 async: true,
-                data: JSON.stringify(obj),
+                data: JSON.stringify(),
                 success: function () {
                     window.open("./homepage.html","_self");
                 },
@@ -229,10 +229,10 @@ function loadTask() {
     else if(taskTag==1){
         taskinfo2.innerHTML="标注类型： 整体标注";
     }
-    else if(taskTags[i]==2){
+    else if(taskTag==2){
         taskinfo2.innerHTML="标注类型： 方框标注";
     }
-    else if(taskTags[i]==3){
+    else if(taskTag==3){
         taskinfo2.innerHTML="标注类型： 描边标注";
     }
     taskinfo3.innerText="任务积分： "+taskCredit;
