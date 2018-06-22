@@ -361,6 +361,7 @@
                     taskDetail.style.display='block';
                     var m=0;
                     marklist=[];
+                    oldanswer=[];
                     while(m<labelInfos.length){
                         marklist.push(labelInfos[m]);
                         if(isRight[m]==1){
@@ -411,6 +412,7 @@
 
 
     function taskDetailSubmit() {
+
         obj=document.getElementsByName("answer");
         check_val=[];
         for(k in obj){
@@ -425,22 +427,28 @@
                 xcv=1;
             }
         }
+        var flog=1;
+
         if(xcv==0){
-            if(check_val[0]=="无答案"&&check_val.length==1){
-                check_val=[];
-                submit2(flog);
-            }
-            else{
-                var flog=1;
-                for(var q=0;q<check_val.length;q++){
-                    for(var p=0;p<oldanswer;p++){
-                        if(check_val[q]!=oldanswer[p]){
-                            flog=0;
-                        }
+            console.log(check_val);
+            console.log(oldanswer);
+            for(var q=0;q<check_val.length;q++){
+                for(var p=0;p<oldanswer.length;p++){
+                    if(check_val[q]!=oldanswer[p]){
+                        flog=0;
                     }
                 }
-                submit2(flog);
             }
+            if(flog==0){
+                if(check_val[0]=="无答案"&&check_val.length==1){
+                    check_val=[];
+                }
+                submit2(1);
+            }
+            else{
+                submit2(0);
+            }
+
         }
 
 
@@ -449,7 +457,7 @@
 
     function submit2(f) {
         var flog=f;
-        if(flog==1){
+        if(flog==0){
             console.log("no"+num);
             /*质疑失败，给任务inittaskid，picid,通知质疑人（requestor）（？，返回结果成功*/
             var obj={
