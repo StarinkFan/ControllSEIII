@@ -41,7 +41,7 @@ public class FeedbackServlet {
         c.setRequestorID(requestorAccount);
         c.setWorkTaskID(taskID);
         c.setReason("");
-        c.setCheck(false);
+        c.setCheck(0);
         complaintBLService.addComplaint(c);
         return true;
     }
@@ -59,7 +59,7 @@ public class FeedbackServlet {
         a.setWorkTaskID(taskID);
         a.setInitTaskID(w.getInitTaskID());
         a.setReason("");
-        a.setCheck(false);
+        a.setCheck(0);
         a.setRequestorID(initTaskBLService.getSingleITask(w.getInitTaskID()).getInitorID());
         appealBLService.add(a);
         return true;

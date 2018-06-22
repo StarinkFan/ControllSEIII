@@ -23,4 +23,14 @@ public class AppealBLImpl implements AppealBLService{
         return appealDataService.save(a);
     }
 
+    @Override
+    public Appeal getSingle(int id) {
+        return appealDataService.findById(id).get();
+    }
+
+    @Override
+    public Appeal modify(Appeal a) {
+        return appealDataService.save(a);
+    }
+
 }

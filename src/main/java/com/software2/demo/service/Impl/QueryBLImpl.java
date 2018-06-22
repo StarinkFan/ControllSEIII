@@ -22,4 +22,14 @@ public class QueryBLImpl implements QueryBLService{
     public Query add(Query q) {
         return queryDataService.save(q);
     }
+
+    @Override
+    public Query getSingle(int id) {
+        return queryDataService.findById(id).get();
+    }
+
+    @Override
+    public Query modify(Query q) {
+        return queryDataService.save(q);
+    }
 }

@@ -7,4 +7,6 @@ import java.util.List;
 public interface QueryBLService {
     public List<Query> getAll();
     public Query add(Query q);
+    public Query getSingle(int id);
+    public Query modify(Query q);
 }

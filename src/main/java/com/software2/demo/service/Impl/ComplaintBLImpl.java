@@ -24,4 +24,14 @@ public class ComplaintBLImpl implements ComplaintBLService{
 
         return complaintDataService.save(c);
     }
+
+    @Override
+    public Complaint getSingle(int id) {
+        return complaintDataService.findById(id).get();
+    }
+
+    @Override
+    public Complaint modify(Complaint c) {
+        return complaintDataService.save(c);
+    }
 }

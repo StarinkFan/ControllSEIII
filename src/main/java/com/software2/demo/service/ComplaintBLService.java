@@ -7,4 +7,6 @@ import java.util.List;
 public interface ComplaintBLService {
     public List<Complaint> getAll();
     public Complaint addComplaint(Complaint c);
+    public Complaint getSingle(int id);
+    public Complaint modify(Complaint c);
 }

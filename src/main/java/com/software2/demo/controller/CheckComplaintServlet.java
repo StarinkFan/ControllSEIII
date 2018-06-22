@@ -2,10 +2,7 @@ package com.software2.demo.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.aliyuncs.exceptions.ClientException;
-import com.software2.demo.bean.InitTask;
-import com.software2.demo.bean.Label;
-import com.software2.demo.bean.User;
-import com.software2.demo.bean.WorkTask;
+import com.software2.demo.bean.*;
 import com.software2.demo.service.*;
 import com.software2.demo.util.SendTextMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +31,15 @@ public class CheckComplaintServlet {
     InitTaskBLService initTaskBLService;
     @Autowired
     UserBLService userBLService;
+    @Autowired
+    ComplaintBLService complaintBLService;
     @RequestMapping("/checkComplaint/pass")
     @ResponseBody
     public boolean pass(@RequestBody Map<String,Object> requestMap){
+        int complaintID= Integer.parseInt(requestMap.get("complaintID").toString());
+        Complaint a=complaintBLService.getSingle(complaintID);
+        a.setCheck(1);
+        complaintBLService.modify(a);
         Integer taskID= Integer.valueOf(requestMap.get("taskID").toString());
         Integer picID= Integer.valueOf(requestMap.get("picID").toString());
         String workerID=requestMap.get("workerID").toString();
@@ -78,6 +81,10 @@ public class CheckComplaintServlet {
     @RequestMapping("/checkComplaint/nopass")
     @ResponseBody
     public boolean nopass(@RequestBody Map<String,Object> requestMap){
+        int complaintID= Integer.parseInt(requestMap.get("complaintID").toString());
+        Complaint a=complaintBLService.getSingle(complaintID);
+        a.setCheck(1);
+        complaintBLService.modify(a);
         Integer taskID= Integer.valueOf(requestMap.get("taskID").toString());
         Integer picID= Integer.valueOf(requestMap.get("picID").toString());
         String requestorID=pictureBLService.getSinglePicture(picID).getPID();

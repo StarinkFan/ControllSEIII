@@ -21,5 +21,5 @@ public class Appeal extends Item {
     private String reason;//申诉理由
     private int initTaskID;
     private int workTaskID;
-    private boolean check;
+    private int check;
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -224,30 +225,34 @@ public class ReviewServlet {
         List<Integer> picid=new ArrayList<>();
         List<String> reason=new ArrayList<>();
         List<Integer> workTaskid=new ArrayList<>();
+        List<Integer> complaintid=new ArrayList<>();
         for(Complaint c:list){
-            InitTask i=iS.getSingleITask(c.getInitTaskID());
-            WorkTask w=workTaskBLService.getSingleWTask(c.getWorkTaskID());
-            User requestor=userBLService.getSingle(c.getRequestorID());
-            User worker=userBLService.getSingle(c.getWorkerID());
-            picture p=pictureBLService.getSinglePicture(c.getPictureID());
-            id.add(c.getInitTaskID());
-            requestorid.add(requestor.getID());
-            requestorname.add(requestor.getName());
-            tag.get(p.getTag());
-            List<String> mark=JSON.parseArray(i.getListOfTags(),String.class);
-            String strMark="";
-            for(String str:mark){
-                strMark=strMark+str+":";
+            if(c.getCheck()==0) {
+                InitTask i = iS.getSingleITask(c.getInitTaskID());
+                WorkTask w = workTaskBLService.getSingleWTask(c.getWorkTaskID());
+                User requestor = userBLService.getSingle(c.getRequestorID());
+                User worker = userBLService.getSingle(c.getWorkerID());
+                picture p = pictureBLService.getSinglePicture(c.getPictureID());
+                id.add(c.getInitTaskID());
+                requestorid.add(requestor.getID());
+                requestorname.add(requestor.getName());
+                tag.get(p.getTag());
+                List<String> mark = JSON.parseArray(i.getListOfTags(), String.class);
+                String strMark = "";
+                for (String str : mark) {
+                    strMark = strMark + str + ":";
+                }
+                marklist.add(strMark);
+                rheadshot.add("http://" + requestor.getHeadShotUrl());
+                workerid.add(worker.getID());
+                workername.add(worker.getName());
+                wheadshot.add("http://" + worker.getHeadShotUrl());
+                picurl.add("http://" + p.getUrl());
+                picid.add(p.getID());
+                reason.add(c.getReason());
+                workTaskid.add(w.getID());
+                complaintid.add(c.getID());
             }
-            marklist.add(strMark);
-            rheadshot.add("http://"+requestor.getHeadShotUrl());
-            workerid.add(worker.getID());
-            workername.add(worker.getName());
-            wheadshot.add("http://"+worker.getHeadShotUrl());
-            picurl.add("http://"+p.getUrl());
-            picid.add(p.getID());
-            reason.add(c.getReason());
-            workTaskid.add(w.getID());
         }
         resultMap.put("id",id);
         resultMap.put("requestorid",requestorid);
@@ -262,6 +267,7 @@ public class ReviewServlet {
         resultMap.put("picid",picid);
         resultMap.put("reason",reason);
         resultMap.put("workTaskid",workTaskid);
+        resultMap.put("complaintid",complaintid);
         return resultMap;
     }
 
@@ -277,19 +283,23 @@ public class ReviewServlet {
         List<Integer> picid=new ArrayList<>();
         List<String> picurl=new ArrayList<>();
         List<String> reason=new ArrayList<>();
+        List<Integer> appealid=new ArrayList<>();
         List<Appeal> list=appealBLService.getAll();
         for(Appeal a:list){
-            User requestor=userBLService.getSingle(a.getRequestorID());
-            User worker=userBLService.getSingle(a.getWorkerID());
-            picture p=pictureBLService.getSinglePicture(a.getPictureID());
-            id.add(a.getInitTaskID());
-            requestorid.add(a.getRequestorID());
-            requestorname.add(requestor.getName());
-            workerid.add(a.getWorkerID());
-            workername.add(worker.getName());
-            picid.add(a.getPictureID());
-            picurl.add("http://"+p.getUrl());
-            reason.add(a.getReason());
+            if(a.getCheck()==0) {
+                User requestor = userBLService.getSingle(a.getRequestorID());
+                User worker = userBLService.getSingle(a.getWorkerID());
+                picture p = pictureBLService.getSinglePicture(a.getPictureID());
+                id.add(a.getInitTaskID());
+                requestorid.add(a.getRequestorID());
+                requestorname.add(requestor.getName());
+                workerid.add(a.getWorkerID());
+                workername.add(worker.getName());
+                picid.add(a.getPictureID());
+                picurl.add("http://" + p.getUrl());
+                reason.add(a.getReason());
+                appealid.add(a.getID());
+            }
         }
         resultMap.put("id",id);
         resultMap.put("requestorid",requestorid);
@@ -299,6 +309,7 @@ public class ReviewServlet {
         resultMap.put("picid",picid);
         resultMap.put("picurl",picurl);
         resultMap.put("reason",reason);
+        resultMap.put("appealid",appealid);
         return resultMap;
     }
 
@@ -349,15 +360,19 @@ public class ReviewServlet {
         List<String> picurl=new ArrayList<>();
         List<String> reason=new ArrayList<>();
         List<Query> list=queryBLService.getAll();
+        List<Integer> queryid=new ArrayList<>();
         for(Query a:list){
-            User requestor=userBLService.getSingle(a.getRequestorID());
-            picture p=pictureBLService.getSinglePicture(a.getPictureID());
-            id.add(a.getInitTaskID());
-            requestorid.add(a.getRequestorID());
-            requestorname.add(requestor.getName());
-            picid.add(a.getPictureID());
-            picurl.add("http://"+p.getUrl());
-            reason.add(a.getReason());
+            if(a.getCheck()==0) {
+                User requestor = userBLService.getSingle(a.getRequestorID());
+                picture p = pictureBLService.getSinglePicture(a.getPictureID());
+                id.add(a.getInitTaskID());
+                requestorid.add(a.getRequestorID());
+                requestorname.add(requestor.getName());
+                picid.add(a.getPictureID());
+                picurl.add("http://" + p.getUrl());
+                reason.add(a.getReason());
+                queryid.add(a.getID());
+            }
         }
         resultMap.put("id",id);
         resultMap.put("requestorid",requestorid);
@@ -365,6 +380,7 @@ public class ReviewServlet {
         resultMap.put("picid",picid);
         resultMap.put("picurl",picurl);
         resultMap.put("reason",reason);
+        resultMap.put("queryid",queryid);
         return resultMap;
     }
 

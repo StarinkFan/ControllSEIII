@@ -3,8 +3,10 @@ package com.software2.demo.controller;
 import com.alibaba.fastjson.JSON;
 import com.aliyuncs.exceptions.ClientException;
 import com.software2.demo.bean.InitTask;
+import com.software2.demo.bean.Query;
 import com.software2.demo.service.InitTaskBLService;
 import com.software2.demo.service.PictureBLService;
+import com.software2.demo.service.QueryBLService;
 import com.software2.demo.service.UserBLService;
 import com.software2.demo.util.SendTextMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +31,15 @@ public class CheckQueryServlet {
     UserBLService userBLService;
     @Autowired
     InitTaskBLService initTaskBLService;
+    @Autowired
+    QueryBLService queryBLService;
     @RequestMapping("/checkQuery/pass")
     @ResponseBody
     public boolean pass(@RequestBody Map<String,Object> requestMap){
+        int QueryID= Integer.parseInt(requestMap.get("QueryID").toString());
+        Query q=queryBLService.getSingle(QueryID);
+        q.setCheck(1);
+        queryBLService.modify(q);
         Integer taskID= Integer.valueOf(requestMap.get("taskID").toString());
         InitTask initTask = initTaskBLService.getSingleITask(taskID);
         List<String> listOfWorker=JSON.parseArray(initTask.getListOfWoker(),String.class);
@@ -60,6 +68,10 @@ public class CheckQueryServlet {
     @RequestMapping("/checkQuery/nopass")
     @ResponseBody
     public boolean nopass(@RequestBody Map<String,Object> requestMap){
+        int QueryID= Integer.parseInt(requestMap.get("QueryID").toString());
+        Query q=queryBLService.getSingle(QueryID);
+        q.setCheck(1);
+        queryBLService.modify(q);
         Integer taskID= Integer.valueOf(requestMap.get("taskID").toString());
         Integer picID= Integer.valueOf(requestMap.get("picID").toString());
         String requestorID=pictureBLService.getSinglePicture(picID).getPID();

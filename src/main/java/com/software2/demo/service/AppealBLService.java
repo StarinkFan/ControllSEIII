@@ -7,4 +7,6 @@ import java.util.List;
 public interface AppealBLService {
     public List<Appeal> getAll();
     public Appeal add(Appeal a);
+    public Appeal getSingle(int id);
+    public Appeal modify(Appeal a);
 }
