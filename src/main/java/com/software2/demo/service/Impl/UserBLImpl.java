@@ -261,9 +261,9 @@ public class UserBLImpl implements UserBLService{
                                     }
                                 }
                                 if(isComplaint)
-                                    { title.setNum_of_right(title.getNum_of_right()-1);thisWT.setActualCredit(thisWT.getActualCredit()-(int)value);change_score(-value,label.getGiverID());change_score(value,initorID);}
+                                    { title.setNum_of_right(title.getNum_of_right()-1);thisWT.setActualCredit(thisWT.getActualCredit()-(int)value);change_score(-value,label.getGiverID(),false);change_score(value,initorID,true);}
                                 else
-                                    {title.setNum_of_right(title.getNum_of_right() + 1); thisWT.setActualCredit(thisWT.getActualCredit()+(int)value);label.setState(1);change_score(value,label.getGiverID());change_score(-value,initorID);}
+                                    {title.setNum_of_right(title.getNum_of_right() + 1); thisWT.setActualCredit(thisWT.getActualCredit()+(int)value);label.setState(1);change_score(value,label.getGiverID(),false);change_score(-value,initorID,true);}
                                     wD.save(thisWT);
                                     break;
                             }
@@ -329,10 +329,11 @@ public class UserBLImpl implements UserBLService{
         }
     }
     //对相应id的worker进行修改得分
-    public void change_score(double value,String id){
+    public void change_score(double value,String id,boolean isInitor){
         User user = uS.getOne(id);
         user.setCredit(user.getCredit()+(int)value);
-        user.setEarncredit(user.getEarncredit()+(int)value);
+        if(!isInitor)
+            user.setEarncredit(user.getEarncredit()+(int)value);
         modifyUser(user);
     }
 }
