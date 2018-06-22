@@ -43,7 +43,6 @@ public class CheckAppealServlet {
         appealBLService.modify(a);
         int taskID=Integer.parseInt(requestMap.get("taskID").toString());
         int picID=Integer.parseInt(requestMap.get("picID").toString());
-        String workerID=requestMap.get("workerID").toString();
         InitTask initTask = initTaskBLService.getSingleITask(taskID);
         try {
             SendTextMessage.sendAnswerChangeToInitor(initTask.getInitorID());
