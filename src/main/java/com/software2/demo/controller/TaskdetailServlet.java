@@ -83,7 +83,14 @@ public class TaskdetailServlet {
                     workername.add(userBLService.getSingle(l.getGiverID()).getName());
                     tag.add(l.getTag());
                     worktaskid.add(lS.getWTask(l.getID()).getID());
-
+                    if(l.getState()==3){
+                        right.add(2);
+                    }
+                    else
+                        if(l.getState()==2)
+                            right.add(0);
+                    else
+                        right.add(1);
                     //从当前标注开始，向后查找同内容标注
                     for (int n = i + 1; n < listOflabel.size(); n++) {
                         Label temp = listOflabel.get(n);
@@ -91,7 +98,13 @@ public class TaskdetailServlet {
                             labelid.add(temp.getID());
                             info.add(temp.getInfo());
                             count++;
-                            right.add(l.getState());
+                            if(l.getState()==3){
+                                right.add(2);
+                            } else
+                            if(l.getState()==1)
+                                right.add(1);
+                            else
+                                right.add(0);
                             workerid.add(temp.getGiverID());
                             workername.add(userBLService.getSingle(temp.getGiverID()).getName());
                             tag.add(temp.getTag());
@@ -111,7 +124,7 @@ public class TaskdetailServlet {
 
             //判断同样内容的标注是否已添加进入info
             //再将错误的标注信息加入
-            if(l.getState()==2) {
+            if(l.getState()==2||l.getState()==3) {
                 for (String str : info) {
                     if (str.equals(l.getInfo())) {
                         in = true;
@@ -128,7 +141,14 @@ public class TaskdetailServlet {
                     workername.add(userBLService.getSingle(l.getGiverID()).getName());
                     tag.add(l.getTag());
                     worktaskid.add(lS.getWTask(l.getID()).getID());
-
+                    if(l.getState()==3){
+                        right.add(2);
+                    }
+                    else
+                    if(l.getState()==2)
+                        right.add(0);
+                    else
+                        right.add(1);
                     //从当前标注开始，向后查找同内容标注
                     for (int n = i + 1; n < listOflabel.size(); n++) {
                         Label temp = listOflabel.get(n);
@@ -136,7 +156,14 @@ public class TaskdetailServlet {
                             count++;
                             labelid.add(temp.getID());
                             info.add(temp.getInfo());
-                            right.add(l.getState());
+                            if(l.getState()==3){
+                                right.add(2);
+                            }
+                            else
+                            if(l.getState()==2)
+                                right.add(0);
+                            else
+                                right.add(1);
                             workerid.add(temp.getGiverID());
                             workername.add(userBLService.getSingle(temp.getGiverID()).getName());
                             tag.add(temp.getTag());

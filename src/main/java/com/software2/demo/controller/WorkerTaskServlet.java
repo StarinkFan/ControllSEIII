@@ -328,7 +328,14 @@ public class WorkerTaskServlet {
 
                         tag.add(temp.getTag());
                         label.add(temp.getInfo());
-                        isright.add(temp.getState());
+                        if(temp.getState()==3){
+                            isright.add(2);
+                        }
+                        else
+                        if(temp.getState()==2)
+                            isright.add(0);
+                        else
+                            isright.add(1);
 
                     }
 
