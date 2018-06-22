@@ -368,7 +368,19 @@ public class ReviewServlet {
         return resultMap;
     }
 
-    /**
-     * @Description：
-     */
+/*    *//**
+     * @Description：根据图片id，获取list，含标注id，标注information，标注该information的人数，对应的workerid，workername
+     *//*
+    @RequestMapping("/review/arbitrationlist")
+    @ResponseBody
+    public Map<String,Object> arbitrationlist(@RequestBody Map<String,Object> requestMap){
+        int picID= Integer.parseInt(requestMap.get("picID").toString());
+        List<Integer> labelid=new ArrayList<>();
+        List<String> info=new ArrayList<>();
+        List<Integer> right=new ArrayList<>();
+        List<Integer> num=new ArrayList<>();
+        List<String> workerid=new ArrayList<>();
+        List<String> workername=new ArrayList<>();
+
+    }*/
 }
