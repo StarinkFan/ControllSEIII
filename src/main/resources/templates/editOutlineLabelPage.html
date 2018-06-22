@@ -168,7 +168,6 @@
                             'demand':document.getElementById('demand').value, 'category':document.getElementById('category').innerText.substr(3)};
                         postData = JSON.stringify(postData); //转化为JSON字符串
                         localStorage.setItem("filter", postData);
-                        alert(myobj.kind);
                         if(myobj.ifLabeled==true){
                             if(myobj.kind==1){
                                 window.open("./EditWholeLabelPage.html","_self");
@@ -204,7 +203,7 @@
         }
 
         function myFunction(){
-            document.getElementById('laber').innerText="标注者"+localStorage.nickname+"    ";
+            document.getElementById('laber').innerText="标注者:"+localStorage.nickname+"    ";
             var data = JSON.parse(localStorage.getItem("filter"));
             var picSrc = data['picSrc'];
 
@@ -277,7 +276,7 @@
                     async: false,
                     data:  JSON.stringify(partLabel),
                     success: function(data) {
-                        if(data==true){alert("success")}
+                        if(data==true){alert("修改成功")}else{alert("修改失败")}
 
                     },
                     error: function() {
@@ -379,9 +378,7 @@
         }
 
         function close1() {
-            window.opener=null;
-            window.open('','_self');
-            window.close();
+            window.open("./myTaskDetailOfWorker.html","_self");
         }
 
 
