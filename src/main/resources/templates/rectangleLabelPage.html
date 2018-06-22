@@ -288,7 +288,7 @@
         };
 
         function myFunction(){
-            document.getElementById('laber').innerText="标注者"+localStorage.nickname+"    ";
+            document.getElementById('laber').innerText="标注者:"+localStorage.nickname+"    ";
             var data = JSON.parse(localStorage.getItem("filter"));
             var hostIp = data['picSrc'];
             document.getElementById("picID").value=data["picID"];
