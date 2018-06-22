@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.rmi.CORBA.Tie;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 @Service
 @Transactional
@@ -108,7 +110,7 @@ public class UserBLImpl implements UserBLService{
     }
 
     public List<Integer> getPersonalRequest(String uid) {
-        User u=uS.findById(uid).get();
+        User u=getSingle(uid);
         List<Integer> list=new ArrayList<>();
         int costCredit=0;
         int complete=0;
@@ -120,7 +122,7 @@ public class UserBLImpl implements UserBLService{
             List<Integer> listOfITask= JSON.parseArray(strLOITask,Integer.class);
             total =listOfITask.size();
         }
-        String strLOITask=u.getListOfITask();
+        String strLOITask = u.getListOfITask();
         List<Integer> listOfITask=JSON.parseArray(strLOITask,Integer.class);
         for(int i=0;i<total;i++){
 
@@ -341,9 +343,28 @@ public class UserBLImpl implements UserBLService{
     //对相应id的worker进行修改得分
     public void change_score(double value,String id,boolean isInitor){
         User user = getSingle(id);
+        List<CostRecord> recordList =JSON.parseArray(user.getListOfCRecord(),CostRecord.class);
         user.setCredit(user.getCredit()+(int)value);
         if(!isInitor)
             user.setEarncredit(user.getEarncredit()+(int)value);
+        else{
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date today = new Date();
+            String todaystr = simpleDateFormat.format(today);
+            int isExist = 0;
+            for(CostRecord record:recordList){
+                if(todaystr.equals(simpleDateFormat.format(record.getDate()))){
+                    record.setCredit(record.getCredit()+(int)value);
+                    isExist = 1;
+                    break;
+                }
+            }
+            if(isExist==0){
+                recordList.add(new CostRecord(new Date(),(int)value));
+            }
+            user.setListOfCRecord(JSON.toJSONString(recordList));
+        }
         modifyUser(user);
     }
 }

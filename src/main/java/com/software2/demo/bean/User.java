@@ -28,6 +28,7 @@ public class User implements Serializable {
     private int credit;//积分
     private int earncredit;//赚取的积分
     private int ranking;//排名
+    private String listOfCRecord;//该用户花费记录
     private String listOfITask; //该用户发布的任务
     private String listOfWTask; //该用户接取的任务
     private String listOfTags;  //该用户给自己增加的标签

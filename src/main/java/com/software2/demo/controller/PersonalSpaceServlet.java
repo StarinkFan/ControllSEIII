@@ -1,10 +1,7 @@
 package com.software2.demo.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.software2.demo.bean.InitTask;
-import com.software2.demo.bean.Title;
-import com.software2.demo.bean.User;
-import com.software2.demo.bean.WorkTask;
+import com.software2.demo.bean.*;
 import com.software2.demo.service.InitTaskBLService;
 import com.software2.demo.service.UserBLService;
 import com.software2.demo.service.WorkTaskBLService;
@@ -16,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,12 +59,40 @@ public class PersonalSpaceServlet {
         System.out.println("getPRequest");
         String uid=requestMap.get("account").toString();
         List<Integer> list=userBLService.getPersonalRequest(uid);
+        User user = userBLService.getSingle(uid);
+        List<CostRecord> recordList =JSON.parseArray(user.getListOfCRecord(),CostRecord.class);
+        Date[] dates = new Date[6];
+        String[] mydates = new String[6];
+        int[] costs = new int[6];
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dates[0] = new Date();
+        mydates[0] = simpleDateFormat.format(dates[0]);
+        for(CostRecord costRecord : recordList){
+            if(simpleDateFormat.format(costRecord.getDate()).equals(mydates[0])){
+                costs[0] = costRecord.getCredit();
+                break;
+            }
+        }
+        for(int i = 1;i<6;i++){
+            dates[i] = new Date(dates[i-1].getTime() - 86400000L);
+            mydates[i] = simpleDateFormat.format(dates[i]);
+            for(CostRecord costRecord : recordList){
+                if(simpleDateFormat.format(costRecord.getDate()).equals(mydates[i])){
+                    costs[i] = costRecord.getCredit();
+                    break;
+                }
+
+            }
+        }
+
         Map<String,Object> resultMap=new HashMap<>();
         resultMap.put("costCredit",list.get(0));
         resultMap.put("complete",list.get(1));
         resultMap.put("undergoing",list.get(2));
         resultMap.put("uncomplete",list.get(3));
         resultMap.put("total",list.get(4));
+        resultMap.put("dates",mydates);
+        resultMap.put("creditsOfDate",costs);
 /*        resultMap.put("costCredit",100);
         resultMap.put("complete",2);
         resultMap.put("undergoing",2);
