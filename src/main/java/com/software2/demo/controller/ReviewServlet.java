@@ -236,7 +236,7 @@ public class ReviewServlet {
                 id.add(c.getInitTaskID());
                 requestorid.add(requestor.getID());
                 requestorname.add(requestor.getName());
-                tag.get(p.getTag());
+                tag.add(p.getTag());
                 List<String> mark = JSON.parseArray(i.getListOfTags(), String.class);
                 String strMark = "";
                 for (String str : mark) {
