@@ -47,7 +47,6 @@ public class EditLabelServlet {
                     temp.setPID(l.getPID());
                     temp.setGiverID(l.getGiverID());
                     temp.setLis(l.getLis());
-                    temp.setLis(l.getLis());
                     temp.setColor(l.getColor());
                     temp.setID(l.getID());
                     Description d=JSON.parseObject(temp.getD(),Description.class);
@@ -141,10 +140,20 @@ public class EditLabelServlet {
             Label pl=lS.getSingleLabel(id);
             if(pl.getTag()!=1)
                 if(pl.getGiverID().equals(workerID)) {
+                    Label temp=new Label();
+                    temp.setD(pl.getD());
+                    temp.setTag(pl.getTag());
+                    temp.setState(pl.getState());
+                    temp.setInfo(pl.getInfo());
+                    temp.setPID(pl.getPID());
+                    temp.setGiverID(pl.getGiverID());
+                    temp.setLis(pl.getLis());
+                    temp.setColor(pl.getColor());
+                    temp.setID(pl.getID());
                     Description d=JSON.parseObject(pl.getD(),Description.class);
-                    pl.setD(d.getC());
+                    temp.setD(d.getC());
                     List<String> answer=JSON.parseArray(p.getListOfAnswers(),String.class);
-                    resultMap.put("pl",pl);
+                    resultMap.put("pl",temp);
                     resultMap.put("id",pl.getID());
                     resultMap.put("answer",answer);
                     return resultMap;

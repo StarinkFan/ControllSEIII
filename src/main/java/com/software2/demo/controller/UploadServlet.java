@@ -59,7 +59,7 @@ public class UploadServlet {
             List<Integer> lID=new ArrayList<>();
             String strlID= JSON.toJSONString(lID);
             p.setLID(strlID);
-            p.setTag(0);
+            p.setTag(tag);
             p.setPID(requestorID);
             p.setListOfAnswers(JSON.toJSONString(new ArrayList<>()));
             pID.add(pS.addPicture(p).getID());
