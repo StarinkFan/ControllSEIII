@@ -239,7 +239,7 @@ public class UserBLImpl implements UserBLService{
             for(int label_id:label_ids){
 
                 Label label = ls.getSingleLabel(label_id);
-                User user = uS.getOne(label.getGiverID());
+                User user = getSingle(label.getGiverID());
                 int flag = 0;
 
                 List<Title> titles = JSON.parseArray(user.getListOfTitles(),Title.class);
