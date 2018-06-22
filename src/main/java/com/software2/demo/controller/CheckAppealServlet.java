@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,19 @@ public class CheckAppealServlet {
         int picID=Integer.parseInt(requestMap.get("picID").toString());
         String workerID=requestMap.get("workerID").toString();
         InitTask initTask = initTaskBLService.getSingleITask(taskID);
+        try {
+            SendTextMessage.sendAnswerChangeToInitor(initTask.getInitorID());
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
+        List<String> listOfWorkerID=JSON.parseArray(initTask.getListOfWoker(),String.class);
+        for(String phone:listOfWorkerID){
+            try {
+                SendTextMessage.sendAnswerChange(phone);
+            } catch (ClientException e) {
+                e.printStackTrace();
+            }
+        }
         List<Integer> pic_ids = JSON.parseArray(initTask.getListOfP(), Integer.class);
         double value = (double)initTask.getCredit()/initTask.getNum()/pic_ids.size();
         List<String> answer= (List<String>) requestMap.get("answer");
@@ -48,6 +62,11 @@ public class CheckAppealServlet {
         String taskID=requestMap.get("taskID").toString();
         String picID=requestMap.get("picID").toString();
         String workerID=requestMap.get("workerID").toString();
+        try {
+            SendTextMessage.sendAppealFail(workerID);
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
         return true;
 
     }

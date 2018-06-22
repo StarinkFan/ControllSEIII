@@ -8,11 +8,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SendTextMessage {
+    public static void sendAnswerChangeToInitor(String phone) throws ClientException {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("phoneNumber", phone);
+        paramMap.put("msgSign", "COUNTS众包");
+        paramMap.put("templateCode", "SMS_137673485");
+        SendSmsResponse sendSmsResponse = AliyunMessageUtil.sendSms(paramMap);
+    }
     public static void sendAppealFail(String phone) throws ClientException {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("phoneNumber", phone);
         paramMap.put("msgSign", "COUNTS众包");
-        paramMap.put("templateCode", "SMS_137665864");
+        paramMap.put("templateCode", "SMS_137688319");
         SendSmsResponse sendSmsResponse = AliyunMessageUtil.sendSms(paramMap);
     }
     public static void sendBeComplainted(String phone) throws ClientException {
