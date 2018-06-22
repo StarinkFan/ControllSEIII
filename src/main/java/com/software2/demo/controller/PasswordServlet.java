@@ -43,7 +43,7 @@ public class PasswordServlet {
         return TextUtil.sendMsg(requestMap);
     }
 
-    @RequestMapping(value = "main/findPassword")
+    @RequestMapping(value = "/main/findPassword")
     @ResponseBody
     public int validateNum(@RequestBody Map<String,Object> requestMap){
         System.out.println("validateNum");

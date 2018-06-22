@@ -62,7 +62,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //我们指定任何用户都可以访问多个URL的模式。
                 // 任何用户都可以访问以"/resources/","/signup", 或者 "/about"开头的URL。
-                .antMatchers("/static/**","/signup.html","/findPassword.html","/homepage","/","/main/signup","/main/findSend","main/findPassword","/main/resetPW","/main/send").permitAll()
+                .antMatchers("/static/**","/signup.html","/findPassword.html","/homepage","/","/main/signup","/main/findSend","/main/findPassword","/main/resetPW","/main/send","/resetPassword.html","/main/resetPW").permitAll()
                 //以 "/admin/" 开头的URL只能让拥有 "ROLE_ADMIN"角色的用户访问。
                 // 请注意我们使用 hasRole 方法，没有使用 "ROLE_" 前缀。
                 .anyRequest().authenticated()
