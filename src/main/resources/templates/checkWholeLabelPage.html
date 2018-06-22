@@ -155,7 +155,7 @@
 
 
         function myFunction(){
-            document.getElementById('laber').innerText="标注者"+localStorage.workerNickname+"    ";
+            document.getElementById('laber').innerText="标注者:"+localStorage.workerNickname+"    ";
             var data = JSON.parse(localStorage.getItem("filter"));
             var picSrc = data['picSrc'];
             document.getElementById("picture").src=picSrc;
