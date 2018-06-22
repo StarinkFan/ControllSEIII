@@ -236,7 +236,15 @@ public class ReviewServlet {
                 id.add(c.getInitTaskID());
                 requestorid.add(requestor.getID());
                 requestorname.add(requestor.getName());
-                tag.add(p.getTag());
+                List<Integer> labelID=JSON.parseArray(p.getLID(),Integer.class);
+                int TAG=0;
+                for(int temp:labelID){
+                    Label l=labelBLService.getSingleLabel(temp);
+                    if(l.getGiverID().equals(worker.getID())){
+                        TAG=l.getTag();
+                    }
+                }
+                tag.add(TAG);
                 List<String> mark = JSON.parseArray(i.getListOfTags(), String.class);
                 String strMark = "";
                 for (String str : mark) {
