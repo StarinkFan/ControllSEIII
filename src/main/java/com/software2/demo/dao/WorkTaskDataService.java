@@ -10,4 +10,5 @@ import java.util.List;
 @Transactional
 public interface WorkTaskDataService extends JpaRepository<WorkTask,Integer>{
     List<WorkTask> findByWorkerID(String workID);
+    List<WorkTask> findByInitTaskID(int inittaskid);
 }

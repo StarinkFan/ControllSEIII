@@ -61,6 +61,18 @@ public class CheckStateUtil {
             if(workers.size()==i.getNum()){
                 i.setState(1);
                 i.setEndTime(time);
+
+                //任务完成改变所有该任务中worktask的状态位
+                List<WorkTask> workTaskList = c.wS.getByInitTaskID(i.getID());
+                for(WorkTask workTask: workTaskList){
+                    if(workTask.getState()==0){
+                        workTask.setState(3);
+                    }else{
+                        workTask.setState(2);
+                    }
+                }
+                //上方的方法可能没有对其保存，因为find方法返回的是一个数据库对象可以直接修改（可能出错，没有试过）
+
                 c.userBLService.modifyTitle(i);//整合评判修分
                 System.out.println("Task Finshed");
             }
@@ -87,9 +99,6 @@ public class CheckStateUtil {
                 System.out.println("Task UnderGoing");
             }
 
-        }
-        if(time>=i.getDeadline()){
-            w.setState(2);
         }
 //        c.userBLService.modifyUser(u);
 //        c.userBLService.modifyUser(u2);

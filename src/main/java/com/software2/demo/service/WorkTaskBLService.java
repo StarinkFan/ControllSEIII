@@ -16,4 +16,5 @@ public interface WorkTaskBLService {
     public List<WorkTask> getUndone(String userID);
     public List<WorkTask> getDone(String userID);
     public List<WorkTask> getUnderGoing(String uid);
+    public List<WorkTask> getByInitTaskID(int id);
 }

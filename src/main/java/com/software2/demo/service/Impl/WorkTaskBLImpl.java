@@ -109,4 +109,9 @@ public class WorkTaskBLImpl implements WorkTaskBLService{
         }
         return toReturn;
     }
+
+    @Override
+    public List<WorkTask> getByInitTaskID(int id) {
+        return wD.findByInitTaskID(id);
+    }
 }

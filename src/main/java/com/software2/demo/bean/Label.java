@@ -22,7 +22,7 @@ public class Label{
     private int pID;//所标的图片ID
     private String d;//标注对应的描述
     private String giverID;//标注者ID
-    @Column(length = 4000)
+    @Column(columnDefinition = "text")
     private String lis;//图片选取点的集合
     private int tag;//标注类型（1:整体标注 2:方框标注,3:描边标注）
     private String color;//标注框的颜色
