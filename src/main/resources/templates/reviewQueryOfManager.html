@@ -360,10 +360,12 @@
                     marklist=[];
                     while(m<labelInfos.length){
                         marklist.push(labelInfos[m]);
+                        if(isRight[m]==1){
+                            oldanswer.push(labelInfos[m]);
+                        }
                         m=parseInt(m)+parseInt(peoples[m]);
                     }
-                    marklist.push("无");
-                    oldanswer=marklist[0];
+                    marklist.push("无答案");
                     console.log(marklist);
                     for(var k=0;k<marklist.length;k++){
                         var taskspan=document.createElement("span");
@@ -377,9 +379,11 @@
                         taskinput.id='menu-radio'+k;
                         taskinput.name='answer';
                         taskinput.value=marklist[k];
-                        if(marklist[k]==oldanswer){
-                            console.log("find");
-                            taskinput.checked=true;
+                        for(var z=0;z<oldanswer.length;z++){
+                            if(marklist[k]==oldanswer[z]){
+                                console.log("find");
+                                taskinput.checked=true;
+                            }
                         }
                         tasklabel.setAttribute('for','menu-radio'+k);
                         taskem.innerText=marklist[k];
@@ -411,7 +415,23 @@
                 check_val.push(obj[k].value);
             }
         }
-        if(check_val.length==1&&check_val[0]==oldanswer){
+        for(var i=0;i<check_val.length;i++){
+            if(check_val[i]=="无答案"&&check_val.length>1){
+                alert("答案有误");
+            }
+        }
+        if(check_val[0]=="无答案"&&check_val.length==1){
+            check_val=[];
+        }
+        var flog=1;
+        for(var q=0;q<check_val.length;q++){
+            for(var p=0;p<oldanswer;p++){
+                if(check_val[q]!=oldanswer[p]){
+                    flog=0;
+                }
+            }
+        }
+        if(flog==1){
             console.log("no"+num);
             /*质疑失败，给任务inittaskid，picid,通知质疑人（requestor）（？，返回结果成功*/
             var obj={
