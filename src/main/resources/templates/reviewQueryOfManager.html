@@ -440,6 +440,9 @@
         }
         else{
             console.log("submit");
+            if(check_val[0]=="无答案"){
+                check_val=[];
+            }
             /*质疑通过，给任务inittaskid，picid，正确答案list（可能0，也可能大于1，修改答案,通知发起者（requestor）（？，返回结果成功*/
             var obj={
                 taskID:taskIDs[num],
