@@ -244,13 +244,13 @@ img{
 
 .infokind{
     width: 150px;
-    height: 40px;
+    height: 50px;
     background-color: #FCB69F;
-    font-size: 20px;
-    line-height: 40px;
+    font-size: 25px;
+    line-height: 50px;
     text-align: center;
     position: absolute;
-    top: 90px;
+    top: 70px;
     right: -15px;
     font-weight: bold;
     color: gray;
@@ -259,7 +259,7 @@ img{
     content:'';
     width:20px;
     height: 0%;
-    border: 20px solid;
+    border: 25px solid;
     border-color: transparent #FCB69F transparent transparent ;
     position: absolute;right:150px;top: 0px; }
 
@@ -271,7 +271,7 @@ img{
     border-top: 0;
     right: -25px;
     position: absolute;/*使伪元素脱离文档流,使伪元素不受div内容的影响,便于计算位置,此时after相对于div的左上角进行定位*/
-    top: 40px;
+    top: 50px;
 }
 .infomark1{
     display: none;
