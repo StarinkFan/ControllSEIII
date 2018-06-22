@@ -218,7 +218,7 @@
 
 
         function prepareCanvas() {
-            var cnv = document.getElementById('myCanvas');
+            cnv = document.getElementById('myCanvas');
             if(typeof G_vmlCanvasManager != 'undefined') {
                 cnv = G_vmlCanvasManager.initElement(cnv);
             }
@@ -281,7 +281,7 @@
             tID=data['TaskID'];
 
             var c=document.getElementById('myCanvas');
-            var ctx=c.getContext('2d');
+            ctx=c.getContext('2d');
             var img=new Image();
             img.src=picSrc;
 
@@ -299,6 +299,7 @@
             document.getElementById('demand').value=localStorage.demand;
             document.getElementById('category').innerText="分类："+localStorage.category;
             showTags();
+            prepareCanvas();
 
         }
 
@@ -411,7 +412,6 @@
 
         function showTags() {
             var tags=JSON.parse(localStorage.getItem('taskTags'));
-            alert(tags.length);
             var i;
             for(i=0;i<tags.length;i++){
                 var tag=document.createElement('div');
