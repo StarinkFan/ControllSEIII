@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="../static/reviewAppealOfManagerCSS.css" type="text/css"/>
+    <link rel="stylesheet" href="../static/reviewTaskOfManagerCSS.css" type="text/css"/>
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
     <script>
         var account=localStorage.account;
@@ -43,7 +43,7 @@
                 dataType: 'json',
                 contentType: "application/json",
                 async: true,
-                data: JSON.stringify(obj),
+                data: JSON.stringify(),
                 success: function () {
                     window.open("./homepage.html","_self");
                 },

@@ -30,7 +30,7 @@
                 dataType: 'json',
                 contentType: "application/json",
                 async: true,
-                data: JSON.stringify(obj),
+                data: JSON.stringify(),
                 success: function () {
                     window.open("./homepage.html","_self");
                 },
@@ -932,7 +932,7 @@
                     localStorage.setItem('taskkindm',taskKinds[w]);
                     var taskrequestm=localStorage.taskrequestm;
                     localStorage.setItem('taskrequestm',taskRequests[w]);
-                    window.open("./taskDetailOfRequestor.html","_blank");
+                    window.open("./taskDetailOfRequestor.html","_self");
                 })
             }(i);
         }
