@@ -39,6 +39,12 @@ public class UserBLImpl implements UserBLService{
         if(uS.existsById(u.getID())){
             return ResultMessage.EXIST;
         }
+        List<Title> titles = JSON.parseArray(u.getListOfTitles(),Title.class);
+        for(Title title:titles){
+            title.setNum_of_complete(1);
+            title.setNum_of_right(1);
+        }
+        u.setListOfTitles(JSON.toJSONString(titles));
         uS.save(u);
         return ResultMessage.SUCCESS;
     }
