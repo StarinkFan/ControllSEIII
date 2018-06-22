@@ -42,7 +42,7 @@
                 dataType: 'json',
                 contentType: "application/json",
                 async: true,
-                data: JSON.stringify(obj),
+                data: JSON.stringify(),
                 success: function () {
                     window.open("./homepage.html","_self");
                 },
@@ -179,6 +179,7 @@
             async: false,
             data:JSON.stringify(obj),
             success: function(myobj) {
+                console.log(myobj);
                 labelIDs=[];
                 labelInfos=[];
                 isRight=[];
@@ -196,7 +197,6 @@
                 workerNames=myobj.workername;
                 picTags=myobj.tag;
                 workTaskIDs=myobj.worktaskid;
-                isArbitration=myobj.isArbitration;//1仲裁
 
                 $("#xx").children("div").remove();
                 loadTask();
@@ -214,7 +214,7 @@
         var taskinfo1=document.getElementById('task-infop1');
         var taskimg=document.getElementById('task-img');
         var rightAnswer="";
-        if(isArbitration=='1'){
+        if(isRight[0]=='2'){
             taskinfo1.innerText="待仲裁";
             var taskbt=document.getElementById('taskbt');
             taskbt.style.display='none';
@@ -222,16 +222,19 @@
         else{
             var taskbt=document.getElementById('taskbt');
             taskbt.style.display='block';
-            if(isRight[0]==0){
+            if(isRight[0]=="0"){
                 taskinfo1.innerText="正确答案： 【无】";
             }
             else{
                 var s=0;
                 while(s<isRight.length){
-                    if(isRight[s]==1){
+
+                    if(isRight[s]=="1"){
+                        console.log(labelInfos[s]);
                         rightAnswer=rightAnswer+" "+labelInfos[s];
                     }
                     s=parseInt(s)+parseInt(peoples[s]);
+
                 }
 
                 taskinfo1.innerText="正确答案： 【"+rightAnswer+"】";
@@ -401,7 +404,7 @@
             obj={
                 picID:picID,
                 taskID:taskID,
-                queryReason:reason,
+                queryReason:nopassreason,
             };
             var html = $.ajax({
                 type: "Post",
