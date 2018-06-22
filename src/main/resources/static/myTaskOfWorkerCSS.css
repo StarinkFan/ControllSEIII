@@ -404,13 +404,13 @@ img{
 }
 .infokind{
     width: 150px;
-    height: 30px;
+    height: 40px;
     background-color: #FCB69F;
-    font-size: 15px;
-    line-height: 30px;
+    font-size: 20px;
+    line-height: 40px;
     text-align: center;
     position: absolute;
-    top: 100px;
+    top: 90px;
     right: -15px;
     font-weight: bold;
     color: gray;
