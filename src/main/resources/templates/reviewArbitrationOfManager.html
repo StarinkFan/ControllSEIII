@@ -389,7 +389,12 @@
                 check_val.push(obj[k].value);
             }
         }
-        if(check_val[0]=="无答案"){
+        for(var i=0;i<check_val.length;i++){
+            if(check_val[i]=="无答案"&&check_val.length>1){
+                alert("答案有误");
+            }
+        }
+        if(check_val[0]=="无答案"&&check_val.length==1){
             check_val=[];
         }
         console.log(taskPicIDs[num]);

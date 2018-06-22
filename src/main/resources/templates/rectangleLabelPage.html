@@ -115,6 +115,7 @@
                 success: function(myobj) {
                     if(myobj.result==false){
                         alert("已是第一张图片");
+                        window.open("./myTaskDetailOfWorker.html","_self");
                     }
                     else{
                         var postData ={'picSrc':myobj.picSrc,'picID':myobj.picID,'TaskID':tID,
@@ -172,6 +173,7 @@
                 success: function(myobj) {
                     if(myobj.result==false){
                         alert("已是最后一张图片");
+                        window.open("./myTaskDetailOfWorker.html","_self");
                     }
                     else{
                         var postData ={'picSrc':myobj.picSrc,'picID':myobj.picID,'TaskID':tID,
@@ -288,6 +290,7 @@
         };
 
         function myFunction(){
+            document.getElementById('laber').innerText="标注者:"+localStorage.nickname+"    ";
             var data = JSON.parse(localStorage.getItem("filter"));
             var hostIp = data['picSrc'];
             document.getElementById("picID").value=data["picID"];
@@ -338,10 +341,8 @@
                 data: JSON.stringify(partLabel),
                 success: function(data) {
                     if(data==true){
-                        alert("success");
-                        window.opener.location.reload();
-
-                        window.close();
+                        alert("标注成功");
+                        nextPic();
                     }
 
                 },
@@ -431,7 +432,6 @@
 
         function showTags() {
             var tags=JSON.parse(localStorage.getItem('taskTags'));
-            alert(tags.length);
             var i;
             for(i=0;i<tags.length;i++){
                 var tag=document.createElement('div');
@@ -522,7 +522,7 @@
 </div>
 
 
-<button id="undo" disabled="true" style="left: 620px;bottom: 90px;position: fixed;background-color: transparent;border-color: white;font-size: 24px;color: white;width: 80px;padding: 8px;font-family: SimSun-ExtB" onclick="undo()">撤销</button>
-<button id="redo" sisabled="true" style="left: 900px;bottom: 90px;position: fixed;background-color: transparent;border-color: white;font-size: 24px;color: white;width: 80px;padding: 8px;font-family: SimSun-ExtB" onclick="redo()">重做</button>
+<button id="undo" disabled="true" style="left: 620px;bottom: 90px;position: fixed;background-color: lightgrey;border-color: deepskyblue;font-size: 24px;color: white;width: 80px;padding: 8px;font-family: SimSun-ExtB" onclick="undo()">撤销</button>
+<button id="redo" sisabled="true" style="left: 900px;bottom: 90px;position: fixed;background-color: lightgrey;border-color: deepskyblue;font-size: 24px;color: white;width: 80px;padding: 8px;font-family: SimSun-ExtB" onclick="redo()">重做</button>
 </body>
 </html>

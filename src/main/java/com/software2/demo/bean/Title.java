@@ -15,6 +15,15 @@ public class Title {
     private double time;
     private int num_of_complete;
     private double marks;
+    public void init(String name){
+        this.name = name;
+        achieve = 0;
+        num_of_right = 0;
+        num_of_complete = 0;
+        time = 0;
+        marks = 0;
+    }
+
     public double[] toArray(){
         double[] array = new double[5];
         array[0] = achieve;

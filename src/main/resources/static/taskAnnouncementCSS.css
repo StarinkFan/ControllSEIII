@@ -269,6 +269,20 @@ img{
     font-size: 20px;
     font-weight: bolder;
 }
+#next3{
+    display: none;
+    background: none;
+    border: none;
+    font-size: 20px;
+    font-weight: bolder;
+}
+#next4{
+    display: none;
+    background: none;
+    border: none;
+    font-size: 20px;
+    font-weight: bolder;
+}
 .qbox{
     display: none;
 }

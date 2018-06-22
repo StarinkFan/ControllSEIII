@@ -203,6 +203,7 @@
         }
 
         function myFunction(){
+            document.getElementById('laber').innerText="标注者:"+localStorage.nickname+"    ";
             var data = JSON.parse(localStorage.getItem("filter"));
             var picSrc = data['picSrc'];
 
@@ -275,7 +276,7 @@
                     async: false,
                     data:  JSON.stringify(partLabel),
                     success: function(data) {
-                        if(data==true){alert("success")}
+                        if(data==true){alert("修改成功")}else{alert("修改失败")}
 
                     },
                     error: function() {
@@ -317,9 +318,10 @@
 
 
         function loadLabel(obj,id){
-            for(var i=0;i<obj.lis.length;i++){
-                storeX[i]=obj.lis[i].x;
-                storeY[i]=obj.lis[i].y;
+            var lis=JSON.parse(obj.lis);
+            for(var i=0;i<lis.length;i++){
+                storeX[i]=lis[i].x;
+                storeY[i]=lis[i].y;
             }
 
             color=obj.color;
@@ -376,9 +378,7 @@
         }
 
         function close1() {
-            window.opener=null;
-            window.open('','_self');
-            window.close();
+            window.open("./myTaskDetailOfWorker.html","_self");
         }
 
 
@@ -440,10 +440,10 @@
 </div>
 
 <div class="colorSelector" style="text-align: center;position: fixed;left: 750px;bottom:100px">
-    <div class="color" onclick="black()" id="bla" style="background-color: black"></div>
-    <div class="color" onclick="white()" id="whi" style="background-color: white"></div>
-    <div class="color" onclick="yellow()" id="yel" style="background-color: yellow"></div>
-    <div class="color" onclick="blue()" id="blu" style="background-color: blue"></div>
+    <div class="color" id="bla" style="background-color: black"></div>
+    <div class="color" id="whi" style="background-color: white"></div>
+    <div class="color" id="yel" style="background-color: yellow"></div>
+    <div class="color" id="blu" style="background-color: blue"></div>
 </div>
 
 

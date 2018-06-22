@@ -123,6 +123,7 @@
                 success: function(myobj) {
                     if(myobj.result==false){
                         alert("已是第一张图片");
+                        window.open("./myTaskDetailOfWorker.html","_self");
                     }
                     else{
                         var postData ={'picSrc':myobj.picSrc,'picID':myobj.picID,'TaskID':tID,
@@ -180,6 +181,7 @@
                 success: function(myobj) {
                     if(myobj.result==false){
                         alert("已是最后一张图片");
+                        window.open("./myTaskDetailOfWorker.html","_self");
                     }
                     else{
                         var postData ={'picSrc':myobj.picSrc,'picID':myobj.picID,'TaskID':tID,
@@ -271,8 +273,8 @@
         }
         function addClick(x, y, dragging)
         {
-            x=x.toFixed(1);
-            y=y.toFixed(1);
+            x=x.toFixed(2);
+            y=y.toFixed(2);
             console.log(x);
             console.log(y);
             clickX.push(x);
@@ -283,6 +285,7 @@
 
 
         function myFunction(){
+            document.getElementById('laber').innerText="标注者:"+localStorage.nickname+"    ";
             var data = JSON.parse(localStorage.getItem("filter"));
             picSrc = data['picSrc'];
             document.getElementById("picID").value=data['picID'];
@@ -339,9 +342,7 @@
                 success: function(data) {
                     if(data==true){
                         alert("标注成功");
-                        window.opener.location.reload();
-
-                        window.close();
+                        nextPic();
                     }
 
                 },

@@ -170,6 +170,7 @@
         }
 
         function myFunction(){
+            document.getElementById('laber').innerText="标注者:"+localStorage.workerNickname+"    ";
             var data = JSON.parse(localStorage.getItem("filter"));
             var picSrc = data['picSrc'];
             document.getElementById("picID").value=data['picID'];
@@ -237,9 +238,11 @@
 
 
         function loadLabel(obj,answer){
-            for(var i=0;i<obj.lis.length;i++){
-                storeX[i]=obj.lis[i].x;
-                storeY[i]=obj.lis[i].y;
+
+            var lis=JSON.parse(obj.lis);
+            for(var i=0;i<lis.length;i++){
+                storeX[i]=lis[i].x;
+                storeY[i]=lis[i].y;
             }
 
             color=obj.color;
