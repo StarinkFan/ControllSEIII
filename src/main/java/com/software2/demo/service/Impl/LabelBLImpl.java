@@ -54,6 +54,9 @@ public class LabelBLImpl implements LabelBLService{
             String lisOfLID=picture.getLID();
             List<Integer> i = JSON.parseArray(lisOfLID,Integer.class);
             i.remove(i.indexOf(l.getID()));
+            //
+            picture.setLID(JSON.toJSONString(i));
+            //
             pictureDataService.save(picture);
             list1.remove(list1.indexOf(l.getID()));
         }
