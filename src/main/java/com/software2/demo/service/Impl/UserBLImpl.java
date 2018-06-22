@@ -295,7 +295,8 @@ public class UserBLImpl implements UserBLService{
                 List<Title> titles = JSON.parseArray(user.getListOfTitles(),Title.class);
                 for(Title title : titles){
                     if(title.getName().equals(kind)){
-                        ability = title.getNum_of_right()/(double)title.getNum_of_complete();
+                        if(title.getNum_of_complete()==0){ability = 0;}
+                        else ability = title.getNum_of_right()/(double)title.getNum_of_complete();
                         break;
                     }
                 }
