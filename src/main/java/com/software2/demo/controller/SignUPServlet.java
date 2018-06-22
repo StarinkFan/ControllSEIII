@@ -80,6 +80,7 @@ public class SignUPServlet {
             u.setIntroduction("");
             u.setSex("");
             u.setWechat("");
+            u.setListOfCRecord(JSON.toJSONString(new ArrayList<>()));
             u.setHeadShotUrl("p7ogpwb2n.bkt.clouddn.com/默认头像.jpg");
             ResultMessage r=userBLService.addUser(u);
             if(r.equals(ResultMessage.EXIST))

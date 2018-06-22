@@ -312,6 +312,29 @@
 
             myChart.setOption(option);
         }
+
+        function setScatter() {
+            var myChart = echarts.init(document.getElementById('line2'));
+            var option = {
+                title: {
+                    text: '任务图片数与工人标注时间（min）'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: taskPicNumbers
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: finishPercents,
+                    type: 'line',
+                    smooth: true
+                }]
+            };
+
+            myChart.setOption(option);
+        }
     </script>
 
 

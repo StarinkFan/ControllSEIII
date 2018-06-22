@@ -111,31 +111,33 @@ public class ChooseTaskServlet {
         List<InitTask> listOfTasks=iS.getUndergoing();
         List<InitTask> list=new ArrayList<>();
         for(InitTask i:listOfTasks){
-            boolean in=false;
-            List<String> tags=JSON.parseArray(i.getListOfTags(),String.class);
-            for(String str:tags){
-                for(String str2:listOfTags){
-                    if(str.equals(str2)){
-                        in=true;
-                        break;
+            if(!i.getInitorID().equals(userID)) {
+                boolean in = false;
+                List<String> tags = JSON.parseArray(i.getListOfTags(), String.class);
+                for (String str : tags) {
+                    for (String str2 : listOfTags) {
+                        if (str.equals(str2)) {
+                            in = true;
+                            break;
+                        }
                     }
+                    if (in)
+                        break;
                 }
-                if(in)
-                    break;
-            }
-            if(in){
-                boolean alreadyin=false;
-                for(int id:JSON.parseArray(u.getListOfWTask(),Integer.class)) {
-                    WorkTask w=workTaskBLService.getSingleWTask(id);
-                    if(w.getInitTaskID()==i.getID()){
-                        alreadyin=true;
-                        break;
-                    }
+                if (in) {
+                    boolean alreadyin = false;
+                    for (int id : JSON.parseArray(u.getListOfWTask(), Integer.class)) {
+                        WorkTask w = workTaskBLService.getSingleWTask(id);
+                        if (w.getInitTaskID() == i.getID()) {
+                            alreadyin = true;
+                            break;
+                        }
 
 
-                }
-                if(!alreadyin){
-                    list.add(i);
+                    }
+                    if (!alreadyin) {
+                        list.add(i);
+                    }
                 }
             }
         }
