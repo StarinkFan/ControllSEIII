@@ -300,9 +300,10 @@
                     data: JSON.stringify(partLabel),
                     success: function(data) {
                         if(data==true){
-                            alert("success");
-                            window.opener.location.reload();
-                            window.close();
+                            alert("删除成功");
+                            window.open("./myTaskDetailOfWorker.html","_self");
+                        }else{
+                            alert("删除失败");
                         }
 
                     },
@@ -358,7 +359,6 @@
 
         function showTags() {
             var tags=JSON.parse(localStorage.getItem('taskTags'));
-            alert(tags.length);
             var i;
             for(i=0;i<tags.length;i++){
                 var tag=document.createElement('div');

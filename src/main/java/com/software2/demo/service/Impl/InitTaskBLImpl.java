@@ -8,6 +8,7 @@ import com.software2.demo.dao.UserDataService;
 import com.software2.demo.service.InitTaskBLService;
 import com.software2.demo.service.PictureBLService;
 import com.software2.demo.service.UserBLService;
+import com.software2.demo.service.WorkTaskBLService;
 import com.software2.demo.util.MyTimer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,8 @@ public class InitTaskBLImpl implements InitTaskBLService{
     UserBLService uB;
     @Autowired
     PictureBLService pBL;
+    @Autowired
+    WorkTaskBLService wB;
     public InitTask addITask(InitTask i) {
         itS.save(i);
         int id = i.getID();
@@ -40,6 +43,18 @@ public class InitTaskBLImpl implements InitTaskBLService{
                     System.out.println(id);
                     task.setState(0);
                     setState(task);//设置状态
+
+                    //任务完成改变所有该任务中worktask的状态位
+                    List<WorkTask> workTaskList = wB.getByInitTaskID(task.getID());
+                    for(WorkTask workTask: workTaskList){
+                        if(workTask.getState()==0){
+                            workTask.setState(3);
+                        }else{
+                            workTask.setState(2);
+                        }
+                    }
+                    //上方的方法可能没有对其保存，因为find方法返回的是一个数据库对象可以直接修改（可能出错，没有试过）
+
                     uB.modifyTitle(task);
                     System.gc();
                 }

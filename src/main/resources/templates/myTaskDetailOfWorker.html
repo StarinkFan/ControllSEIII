@@ -547,6 +547,9 @@ function loadTask() {
                     picinfo.innerText=picLabels[i]+" √";
                     picinfo.style.color='green';
                 }
+                else if(isRights[i]==2){
+                    picinfo.innerText=picLabels[i];
+                }
                 picitem.appendChild(picimg);
                 picitem.appendChild(pictag);
                 pictag.appendChild(picbt);
@@ -587,7 +590,7 @@ function loadTask() {
                             tempm[2]=temp[2];
                         }
                         localStorage.setItem('taskTags',JSON.stringify(tempm));
-                        window.open("./rectangleLabelPage.html","_blank");
+                        window.open("./rectangleLabelPage.html","_self");
                     }
                     else if(picConditions[i]==1){
                         if(picTags[i]==2){
@@ -613,7 +616,7 @@ function loadTask() {
                             localStorage.setItem('taskTags',JSON.stringify(tempm));
                             var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
                             localStorage.setItem('filter',JSON.stringify(postData));
-                            window.open("./editRectangleLabelPage.html","_blank");
+                            window.open("./editRectangleLabelPage.html","_self");
                         }
                     }
                 })
@@ -642,7 +645,7 @@ function loadTask() {
                         localStorage.setItem('taskTags',JSON.stringify(tempm));
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
                         localStorage.setItem('filter',JSON.stringify(postData));
-                        window.open("./wholeLabelPage.html","_blank");
+                        window.open("./wholeLabelPage.html","_self");
                     }
                     else if(picConditions[i]==1){
                         if(picTags[i]==1){
@@ -653,7 +656,7 @@ function loadTask() {
                             localStorage.setItem('category',taskKind);
                             var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
                             localStorage.setItem('filter',JSON.stringify(postData));
-                            window.open("./EditWholeLabelPage.html","_blank");
+                            window.open("./EditWholeLabelPage.html","_self");
                         }
                     }
                 })
@@ -682,7 +685,7 @@ function loadTask() {
                         localStorage.setItem('taskTags',JSON.stringify(tempm));
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
                         localStorage.setItem('filter',JSON.stringify(postData));
-                        window.open("./outlineLabelPage.html","_blank");
+                        window.open("./outlineLabelPage.html","_self");
                     }
                     else if(picConditions[i]==1){
                         if(picTags[i]==3){
@@ -708,7 +711,7 @@ function loadTask() {
                             localStorage.setItem('taskTags',JSON.stringify(tempm));
                             var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
                             localStorage.setItem('filter',JSON.stringify(postData));
-                            window.open("./editOutlineLabelPage.html","_blank");
+                            window.open("./editOutlineLabelPage.html","_self");
                         }
                     }
                 })
@@ -744,7 +747,7 @@ function loadTask() {
                         localStorage.setItem('taskTags',JSON.stringify(tempm));
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
                         localStorage.setItem('filter',JSON.stringify(postData));
-                        window.open("./EditWholeLabelPage.html","_blank");
+                        window.open("./EditWholeLabelPage.html","_self");
                     }
                     else if(picTags[i]==2){
                         localStorage.setItem('order',i);
@@ -769,7 +772,7 @@ function loadTask() {
                         localStorage.setItem('taskTags',JSON.stringify(tempm));
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
                         localStorage.setItem('filter',JSON.stringify(postData));
-                        window.open("./editRectangleLabelPage.html","_blank");
+                        window.open("./editRectangleLabelPage.html","_self");
                     }
                     else if(picTags[i]==3){
                         localStorage.setItem('order',i);
@@ -794,7 +797,7 @@ function loadTask() {
                         localStorage.setItem('taskTags',JSON.stringify(tempm));
                         var postData ={'picSrc':picurls[i],'picID':picIDs[i],'TaskID':taskID};
                         localStorage.setItem('filter',JSON.stringify(postData));
-                        window.open("./editOutlineLabelPage.html","_blank");
+                        window.open("./editOutlineLabelPage.html","_self");
                     }
                 })
             }(i);
