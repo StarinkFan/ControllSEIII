@@ -203,6 +203,9 @@ public class RequestorTaskServlet {
         return resultMap;
     }
 
+    /**
+     * @Description：返回审核中的任务信息
+     */
     @RequestMapping("/requestorTask/review")
     @ResponseBody
     public Map<String,Object> getReview(@RequestBody Map<String,Object> requestMap){
@@ -221,19 +224,21 @@ public class RequestorTaskServlet {
         List<String> marklist=new ArrayList<>();
         for(InitTask i:noPass){
             if(i.getState()==3){
-                id.add(i.getID());
-                request.add(i.getRequest());
-                tag.add(i.getTag());
-                credit.add(i.getCredit());
-                people.add(i.getNum());
-                deadline.add(i.getDeadline());
-                kind.add(i.getKind());
-                String s="";
-                for(String str:JSON.parseArray(i.getListOfTags(),String.class)){
-                    s=s+str+":";
+                if(i.getKind().equals(sortKind)||sortKind.equals("全部")) {
+                    id.add(i.getID());
+                    request.add(i.getRequest());
+                    tag.add(i.getTag());
+                    credit.add(i.getCredit());
+                    people.add(i.getNum());
+                    deadline.add(i.getDeadline());
+                    kind.add(i.getKind());
+                    String s = "";
+                    for (String str : JSON.parseArray(i.getListOfTags(), String.class)) {
+                        s = s + str + ":";
+                    }
+                    marklist.add(s);
+                    picurl.add("http://" + pS.getSinglePicture(JSON.parseArray(i.getListOfP(), Integer.class).get(0)).getUrl());
                 }
-                marklist.add(s);
-                picurl.add("http://"+pS.getSinglePicture(JSON.parseArray(i.getListOfP(),Integer.class).get(0)).getUrl());
             }
         }
         Map<String,Object> resultMap=new HashMap<>();
@@ -294,13 +299,14 @@ public class RequestorTaskServlet {
     @ResponseBody
     public Map<String,Object> getfinishedByID(@RequestBody Map<String,Object> requestMap){
         System.out.println("getfinishedByID");
+        System.out.println("testAAAAA");
         String requestorID=requestMap.get("requestorID").toString();
         List<InitTask> IT=iS.getDone(requestorID);
         String sortKind=requestMap.get("sortKind").toString();
         int sortNum= Integer.parseInt(requestMap.get("sortNum").toString());
         List<InitTask> a=new ArrayList<>();
         for(InitTask i:IT){
-            if(i.getKind().equals(sortKind)){
+            if(i.getKind().equals(sortKind)||sortKind.equals("全部")){
                 a.add(i);
             }
         }
@@ -383,7 +389,7 @@ public class RequestorTaskServlet {
         int sortNum= Integer.parseInt(requestMap.get("sortNum").toString());
         List<InitTask> a=new ArrayList<>();
         for(InitTask i:list){
-            if(i.getKind().equals(sortKind)){
+            if(i.getKind().equals(sortKind)||sortKind.equals("全部")){
                 a.add(i);
             }
         }
