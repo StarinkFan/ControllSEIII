@@ -21,5 +21,5 @@ public class Complaint extends Item {
     private String reason;//投诉理由
     private int initTaskID;
     private int workTaskID;
-    private int check;
+    private int checking;
 }
