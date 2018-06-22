@@ -378,6 +378,7 @@ function clickAppeal() {
                     taskDetail.style.display='block';
                     var m=0;
                     marklist=[];
+                    oldanswer=[];
                     while(m<labelInfos.length){
                         marklist.push(labelInfos[m]);
                         if(isRight[m]==1){
@@ -442,22 +443,28 @@ function clickAppeal() {
                 xcv=1;
             }
         }
+        var flog=1;
+
         if(xcv==0){
-            if(check_val[0]=="无答案"&&check_val.length==1){
-                check_val=[];
-                submit2(flog);
-            }
-            else{
-                var flog=1;
-                for(var q=0;q<check_val.length;q++){
-                    for(var p=0;p<oldanswer;p++){
-                        if(check_val[q]!=oldanswer[p]){
-                            flog=0;
-                        }
+            console.log(check_val);
+            console.log(oldanswer);
+            for(var q=0;q<check_val.length;q++){
+                for(var p=0;p<oldanswer.length;p++){
+                    if(check_val[q]!=oldanswer[p]){
+                        flog=0;
                     }
                 }
-                submit2(flog);
             }
+            if(flog==0){
+                if(check_val[0]=="无答案"&&check_val.length==1){
+                    check_val=[];
+                }
+                submit2(1);
+            }
+            else{
+                submit2(0);
+            }
+
         }
 
 
@@ -467,7 +474,7 @@ function clickAppeal() {
 
     function submit2(f) {
         var flog=f;
-        if(flog==1){
+        if(flog==0){
             console.log("no"+num);
             /*申诉失败，给任务inittaskid，picid,workerid,通知申诉者（worker）（？，返回结果成功*/
             var obj={
@@ -492,7 +499,7 @@ function clickAppeal() {
                     alert("error");
                 }
             });
-            /*var taskDetail=document.getElementById('taskDetail');
+           /* var taskDetail=document.getElementById('taskDetail');
             taskDetail.style.display='none';
             clickAppeal();*/
         }
@@ -502,7 +509,7 @@ function clickAppeal() {
                 check_val=[];
             }
             /*申诉通过，给任务inittaskid，picid，正确答案list（可能0，也可能大于1，修改答案,通知发起者（requestor）申诉者（worker）（？，返回结果成功*/
-            var obj={
+           var obj={
                 taskID:taskIDs[num],
                 picID:taskPicIDs[num],
                 answer:check_val,
@@ -524,7 +531,7 @@ function clickAppeal() {
                     alert("error");
                 }
             });
-            /*var taskDetail=document.getElementById('taskDetail');
+          /*  var taskDetail=document.getElementById('taskDetail');
             taskDetail.style.display='none';
             clickAppeal();*/
         }
