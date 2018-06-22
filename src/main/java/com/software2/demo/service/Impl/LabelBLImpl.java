@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -27,6 +28,7 @@ public class LabelBLImpl implements LabelBLService{
     public ResultMessage addLabel(Label label,int WorkTaskID) {
         labelData.save(label);
         WorkTask workTask = workTaskDataService.findById(WorkTaskID).get();
+        workTask.setEndtime(new Date());
         List<Integer> list = JSON.parseObject(workTask.getListOfLabel(),List.class);
         list.add(label.getID());
         workTask.setListOfLabel(JSON.toJSONString(list));
