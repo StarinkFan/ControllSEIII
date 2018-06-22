@@ -161,6 +161,7 @@ public class UserBLImpl implements UserBLService{
         int undergoing=UGTask.size();
         List<WorkTask> UCTask=wS.getUndone(uid);
         int uncomplete=UCTask.size();
+        rank(0);
         int rank=u.getRanking();
         List<Integer> list=new ArrayList<>();
         list.add(earnedCredit);
