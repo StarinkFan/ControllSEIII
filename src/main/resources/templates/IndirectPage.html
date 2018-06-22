@@ -169,14 +169,38 @@
         ];
 
         window.onload=function () {
-            set3d();
-            setScatter();
-            // picCredits=['0-20','20-100','100-500','>500'];
-            // speeds=[10,6,3,1];
-            // setLine1();
-            // taskPicNumbers=['0-5','5-20','20-50','>50'];
-            // finishPercents=[96,90,50,10];
-            // setLine2();
+            var obj=new Object();
+            obj.data=JSON.stringify(data);
+            obj.data0=JSON.stringify(data0);
+            obj.percents=JSON.stringify(percents);
+            obj.credits=JSON.stringify(credits);
+            obj.picNumbers=JSON.stringify(picNumbers);
+
+            var html = $.ajax({
+                type: "Post",
+                url: '/getData',
+                dataType:'json',
+                contentType: "application/json",
+                async: true,
+                data: JSON.stringify(obj),
+                success: function(myobj) {
+                    data=myobj.data;
+                    data0=myobj.data0;
+                    percents=myobj.percents;
+                    picNumbers=myobj.picNumbers;
+                    credits=myobj.credits;
+                    console.log(credits[0]);
+                    set3d();
+                    setScatter();
+                },
+                error: function() {
+                    alert("error");
+                }
+            });
+
+
+        };
+
             name = localStorage.nickname;
             account = localStorage.account;
             document.getElementById('username').innerText=name;
@@ -205,7 +229,9 @@
                     percents=myobj.percents;
                     picNumbers=myobj.picNumbers;
                     credits=myobj.credits;
-                    setLine1();
+                    console.log(credits[0]);
+                    set3d();
+                    setScatter();
                 },
                 error: function() {
                     alert("error");
