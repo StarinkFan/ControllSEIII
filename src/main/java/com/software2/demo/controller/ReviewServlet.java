@@ -226,6 +226,8 @@ public class ReviewServlet {
         List<String> reason=new ArrayList<>();
         List<Integer> workTaskid=new ArrayList<>();
         List<Integer> complaintid=new ArrayList<>();
+        List<String> kind=new ArrayList<>();
+        List<String> request=new ArrayList<>();
         for(Complaint c:list){
             if(c.getChecking()==0) {
                 InitTask i = iS.getSingleITask(c.getInitTaskID());
@@ -260,6 +262,8 @@ public class ReviewServlet {
                 reason.add(c.getReason());
                 workTaskid.add(w.getID());
                 complaintid.add(c.getID());
+                kind.add(i.getKind());
+                request.add(i.getRequest());
             }
         }
         resultMap.put("id",id);
@@ -276,6 +280,8 @@ public class ReviewServlet {
         resultMap.put("reason",reason);
         resultMap.put("workTaskid",workTaskid);
         resultMap.put("complaintid",complaintid);
+        resultMap.put("request",request);
+        resultMap.put("kind",kind);
         return resultMap;
     }
 
