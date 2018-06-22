@@ -49,6 +49,7 @@ public class CheckStateUtil {
         List<Integer> listOfP= JSON.parseArray(strLOP,Integer.class);
         String strLOL=w.getListOfLabel();
         List<Integer> listOfLabel=JSON.parseArray(strLOL,Integer.class);
+        boolean isDeleted=false;
         if(listOfP.size()==listOfLabel.size()){
             String strLOW=i.getListOfWoker();
             List<String> workers=JSON.parseArray(strLOW,String.class);
@@ -82,6 +83,7 @@ public class CheckStateUtil {
                         List<Integer> labelID=JSON.parseArray(workTask.getListOfLabel(),Integer.class);
                         c.labelBLService.deleteLabel(labelID,workTask.getID());
                         c.wS.deleteTask(workTask.getID());
+                        isDeleted=true;
 /*                        for(int temp:labelID){
                             Label label=c.labelBLService.getSingleLabel(temp);
                             picture picture=c.pictureBLService.getSinglePicture(label.getPID());
@@ -96,7 +98,6 @@ public class CheckStateUtil {
                             c.pictureBLService.modify(picture);
                             c.labelBLService.deleteLabel()
                         }*/
-                        workTask.setState(3);
                     }else{
                         workTask.setState(2);
                     }
@@ -132,7 +133,9 @@ public class CheckStateUtil {
         }
 //        c.userBLService.modifyUser(u);
 //        c.userBLService.modifyUser(u2);
-        c.wS.modifyTask(w);
+        if(!isDeleted) {
+            c.wS.modifyTask(w);
+        }
         c.iS.modifyIT(i);
     }
 }

@@ -19,4 +19,5 @@ public class Query extends Item {
     private String requestorID;//发起者id
     private String reason;//质疑理由
     private int initTaskID;
+    private boolean check;
 }

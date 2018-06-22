@@ -203,6 +203,7 @@ public class TaskdetailServlet {
         query.setInitTaskID(taskId);
         query.setReason(queryReason);
         query.setRequestorID(pS.getSinglePicture(picID).getPID());
+        query.setCheck(false);
         queryBLService.add(query);
         return true;
     }
