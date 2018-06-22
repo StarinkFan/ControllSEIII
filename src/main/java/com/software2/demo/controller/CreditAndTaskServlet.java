@@ -20,7 +20,7 @@ import java.util.Map;
 @Controller
 @Transactional
 public class CreditAndTaskServlet {
-    private int UserID=2;
+    private int UserID=1;
     @Autowired
     UserDataBLService userDataBLService;
 
@@ -48,6 +48,7 @@ public class CreditAndTaskServlet {
     @RequestMapping("/getData")
     @ResponseBody
     public boolean getData(@RequestBody Map<String,Object> requestMap){
+        System.out.println("aaaaa");
         String percents=requestMap.get("percents").toString();
         String data0=requestMap.get("data0").toString();
         String data=requestMap.get("data").toString();
