@@ -52,6 +52,7 @@ public class LabelBLImpl implements LabelBLService{
         String listOfL=workTask.getListOfLabel();
         List<Integer> list1 =JSON.parseArray(listOfL,Integer.class);
         for(Label l:list){
+
             picture picture = pictureDataService.findById(l.getPID()).get();
             String lisOfLID=picture.getLID();
             List<Integer> i = JSON.parseArray(lisOfLID,Integer.class);
@@ -62,6 +63,7 @@ public class LabelBLImpl implements LabelBLService{
             pictureDataService.save(picture);
             list1.remove(list1.indexOf(l.getID()));
         }
+        workTask.setListOfLabel(JSON.toJSONString(list1));
         workTaskDataService.save(workTask);
         labelData.deleteInBatch(list);
         return rs;
