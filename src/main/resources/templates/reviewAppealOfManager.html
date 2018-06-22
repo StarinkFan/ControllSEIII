@@ -435,47 +435,63 @@ function clickAppeal() {
                 check_val.push(obj[k].value);
             }
         }
+        var xcv=0;
         for(var i=0;i<check_val.length;i++){
             if(check_val[i]=="无答案"&&check_val.length>1){
                 alert("答案有误");
+                xcv=1;
             }
         }
-        if(check_val[0]=="无答案"&&check_val.length==1){
-            check_val=[];
-        }
-        var flog=1;
-        for(var q=0;q<check_val.length;q++){
-            for(var p=0;p<oldanswer;p++){
-                if(check_val[q]!=oldanswer[p]){
-                    flog=0;
+        if(xcv==0){
+            if(check_val[0]=="无答案"&&check_val.length==1){
+                check_val=[];
+                submit2(flog);
+            }
+            else{
+                var flog=1;
+                for(var q=0;q<check_val.length;q++){
+                    for(var p=0;p<oldanswer;p++){
+                        if(check_val[q]!=oldanswer[p]){
+                            flog=0;
+                        }
+                    }
                 }
+                submit2(flog);
             }
         }
+
+
+
+
+    }
+
+    function submit2(f) {
+        var flog=f;
         if(flog==1){
             console.log("no"+num);
             /*申诉失败，给任务inittaskid，picid,workerid,通知申诉者（worker）（？，返回结果成功*/
             var obj={
-                 taskID:taskIDs[num],
-                 picID:taskPicIDs[num],
-                 workerID:taskWorkerIDs[num],
+                taskID:taskIDs[num],
+                picID:taskPicIDs[num],
+                workerID:taskWorkerIDs[num],
                 appealID:appealIDs[num],
-             };
-             var html = $.ajax({
-                 type: "Post",
-                 url: '/checkAppeal/nopass',
-                 data:JSON.stringify(obj),
-                 dataType:'json',
-                 contentType: "application/json",
-                 async: false,
-                 success: function(data) {
-                     var taskDetail=document.getElementById('taskDetail');
-                     taskDetail.style.display='none';
-                     clickAppeal();
-                 },
-                 error: function() {
-                     alert("error");
-                 }
-             });
+            };
+            var html = $.ajax({
+                type: "Post",
+                url: '/checkAppeal/nopass',
+                data:JSON.stringify(obj),
+                dataType:'json',
+                contentType: "application/json",
+                async: false,
+                success: function(data) {
+                    var taskDetail=document.getElementById('taskDetail');
+                    taskDetail.style.display='none';
+                    clickAppeal();
+                },
+                error: function() {
+                    alert("error");
+                }
+            });
             /*var taskDetail=document.getElementById('taskDetail');
             taskDetail.style.display='none';
             clickAppeal();*/
@@ -487,27 +503,27 @@ function clickAppeal() {
             }
             /*申诉通过，给任务inittaskid，picid，正确答案list（可能0，也可能大于1，修改答案,通知发起者（requestor）申诉者（worker）（？，返回结果成功*/
             var obj={
-                 taskID:taskIDs[num],
-                 picID:taskPicIDs[num],
-                 answer:check_val,
+                taskID:taskIDs[num],
+                picID:taskPicIDs[num],
+                answer:check_val,
                 appealID:appealIDs[num],
-             };
-             var html = $.ajax({
-                 type: "Post",
-                 url: '/checkAppeal/pass',
-                 data:JSON.stringify(obj),
-                 dataType:'json',
-                 contentType: "application/json",
-                 async: false,
-                 success: function(data) {
-                     var taskDetail=document.getElementById('taskDetail');
-                     taskDetail.style.display='none';
-                     clickAppeal();
-                 },
-                 error: function() {
-                     alert("error");
-                 }
-             });
+            };
+            var html = $.ajax({
+                type: "Post",
+                url: '/checkAppeal/pass',
+                data:JSON.stringify(obj),
+                dataType:'json',
+                contentType: "application/json",
+                async: false,
+                success: function(data) {
+                    var taskDetail=document.getElementById('taskDetail');
+                    taskDetail.style.display='none';
+                    clickAppeal();
+                },
+                error: function() {
+                    alert("error");
+                }
+            });
             /*var taskDetail=document.getElementById('taskDetail');
             taskDetail.style.display='none';
             clickAppeal();*/

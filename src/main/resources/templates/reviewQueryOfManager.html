@@ -418,22 +418,37 @@
                 check_val.push(obj[k].value);
             }
         }
+        var xcv=0;
         for(var i=0;i<check_val.length;i++){
             if(check_val[i]=="无答案"&&check_val.length>1){
                 alert("答案有误");
+                xcv=1;
             }
         }
-        if(check_val[0]=="无答案"&&check_val.length==1){
-            check_val=[];
-        }
-        var flog=1;
-        for(var q=0;q<check_val.length;q++){
-            for(var p=0;p<oldanswer;p++){
-                if(check_val[q]!=oldanswer[p]){
-                    flog=0;
+        if(xcv==0){
+            if(check_val[0]=="无答案"&&check_val.length==1){
+                check_val=[];
+                submit2(flog);
+            }
+            else{
+                var flog=1;
+                for(var q=0;q<check_val.length;q++){
+                    for(var p=0;p<oldanswer;p++){
+                        if(check_val[q]!=oldanswer[p]){
+                            flog=0;
+                        }
+                    }
                 }
+                submit2(flog);
             }
         }
+
+
+
+    }
+
+    function submit2(f) {
+        var flog=f;
         if(flog==1){
             console.log("no"+num);
             /*质疑失败，给任务inittaskid，picid,通知质疑人（requestor）（？，返回结果成功*/
@@ -490,9 +505,9 @@
                     alert("error");
                 }
             });
-           /* var taskDetail=document.getElementById('taskDetail');
-            taskDetail.style.display='none';
-            clickQuery();*/
+            /* var taskDetail=document.getElementById('taskDetail');
+             taskDetail.style.display='none';
+             clickQuery();*/
 
         }
     }
