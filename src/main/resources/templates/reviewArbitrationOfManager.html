@@ -10,6 +10,7 @@
         var name=localStorage.nickname;
 
         window.onload=function () {
+            clickArbitration();
             document.getElementById('username').innerText = name;
             var username = document.getElementById('username');
             username.onmouseover = function () {
@@ -21,7 +22,7 @@
                 }
             }
 
-            clickArbitration();
+
 
         }
 
@@ -48,7 +49,7 @@
 <body>
 
 <div id="userbar" style="width:100%;position: fixed;z-index: 3;padding-left: 12%;">
-    <li><img src="../static/pic/logo.png" style="height: 60px;margin-left: -465%"></li>
+    <li><img src="../static/pic/logo.png" style="height: 60px;margin-left: -165%"></li>
     <div style=" z-index:3;display: inline-block;float:left;margin-left: 10%;" >
         <ul>
             <li><a href="#task"></a></li>
