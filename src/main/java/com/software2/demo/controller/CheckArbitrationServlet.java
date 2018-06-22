@@ -49,7 +49,6 @@ public class CheckArbitrationServlet {
 
         List<Integer> pic_ids = JSON.parseArray(initTask.getListOfP(), Integer.class);
         double value = (double)initTask.getCredit()/initTask.getNum()/pic_ids.size();
-        userBLService.modify_picTitle(picID,initTask.getKind(),answer,true,value,taskID);
         userBLService.modify_picTitle(picID,initTask.getKind(),answer,false,value,taskID);
         return true;
     }

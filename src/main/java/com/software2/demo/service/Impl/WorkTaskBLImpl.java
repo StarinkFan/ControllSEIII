@@ -32,8 +32,6 @@ public class WorkTaskBLImpl implements WorkTaskBLService{
     }
 
     public ResultMessage modifyTask(WorkTask w) {
-        Date date = new Date();
-        w.setEndtime(date);
         wD.save(w);
         return ResultMessage.SUCCESS;
     }

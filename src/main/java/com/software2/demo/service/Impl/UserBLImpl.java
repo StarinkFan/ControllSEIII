@@ -193,7 +193,7 @@ public class UserBLImpl implements UserBLService{
             List<WorkTask> lis = wD.findByWorkerID(id);
             for(WorkTask workTask:lis){
                 if(workTask.getInitTaskID()==initTask.getID()){
-                    time = (workTask.getEndtime().getTime()-workTask.getStarttime().getTime())/(1000* 60 * 60);
+                    time = (workTask.getEndtime().getTime()-workTask.getStarttime().getTime())/(1000);
                     break;
                 }
             }
@@ -259,12 +259,21 @@ public class UserBLImpl implements UserBLService{
                                         break;
                                     }
                                 }
-                                if(isComplaint)
-                                    { title.setNum_of_right(title.getNum_of_right()-1);thisWT.setActualCredit(thisWT.getActualCredit()-(int)value);change_score(-value,label.getGiverID(),false);change_score(value,initorID,true);}
-                                else
-                                    { title.setNum_of_right(title.getNum_of_right() + 1); thisWT.setActualCredit(thisWT.getActualCredit()+(int)value);label.setState(1);change_score(value,label.getGiverID(),false);change_score(-value,initorID,true);}
-                                    wD.save(thisWT);
-                                    break;
+                                if(isComplaint) {
+                                    title.setNum_of_right(title.getNum_of_right()-1);
+                                    thisWT.setActualCredit(thisWT.getActualCredit()-(int)value);
+                                    change_score(-value,label.getGiverID(),false);
+                                    change_score(value,initorID,true);
+                                }
+                                else{
+                                    title.setNum_of_right(title.getNum_of_right() + 1);
+                                    thisWT.setActualCredit(thisWT.getActualCredit()+(int)value);
+                                    label.setState(1);
+                                    change_score(value,label.getGiverID(),false);
+                                    change_score(-value,initorID,true);
+                                }
+                                wD.save(thisWT);
+                                break;
                             }
                         }
                         if(flag==0){
