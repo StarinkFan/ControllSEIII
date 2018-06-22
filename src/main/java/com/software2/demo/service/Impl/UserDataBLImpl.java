@@ -1,5 +1,6 @@
 package com.software2.demo.service.Impl;
 
+import com.software2.demo.bean.UserData;
 import com.software2.demo.dao.UserDataDAO;
 import com.software2.demo.service.UserDataBLService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,10 @@ public class UserDataBLImpl implements UserDataBLService{
     @Override
     public String getCredits(int id) {
         return userDataDAO.findById(id).get().getCredits();
+    }
+
+    @Override
+    public UserData add(UserData u) {
+        return userDataDAO.save(u);
     }
 }

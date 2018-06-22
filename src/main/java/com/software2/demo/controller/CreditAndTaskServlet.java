@@ -1,6 +1,8 @@
 package com.software2.demo.controller;
 
+import com.software2.demo.bean.UserData;
 import com.software2.demo.service.UserDataBLService;
+import org.omg.CORBA.OBJ_ADAPTER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +20,7 @@ import java.util.Map;
 @Controller
 @Transactional
 public class CreditAndTaskServlet {
-    private int UserID=1;
+    private int UserID=2;
     @Autowired
     UserDataBLService userDataBLService;
 
@@ -41,5 +43,23 @@ public class CreditAndTaskServlet {
         resultMap.put("picNumbers",picNumbers);
         resultMap.put("credits",credits);
         return resultMap;
+    }
+
+    @RequestMapping("/getData")
+    @ResponseBody
+    public boolean getData(@RequestBody Map<String,Object> requestMap){
+        String percents=requestMap.get("percents").toString();
+        String data0=requestMap.get("data0").toString();
+        String data=requestMap.get("data").toString();
+        String picNumbers=requestMap.get("picNumbers").toString();
+        String credits=requestMap.get("credits").toString();
+        UserData userData=new UserData();
+        userData.setCredits(credits);
+        userData.setData0(data0);
+        userData.setData1(data);
+        userData.setPercents(percents);
+        userData.setPicNumbers(picNumbers);
+        userDataBLService.add(userData);
+        return true;
     }
 }
