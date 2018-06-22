@@ -125,7 +125,7 @@ public class ChangePicServlet {
                     boolean isLabeled=false;
                     for(int labelID:listOfLabel){
                         Label label=labelBLService.getSingleLabel(labelID);
-                        if(label.getPID()==picID){
+                        if(label.getPID()==p.getID()){
 
                             resultMap.put("kind",label.getTag());
                             isLabeled=true;
@@ -170,7 +170,7 @@ public class ChangePicServlet {
                     boolean isLabeled=false;
                     for(int labelID:listOfLabel){
                         Label label=labelBLService.getSingleLabel(labelID);
-                        if(label.getPID()==picID){
+                        if(label.getPID()==p.getID()){
                             isLabeled=true;
                             resultMap.put("ifLabeled",isLabeled);
                             resultMap.put("kind",label.getTag());
