@@ -126,11 +126,10 @@
         var credits=new Array();
 
 
-        var username=document.getElementById('username');
         window.onload=function () {
-            username.onmouseover=function () {
+            document.getElementById('username').onmouseover=function () {
                 document.getElementById("menu").style.display="inherit";
-            }
+            };
             document.getElementById("userbar").onmouseleave=function (e) {
                 if(e.target.id!="nemu"){
                     document.getElementById("menu").style.display="none";
