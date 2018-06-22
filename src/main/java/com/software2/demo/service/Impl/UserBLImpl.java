@@ -64,6 +64,7 @@ public class UserBLImpl implements UserBLService{
         User u=uS.findById(uid).get();
         if(u==null)
             return 1;
+        money=money*100;
         money+=u.getCredit();
         u.setCredit(money);
         uS.save(u);
