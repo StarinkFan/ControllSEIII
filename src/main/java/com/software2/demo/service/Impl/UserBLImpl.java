@@ -228,6 +228,7 @@ public class UserBLImpl implements UserBLService{
      */
     public void modify_picTitle(int pic_id,String kind,List<String> anslis,boolean isComplaint,double value,int initID) {
             picture pic = ps.getSinglePicture(pic_id);
+            AutoIntegrationUtil util = new AutoIntegrationUtil();
             String initorID = pic.getPID();
             List<Integer> label_ids = JSON.parseArray(pic.getLID(),Integer.class);
             if(isComplaint){
@@ -251,7 +252,7 @@ public class UserBLImpl implements UserBLService{
                         if(isComplaint) title.setNum_of_complete(title.getNum_of_complete()-1);
                         else title.setNum_of_complete(title.getNum_of_complete()+1);
                         for(String answer:anslis) {
-                            if (label.getInfo().equals(answer)) {
+                            if (util.calculate_alike(label.getInfo(),answer)>0.6) {
                                 flag = 1;
                                 WorkTask thisWT = new WorkTask();
                                 List<WorkTask> lis = wD.findByWorkerID(label.getGiverID());

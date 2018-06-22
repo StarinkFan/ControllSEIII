@@ -60,9 +60,13 @@ public class AutoIntegrationUtil {
                     if(a.length()>b.length()){
                         a1.setAnswer(b);
                         b1.setAnswer(b);
-                        a1.setHas_answer(true);
-                        b1.setHas_answer(true);
+                    }else{
+
+                        a1.setAnswer(a);
+                        b1.setAnswer(a);
                     }
+                    a1.setHas_answer(true);
+                    b1.setHas_answer(true);
                 }
             }
         }
@@ -71,6 +75,7 @@ public class AutoIntegrationUtil {
     public double calculate_alike(String a,String b){
         // 短文本相似度
         JSONObject res = client.simnet(a, b, options);
+        System.out.println(res);
         return res.getDouble("score");
     }
     public void run(){
@@ -84,7 +89,8 @@ public class AutoIntegrationUtil {
         double ability;
         for(relation r:list){
             label = r.getAnswer();
-            ability = r.getAbility();
+            //ability = r.getAbility();
+            ability = 1;
             if(!answers.keySet().contains(label)){
                 answers.put(label,ability);
             }else{
