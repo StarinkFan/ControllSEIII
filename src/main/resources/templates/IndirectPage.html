@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="../static/echarts.min.js"></script>
+    <script src="../static/echarts.js"></script>
+    <script src="../static/echarts-gl.min.js"></script>
 
     <style>
         ul {
@@ -122,11 +123,22 @@
         var speeds=new Array();
         var taskPicNumbers=new Array();
         var finishPercents=new Array();
+        var picNumbers=['1-5','6-10','11-15','16-20','21-25','26-30','31-35','36-40','40-45','46-50','>50'];
+        var credits=['1-20','21-40','41-60','61-80','81-100','>100'];
+        var percents=[
+            [0,0,75],[0,1,72],[0,2,66],[0,3,61],[0,4,55],[0,5,99],[0,6,99],[0,7,100],[0,8,100],[0,9,100],[0,10,8],
+            [1,0,79],[1,1,77],[1,2,75],[1,3,70],[1,4,64],[1,5,],[1,6,98],[1,7,98],[1,8,99],[1,9,100],[1,10,100],
+            [2,0,86],[2,1,85],[2,2,80],[2,3,76],[2,4,70],[2,5,62],[2,6,94],[2,7,95],[2,8,96],[2,9,97],[2,10,98],
+            [3,0,92],[3,1,90],[3,2,87],[3,3,82],[3,4,74],[3,5,69],[3,6,99],[3,7,100],[3,8,100],[3,9,100],[3,10,100],
+            [4,0,100],[4,1,98],[4,2,95],[4,3,90],[4,4,83],[4,5,73],[4,6,99],[4,7,100],[4,8,100],[4,9,100],[4,10,100],
+            [5,0,100],[5,1,99],[5,2,96],[5,3,92],[5,4,86],[5,5,79],[5,6,86],[5,7,82],[5,8,80],[5,9,79],[5,10,77]
+        ];
 
         window.onload=function () {
-            picCredits=['0-20','20-100','100-500','>500'];
-            speeds=[10,6,3,1];
-            setLine1();
+            set3d();
+            // picCredits=['0-20','20-100','100-500','>500'];
+            // speeds=[10,6,3,1];
+            // setLine1();
             taskPicNumbers=['0-5','5-20','20-50','>50'];
             finishPercents=[96,90,50,10];
             setLine2();
@@ -224,7 +236,82 @@
 
             myChart.setOption(option);
         }
+
+        function set3d() {
+            var myChart = echarts.init(document.getElementById('line1'));
+            var option = {
+                title: {
+                    text: '任务图片数、图片价格与完成率（%）'
+                },
+                tooltip: {},
+                visualMap: {
+                    max: 100,
+                    inRange: {
+                        color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+                    }
+                },
+                xAxis3D: {
+                    type: 'category',
+                    data: picNumbers
+                },
+                yAxis3D: {
+                    type: 'category',
+                    data: credits
+                },
+                zAxis3D: {
+                    type: 'value'
+                },
+                grid3D: {
+                    boxWidth: 200,
+                    boxDepth: 80,
+                    viewControl: {
+                        // projection: 'orthographic'
+                    },
+                    light: {
+                        main: {
+                            intensity: 1.2,
+                            shadow: true
+                        },
+                        ambient: {
+                            intensity: 0.3
+                        }
+                    }
+                },
+                series: [{
+                    type: 'bar3D',
+                    data: percents.map(function (item) {
+                        return {
+                            value: [item[1], item[0], item[2]]
+                        }
+                    }),
+                    shading: 'lambert',
+
+                    label: {
+                        textStyle: {
+                            fontSize: 16,
+                            borderWidth: 1
+                        }
+                    },
+
+                    emphasis: {
+                        label: {
+                            textStyle: {
+                                fontSize: 20,
+                                color: '#900'
+                            }
+                        },
+                        itemStyle: {
+                            color: '#900'
+                        }
+                    }
+                }]
+            };
+
+            myChart.setOption(option);
+        }
     </script>
+
+
 
 </head>
 
@@ -280,7 +367,7 @@
 <div class="mainbody">
     <div class="mainbox">
         <div class="mainPanel" style="font-size: 20px;">
-            <div id="line1" style="width: 600px;height: 400px;margin-top: 100px;margin-left: 40px"></div>
+            <div id="line1" style="width: 800px;height: 500px;margin-top: 0px;margin-left: 40px"></div>
             <div id="line2" style="width: 600px;height: 400px;margin-top: -400px;margin-left: 800px"></div>
         </div>
 

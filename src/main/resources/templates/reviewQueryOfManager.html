@@ -151,6 +151,7 @@
     var taskPicIDs=new Array();
     var taskPicurls=new Array();
     var taskReasons=new Array();
+    var QueryIDs=new Array();
 
     var labelIDs=new Array();
     var labelInfos=new Array();
@@ -160,7 +161,7 @@
     var workerNames=new Array();
 
     var marklist=new Array();
-    var oldanswer='';
+    var oldanswer=new Array();
     var num=0;
 
 
@@ -240,6 +241,7 @@
                 taskPicIDs = [];
                 taskPicurls = [];
                 taskReasons = [];
+                QueryIDs=[];
 
                 taskIDs = myobj.id;
                 taskRequestorIDs = myobj.requestorid;
@@ -247,6 +249,7 @@
                 taskPicIDs = myobj.picid;
                 taskPicurls = myobj.picurl;
                 taskReasons = myobj.reason;
+                QueryIDs=myobj.queryid;
 
                 $("#info").children("div").remove();
                 loadReview();
@@ -437,6 +440,7 @@
             var obj={
                 taskID:taskIDs[num],
                 picID:taskPicIDs[num],
+                QueryID:QueryIDs[num],
             };
             var html = $.ajax({
                 type: "Post",
@@ -468,6 +472,7 @@
                 taskID:taskIDs[num],
                 picID:taskPicIDs[num],
                 answer:check_val,
+                QueryID:QueryIDs[num],
             };
             var html = $.ajax({
                 type: "Post",

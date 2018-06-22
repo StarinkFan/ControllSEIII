@@ -124,7 +124,7 @@
                         }else  if(myobj.kind==2){
                             window.open("./checkRectangleLabelPage.html","_self");
                         }else{
-                            window.open("./OutlineLabelPage.html","_self");
+                            window.open("./checkOutlineLabelPage.html","_self");
                         }
 
                     }
@@ -164,7 +164,7 @@
                         }else  if(myobj.kind==2){
                             window.open("./checkRectangleLabelPage.html","_self");
                         }else{
-                            window.open("./OutlineLabelPage.html","_self");
+                            window.open("./checkOutlineLabelPage.html","_self");
                         }
 
                     }
@@ -306,7 +306,7 @@
                 var obj=new Object();
                 obj.requestorAccount=localStorage.account;
                 obj.workerAccount=workerAccount;
-                obj.picID=picIDs[order];
+                obj.picID=document.getElementById('picID').value;
                 obj.taskID=tID;
 
                 var html = $.ajax({
@@ -336,7 +336,7 @@
             if(c==true){
                 var obj=new Object();
                 obj.workerAccount=workerAccount;
-                obj.picID=picIDs[order];
+                obj.picID=document.getElementById('picID').value;
                 obj.taskID=tID;
 
                 var html = $.ajax({

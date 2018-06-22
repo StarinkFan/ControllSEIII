@@ -142,6 +142,7 @@
     var taskPicurls=new Array();
     var taskPicIDs=new Array();
     var taskReasons=new Array();
+    var complaintIDs=new Array();
 
 
     /*taskIDs[0]='01';
@@ -227,6 +228,7 @@
                  taskPicIDs=[];
                  taskReasons=[];
                  workTaskIDs=[];
+                 complaintIDs=[];
                  taskIDs=myobj.id;
                  taskRequestorIDs=myobj.requestorid;
                  taskRequestorNames=myobj.requestorname;
@@ -240,6 +242,7 @@
                  taskPicIDs=myobj.picid;
                  taskReasons=myobj.reason;
                  workTaskIDs=myobj.workTaskid;
+                 complaintIDs=myobj.complaintid;
                  $("#info").children("div").remove();
                  loadReview();
 
@@ -432,7 +435,8 @@
                         taskID:taskIDs[i],
                         picID:taskPicIDs[i],
                         workerID:taskWorkerIDs[i],
-                        worktaskID:workTaskIDs[i]
+                        worktaskID:workTaskIDs[i],
+                        complaintID:complaintIDs[i],
                     };
                     var html = $.ajax({
                         type: "Post",
@@ -456,7 +460,8 @@
                         taskID:taskIDs[i],
                         picID:taskPicIDs[i],
                         workerID:taskWorkerIDs[i],
-                        requestorID:taskRequestorIDs[i]
+                        requestorID:taskRequestorIDs[i],
+                        complaintID:complaintIDs[i],
                     };
                     var html = $.ajax({
                         type: "Post",
