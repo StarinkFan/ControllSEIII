@@ -1,5 +1,11 @@
 package com.software2.demo.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.software2.demo.bean.InitTask;
+import com.software2.demo.service.InitTaskBLService;
+import com.software2.demo.service.PictureBLService;
+import com.software2.demo.service.UserBLService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +24,13 @@ import java.util.Map;
 @Transactional
 public class CheckArbitrationServlet {
 
+    @Autowired
+    InitTaskBLService initTaskBLService;
+    @Autowired
+    PictureBLService pictureBLService;
+    @Autowired
+    UserBLService userBLService;
+
     /**
      * @Description：接受仲裁返回的正确答案
      */
@@ -28,6 +41,12 @@ public class CheckArbitrationServlet {
         int taskID= Integer.parseInt(requestMap.get("taakID").toString());
         int picID= Integer.parseInt(requestMap.get("picID").toString());
         List<String> answer= (List<String>) requestMap.get("answer");
+        InitTask initTask = initTaskBLService.getSingleITask(taskID);
+
+        List<Integer> pic_ids = JSON.parseArray(initTask.getListOfP(), Integer.class);
+        double value = (double)initTask.getCredit()/initTask.getNum()/pic_ids.size();
+        userBLService.modify_picTitle(picID,initTask.getKind(),answer,true,value,taskID);
+        userBLService.modify_picTitle(picID,initTask.getKind(),answer,false,value,taskID);
         return true;
     }
 }
