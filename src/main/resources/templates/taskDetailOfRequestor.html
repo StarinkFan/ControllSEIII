@@ -108,6 +108,7 @@
     var taskMark='';
     var taskKind='';
     var taskRequest='';
+    var isArbitration='';
 
     var labelIDs=new Array();
     var labelInfos=new Array();
@@ -178,8 +179,6 @@
             async: false,
             data:JSON.stringify(obj),
             success: function(myobj) {
-                console.log(myobj);
-                console.log(myobj.Rid);
                 labelIDs=[];
                 labelInfos=[];
                 isRight=[];
@@ -197,6 +196,8 @@
                 workerNames=myobj.workername;
                 picTags=myobj.tag;
                 workTaskIDs=myobj.worktaskid;
+                isArbitration=myobj.isArbitration;//1仲裁
+
                 $("#xx").children("div").remove();
                 loadTask();
 
@@ -210,22 +211,31 @@
     }
 
     loadTask=function() {
-
-
         var taskinfo1=document.getElementById('task-infop1');
         var taskimg=document.getElementById('task-img');
         var rightAnswer="";
-        if(isRight[0]==0){
-            taskinfo1.innerText="正确答案： 【无】";
+        if(isArbitration=='1'){
+            taskinfo1.innerText="待仲裁";
+            var taskbt=document.getElementById('taskbt');
+            taskbt.style.display='none';
         }
         else{
-            for(var s=0;s<isRight.length;s++){
-                if(isRight==1){
-                    rightAnswer=rightAnswer+" "+labelInfos[s];
-                }
+            var taskbt=document.getElementById('taskbt');
+            taskbt.style.display='block';
+            if(isRight[0]==0){
+                taskinfo1.innerText="正确答案： 【无】";
             }
+            else{
+                var s=0;
+                while(s<isRight.length){
+                    if(isRight[s]==1){
+                        rightAnswer=rightAnswer+" "+labelInfos[s];
+                    }
+                    s=parseInt(s)+parseInt(peoples[s]);
+                }
 
-            taskinfo1.innerText="正确答案： 【"+rightAnswer+"】";
+                taskinfo1.innerText="正确答案： 【"+rightAnswer+"】";
+            }
         }
 
         taskimg.src=picurl;
