@@ -125,11 +125,9 @@
         var peopleNumbers=new Array();
         var credits=new Array();
 
+
+        var username=document.getElementById('username');
         window.onload=function () {
-            name = localStorage.nickname;
-            account = localStorage.account;
-            document.getElementById('username').innerText=name;
-            var username=document.getElementById('username');
             username.onmouseover=function () {
                 document.getElementById("menu").style.display="inherit";
             }
@@ -362,8 +360,8 @@
         <ul>
             <li style="z-index: 3">
                 <a style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">
-                    你好，管理员
-                    <u id="username" style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">用户</u>
+                    你好，
+                    <u id="username" style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">管理员</u>
                 </a>
             </li>
         </ul>
