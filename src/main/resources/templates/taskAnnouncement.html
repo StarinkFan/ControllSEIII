@@ -122,8 +122,10 @@
         <p></p>
         <input type="text" id="form-input4" class="form-input" name="mark2" value="" maxlength="10" placeholder="标签2">
         <button type="button" class="next" id="next2" onclick="clickNextNextMark()">+</button>
+        <button type="button" class="next" id="next3" onclick="clickLastMark()">-</button>
         <p></p>
-        <input type="text" id="form-input5" class="form-input" name="mark3" value="" maxlength="10" placeholder="标签3（最多三个哦~）">
+        <input type="text" id="form-input5" class="form-input" name="mark3" value="" maxlength="10" placeholder="标签3（最多三个）">
+        <button type="button" class="next" id="next4" onclick="clickLastLastMark()">-</button>
         <p></p>
         <label class="form-label" id="form-label5">要求</label>
         <p></p>
@@ -179,6 +181,8 @@
     var inputM2=document.getElementById("form-input5");
     var nextMarkButton1=document.getElementById("next1");
     var nextMarkButton2=document.getElementById("next2");
+    var nextMarkButton3=document.getElementById("next3");
+    var nextMarkButton4=document.getElementById("next4");
     var qbox=document.getElementById("qbox");
 
     var imgSrc = [];  //存放图片路径
@@ -438,11 +442,22 @@
         inputM1.style.display='initial';
         nextMarkButton1.style.display='none';
         nextMarkButton2.style.display='initial';
+        nextMarkButton3.style.display='initial';
     }
     
     function clickNextNextMark() {
         nextMarkButton2.style.display='none';
         inputM2.style.display='initial';
+    }
+
+    function clickLastMark() {
+        inputM1.style.display='none';
+        nextMarkButton2.style.display='none';
+        nextMarkButton3.style.display='none';
+        nextMarkButton1.style.display='initial';
+    }
+    function clickLastLastMark() {
+
     }
 
 </script>
