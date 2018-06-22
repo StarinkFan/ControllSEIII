@@ -352,7 +352,7 @@
                         taskinput.id='menu-radio'+k;
                         taskinput.name='answer';
                         taskinput.value=marklist[k];
-                        if(marklist[k]=="无"){
+                        if(marklist[k]=="无答案"){
                             console.log("find");
                             taskinput.checked=true;
                         }
@@ -389,6 +389,8 @@
         if(check_val[0]=="无答案"){
             check_val=[];
         }
+        console.log(taskPicIDs[num]);
+        console.log(check_val);
         /*任务，picid，正确答案list（可能0，也可能大于1，拥有答案，返回结果成功*/
         var obj={
             picID:taskPicIDs[num],
