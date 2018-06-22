@@ -6,6 +6,7 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="../static/echarts.js"></script>
     <script src="../static/echarts-gl.min.js"></script>
+    <script src="../static/ecStat.min.js"></script>
 
     <style>
         ul {
@@ -133,15 +134,49 @@
             [4,0,100],[4,1,98],[4,2,95],[4,3,90],[4,4,83],[4,5,73],[4,6,65],[4,7,56],[4,8,45],[4,9,40],[4,10,34],
             [5,0,100],[5,1,99],[5,2,96],[5,3,92],[5,4,86],[5,5,79],[5,6,72],[5,7,63],[5,8,53],[5,9,45],[5,10,39]
         ];
+        var data0= [
+            [28, 22.3, 60, '001'],
+            [5, 3.4, 36, '002'],
+            [3, 2.1, 100, '003'],
+            [31, 27.1, 50, '004'],
+            [14, 9.3, 40, '005'],
+            [17, 11.5, 80, '006'],
+            [46, 45.5, 12, '007'],
+            [19, 13.1, 75, '008'],
+            [2, 1.3, 30, '009'],
+            [8, 5.9, 100, '010'],
+            [25, 19.4, 120, '011'],
+            [36, 32.2, 90, '012'],
+            [48, 47.3, 70, '013'],
+            [55, 60.2, 88, '014']
+        ];
+
+        var data= [
+            [28, 22.3],
+            [5, 3.4],
+            [3, 2.1],
+            [31, 27.1],
+            [14, 9.3],
+            [17, 11.5],
+            [46, 45.5],
+            [19, 13.1],
+            [2, 1.3],
+            [8, 5.9],
+            [25, 19.4],
+            [36, 32.2],
+            [48, 47.3],
+            [55, 60.2]
+        ];
 
         window.onload=function () {
             set3d();
+            setScatter();
             // picCredits=['0-20','20-100','100-500','>500'];
             // speeds=[10,6,3,1];
             // setLine1();
-            taskPicNumbers=['0-5','5-20','20-50','>50'];
-            finishPercents=[96,90,50,10];
-            setLine2();
+            // taskPicNumbers=['0-5','5-20','20-50','>50'];
+            // finishPercents=[96,90,50,10];
+            // setLine2();
             name = localStorage.nickname;
             account = localStorage.account;
             document.getElementById('username').innerText=name;
@@ -165,11 +200,11 @@
                 async: true,
                 data: JSON.stringify(obj),
                 success: function(myobj) {
-                    picCredits=myobj.picCredits;
-                    speeds=myobj.creditsOfDate;
-                    taskPicNumbers=myobj.taskPicNumbers;
-                    finishPercents=myobj.finishPercents;
-
+                    data=myobj.data;
+                    data0=myobj.data0;
+                    percents=myobj.percents;
+                    picNumbers=myobj.picNumbers;
+                    credits=myobj.credits;
                     setLine1();
                 },
                 error: function() {
@@ -314,22 +349,105 @@
         }
 
         function setScatter() {
+            var myRegression = ecStat.regression('exponential', data);
+
+            myRegression.points.sort(function(a, b) {
+                return a[0] - b[0];
+            });
+
             var myChart = echarts.init(document.getElementById('line2'));
             var option = {
                 title: {
-                    text: '任务图片数与工人标注时间（min）'
+                    text: '任务图片数和完成任务平均时间',
+                    left: 'center'
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross'
+                    }
+                },
+                grid: {
+                    top: 80,
+                    bottom: 90
                 },
                 xAxis: {
-                    type: 'category',
-                    data: taskPicNumbers
+                    type: 'value',
+                    splitLine: {
+                        lineStyle: {
+                            type: 'dashed'
+                        }
+                    },
                 },
                 yAxis: {
-                    type: 'value'
+                    type: 'value',
+                    splitLine: {
+                        lineStyle: {
+                            type: 'dashed'
+                        }
+                    },
                 },
                 series: [{
-                    data: finishPercents,
+                    type: 'scatter',
+                    symbolSize: function(data) {
+                        return Math.sqrt(data[2]) / 0.5;
+                    },
+                    label: {
+                        emphasis: {
+                            show: true,
+                            formatter: function(param) {
+                                return param.data[3];
+                            },
+                            position: 'top'
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            shadowBlur: 10,
+                            shadowColor: 'rgba(120, 36, 50, 0.5)',
+                            shadowOffsetY: 5,
+                            color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                                offset: 0,
+                                color: 'rgb(251, 118, 123)'
+                            }, {
+                                offset: 1,
+                                color: 'rgb(204, 46, 72)'
+                            }])
+                        }
+                    },
+                    data: data0
+                }, {
+                    name: 'line',
                     type: 'line',
-                    smooth: true
+                    lineStyle: {
+                        normal: {
+                            color: '#2f4554'
+                        }
+                    },
+                    smooth: true,
+                    showSymbol: false,
+                    data: myRegression.points,
+                    markPoint: {
+                        itemStyle: {
+                            normal: {
+                                color: 'transparent'
+                            }
+                        },
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'left',
+                                formatter: myRegression.expression,
+                                textStyle: {
+                                    color: '#333',
+                                    fontSize: 14
+                                }
+                            }
+                        },
+                        data: [{
+                            coord: myRegression.points[myRegression.points.length - 1]
+                        }]
+                    }
                 }]
             };
 
@@ -384,8 +502,8 @@
 <br>
 
 <div class="titleBox">
-    <h2 style="padding-top: 2%;color: #232323;padding-left: 11.5%">发布指导</h2>
-    <p style="color: #939393;padding-left: 11.5%">在这里，可以查看系统积分状况，帮助您更好地获取、使用积分</p>
+    <h2 style="padding-top: 2%;color: #232323;padding-left: 11.5%">积分指导</h2>
+    <p style="color: #939393;padding-left: 11.5%">在这里，可以查看系统任务状况，帮助您更好地获取、使用积分</p>
 </div>
 
 <div class="maincut"></div>
