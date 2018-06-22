@@ -25,6 +25,7 @@ import java.util.List;
 public class UserBLImpl implements UserBLService{
     //获得专家称号的标准分s
     private static int standard = 1000;
+    private String[] names = {"自然","地理","文化","历史","艺术","人物","生活","社会","体育","经济","科技"};
     @Autowired
     UserDataService uS;
     @Autowired
@@ -39,12 +40,11 @@ public class UserBLImpl implements UserBLService{
         if(uS.existsById(u.getID())){
             return ResultMessage.EXIST;
         }
-//        List<Title> titles = JSON.parseArray(u.getListOfTitles(),Title.class);
-//        for(Title title:titles){
-//            title.setNum_of_complete(1);
-//            title.setNum_of_right(1);
-//        }
-//        u.setListOfTitles(JSON.toJSONString(titles));
+        List<Title> titles = JSON.parseArray(u.getListOfTitles(),Title.class);
+        for(int i = 0;i<11;i++){
+            titles.get(i).init(names[i]);
+        }
+        u.setListOfTitles(JSON.toJSONString(titles));
         uS.save(u);
         return ResultMessage.SUCCESS;
     }
@@ -270,7 +270,6 @@ public class UserBLImpl implements UserBLService{
                             label.setState(2);
                         }
                         if(isComplaint){
-                            flag = 0;
                             label.setState(0);
                         }
                         judgeTitle(title);
