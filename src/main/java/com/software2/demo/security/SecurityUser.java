@@ -9,7 +9,7 @@ import java.util.Collection;
 
 public class SecurityUser extends User implements UserDetails{
     public SecurityUser(User u){
-        super(u.getID(),u.getName(),u.getPassword(),u.getSex(),u.getWechat(),u.getAddress(),u.getIntroduction(),u.getCredit(),u.getEarncredit(),u.getRanking(),u.getListOfITask(),u.getListOfWTask(),u.getListOfTags(),u.getListOfTitles(),u.getHeadShotUrl(),u.getOnlinestatus(),u.getSessionid());
+        super(u.getID(),u.getName(),u.getPassword(),u.getSex(),u.getWechat(),u.getAddress(),u.getIntroduction(),u.getCredit(),u.getEarncredit(),u.getRanking(),u.getListOfCRecord(),u.getListOfITask(),u.getListOfWTask(),u.getListOfTags(),u.getListOfTitles(),u.getHeadShotUrl(),u.getOnlinestatus(),u.getSessionid());
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
