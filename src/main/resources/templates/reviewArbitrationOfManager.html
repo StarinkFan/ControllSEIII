@@ -11,11 +11,9 @@
 
         window.onload=function () {
             clickArbitration();
-            document.getElementById('username').innerText = name;
-            var username = document.getElementById('username');
-            username.onmouseover = function () {
-                document.getElementById("menu").style.display = "inherit";
-            }
+            document.getElementById('username').onmouseover=function () {
+                document.getElementById("menu").style.display="inherit";
+            };
             document.getElementById("userbar").onmouseleave = function (e) {
                 if (e.target.id != "nemu") {
                     document.getElementById("menu").style.display = "none";
@@ -64,8 +62,8 @@
         <ul>
             <li style="z-index: 3">
                 <a style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">
-                    你好，管理员
-                    <u id="username" style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">用户</u>
+                    你好，
+                    <u id="username" style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">管理员</u>
                 </a>
             </li>
         </ul>

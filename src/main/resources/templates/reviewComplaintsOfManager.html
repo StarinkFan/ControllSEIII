@@ -10,11 +10,9 @@
         var name=localStorage.nickname;
 
         window.onload=function () {
-            document.getElementById('username').innerText = name;
-            var username = document.getElementById('username');
-            username.onmouseover = function () {
-                document.getElementById("menu").style.display = "inherit";
-            }
+            document.getElementById('username').onmouseover=function () {
+                document.getElementById("menu").style.display="inherit";
+            };
             document.getElementById("userbar").onmouseleave = function (e) {
                 if (e.target.id != "nemu") {
                     document.getElementById("menu").style.display = "none";
@@ -60,8 +58,8 @@
         <ul>
             <li style="z-index: 3">
                 <a style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">
-                    你好，管理员
-                    <u id="username" style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">用户</u>
+                    你好，
+                    <u id="username" style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">管理员</u>
                 </a>
             </li>
         </ul>
@@ -143,6 +141,8 @@
     var taskPicIDs=new Array();
     var taskReasons=new Array();
     var complaintIDs=new Array();
+    var taskRequests=new Array();
+    var taskKinds=new Array();
 
 
     /*taskIDs[0]='01';
@@ -215,6 +215,7 @@
              url: '/review/complaint',
              dataType:'json',
              success: function(myobj) {
+                 console.log(myobj);
                  taskIDs=[];
                  taskRequestorIDs=[];
                  taskRequestorNames=[];
@@ -229,6 +230,10 @@
                  taskReasons=[];
                  workTaskIDs=[];
                  complaintIDs=[];
+                 taskRequests=[];
+                 taskKinds=[];
+                 taskRequests=myobj.request;//任务要求
+                 taskKinds=myobj.kind;//分类
                  taskIDs=myobj.id;
                  taskRequestorIDs=myobj.requestorid;
                  taskRequestorNames=myobj.requestorname;
@@ -349,6 +354,7 @@
             !function (i) {
                 var bt1=document.getElementById('bt1'+i);
                 bt1.addEventListener("click",function () {
+                    console.log(taskTags[i]);
                     if (taskTags[i] == 1) {
                         localStorage.setItem('order',"");
                         localStorage.setItem('picIDs',"");
@@ -368,10 +374,10 @@
                             tempm[2]=temp[2];
                         }
                         localStorage.setItem('taskTags',JSON.stringify(tempm));
-                        localStorage.setItem('demand',taskRequest);
-                        localStorage.setItem('category',taskKind);
+                        localStorage.setItem('demand',"");
+                        localStorage.setItem('category',"");
                         localStorage.setItem('workerNickname',taskWorkerNames[i]);
-                        var postData = {'picSrc': taskPicurls[i], 'picID': taskPicIDs[i], 'workerAccount': managerID, 'tag': 2,'TaskID':workTaskIDs[i]};
+                        var postData = {'picSrc': taskPicurls[i], 'picID': taskPicIDs[i], 'workerAccount': taskWorkerIDs[i], 'tag': 2,'TaskID':workTaskIDs[i]};
                         localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./checkWholeLabelPage.html", "_blank");
                     }
@@ -394,10 +400,10 @@
                             tempm[2]=temp[2];
                         }
                         localStorage.setItem('taskTags',JSON.stringify(tempm));
-                        localStorage.setItem('demand',taskRequest);
-                        localStorage.setItem('category',taskKind);
+                        localStorage.setItem('demand',"");
+                        localStorage.setItem('category',"");
                         localStorage.setItem('workerNickname',taskWorkerNames[i]);
-                        var postData = {'picSrc': taskPicurls[i], 'picID': taskPicIDs[i], 'workerAccount': managerID, 'tag': 2,'TaskID':workTaskIDs[i]};
+                        var postData = {'picSrc': taskPicurls[i], 'picID': taskPicIDs[i], 'workerAccount': taskWorkerIDs[i], 'tag': 2,'TaskID':workTaskIDs[i]};
                         localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./checkRectangleLabelPage.html", "_blank");
                     }
@@ -420,10 +426,10 @@
                             tempm[2]=temp[2];
                         }
                         localStorage.setItem('taskTags',JSON.stringify(tempm));
-                        localStorage.setItem('demand',taskRequest);
-                        localStorage.setItem('category',taskKind);
+                        localStorage.setItem('demand',"");
+                        localStorage.setItem('category',"");
                         localStorage.setItem('workerNickname',taskWorkerNames[i]);
-                        var postData = {'picSrc': taskPicurls[i], 'picID': taskPicIDs[i], 'workerAccount': managerID, 'tag': 2,'TaskID':workTaskIDs[i]};
+                        var postData = {'picSrc': taskPicurls[i], 'picID': taskPicIDs[i], 'workerAccount': taskWorkerIDs[i], 'tag': 2,'TaskID':workTaskIDs[i]};
                         localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./checkOutlineLabelPage.html", "_blank");
                     }
