@@ -5,10 +5,7 @@ import com.software2.demo.ResultMessage;
 import com.software2.demo.bean.*;
 import com.software2.demo.dao.UserDataService;
 import com.software2.demo.dao.WorkTaskDataService;
-import com.software2.demo.service.LabelBLService;
-import com.software2.demo.service.PictureBLService;
-import com.software2.demo.service.UserBLService;
-import com.software2.demo.service.WorkTaskBLService;
+import com.software2.demo.service.*;
 import com.software2.demo.util.AutoIntegrationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -36,6 +33,8 @@ public class UserBLImpl implements UserBLService{
     LabelBLService ls;
     @Autowired
     WorkTaskDataService wD;
+    @Autowired
+    InitTaskBLService iS;
     public ResultMessage addUser(User u) {
         if(uS.existsById(u.getID())){
             return ResultMessage.EXIST;
@@ -121,7 +120,6 @@ public class UserBLImpl implements UserBLService{
             List<Integer> listOfITask= JSON.parseArray(strLOITask,Integer.class);
             total =listOfITask.size();
         }
-        InitTaskBLImpl iS=new InitTaskBLImpl();
         String strLOITask=u.getListOfITask();
         List<Integer> listOfITask=JSON.parseArray(strLOITask,Integer.class);
         for(int i=0;i<total;i++){

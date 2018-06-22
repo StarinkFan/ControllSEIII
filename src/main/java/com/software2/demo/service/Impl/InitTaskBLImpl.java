@@ -25,7 +25,7 @@ public class InitTaskBLImpl implements InitTaskBLService{
     @Autowired
     UserDataService uS;
     @Autowired
-    UserBLService uB;
+    UserBLService userBLService;
     @Autowired
     PictureBLService pBL;
     @Autowired
@@ -55,7 +55,7 @@ public class InitTaskBLImpl implements InitTaskBLService{
                     }
                     //上方的方法可能没有对其保存，因为find方法返回的是一个数据库对象可以直接修改（可能出错，没有试过）
 
-                    uB.modifyTitle(task);
+                    userBLService.modifyTitle(task);
                     System.gc();
                 }
             }
