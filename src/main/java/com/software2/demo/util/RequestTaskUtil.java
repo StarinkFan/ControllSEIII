@@ -51,6 +51,7 @@ public class RequestTaskUtil {
         List<String> kind=new ArrayList<>();
         List<String> mark=new ArrayList<>();
         List<String> headShots=new ArrayList<>();
+        List<Long> endtime=new ArrayList<>();
         for(InitTask i:list){
             id.add(i.getID());
             Rid.add(i.getInitorID());
@@ -63,6 +64,7 @@ public class RequestTaskUtil {
             picurl.add("http://"+r.pS.getSinglePicture(JSON.parseArray(i.getListOfP(),Integer.class).get(0)).getUrl());
             System.out.println(picurl.get(0));
             starttime.add(i.getStartTime());
+            endtime.add(i.getEndTime());
             deadline.add(i.getDeadline());
             headShots.add("http://"+r.userBLService.getSingle(i.getInitorID()).getHeadShotUrl());
             kind.add(i.getKind());
@@ -87,6 +89,7 @@ public class RequestTaskUtil {
         resultMap.put("kind",kind);
         resultMap.put("marklist",mark);
         resultMap.put("rheadshot",headShots);
+        resultMap.put("endtime",endtime);
         return resultMap;
     }
 
