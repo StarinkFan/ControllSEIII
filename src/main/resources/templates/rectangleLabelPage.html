@@ -288,6 +288,7 @@
         };
 
         function myFunction(){
+            document.getElementById('laber').innerText="标注者"+localStorage.nickname+"    ";
             var data = JSON.parse(localStorage.getItem("filter"));
             var hostIp = data['picSrc'];
             document.getElementById("picID").value=data["picID"];
@@ -338,10 +339,8 @@
                 data: JSON.stringify(partLabel),
                 success: function(data) {
                     if(data==true){
-                        alert("success");
-                        window.opener.location.reload();
-
-                        window.close();
+                        alert("标注成功");
+                        nextPic();
                     }
 
                 },
