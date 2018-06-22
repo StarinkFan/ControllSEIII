@@ -1,5 +1,12 @@
 package com.software2.demo.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.aliyuncs.exceptions.ClientException;
+import com.software2.demo.bean.InitTask;
+import com.software2.demo.service.InitTaskBLService;
+import com.software2.demo.service.UserBLService;
+import com.software2.demo.util.SendTextMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,12 +23,22 @@ import java.util.Map;
 @Controller
 @Transactional
 public class CheckAppealServlet {
+    @Autowired
+    InitTaskBLService initTaskBLService;
+    @Autowired
+    UserBLService userBLService;
     @RequestMapping("/checkAppeal/pass")
     @ResponseBody
     public boolean appealPass(@RequestBody Map<String,Object> requestMap){
-        String taskID=requestMap.get("taskID").toString();
-        String picID=requestMap.get("picID").toString();
+        int taskID=Integer.parseInt(requestMap.get("taskID").toString());
+        int picID=Integer.parseInt(requestMap.get("picID").toString());
+        String workerID=requestMap.get("workerID").toString();
+        InitTask initTask = initTaskBLService.getSingleITask(taskID);
+        List<Integer> pic_ids = JSON.parseArray(initTask.getListOfP(), Integer.class);
+        double value = (double)initTask.getCredit()/initTask.getNum()/pic_ids.size();
         List<String> answer= (List<String>) requestMap.get("answer");
+        userBLService.modify_picTitle(picID,initTask.getKind(),answer,true,value,initTask.getID());
+        userBLService.modify_picTitle(picID,initTask.getKind(),answer,false,value,initTask.getID());
         return true;
     }
 
