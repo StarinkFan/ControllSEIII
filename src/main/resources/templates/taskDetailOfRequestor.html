@@ -158,6 +158,13 @@
 
 
     gainList=function() {
+
+        taskID=localStorage.getItem('inittaskidc');
+        picID=localStorage.getItem('picidm');
+        picurl=localStorage.getItem('picurlm');
+        taskMark=localStorage.getItem('taskmarkm');
+        taskKind=localStorage.getItem('taskkindm');
+        taskrequestm=localStorage.getItem('taskquestm');
         /* 给图片id，获取list含标注id，标注information，是否正确，人数（标注该information的人数），对应的workerid，workername,worktaskid,该工人的标注方式（第一个放正确的*/
         var obj=new Object();
         obj={
@@ -203,12 +210,7 @@
     }
 
     loadTask=function() {
-        taskID=localStorage.getItem('inittaskidc');
-        picID=localStorage.getItem('picidm');
-        picurl=localStorage.getItem('picurlm');
-        taskMark=localStorage.getItem('taskmarkm');
-        taskKind=localStorage.getItem('taskkindm');
-        taskrequestm=localStorage.getItem('taskquestm');
+
 
         var taskinfo1=document.getElementById('task-infop1');
         var taskimg=document.getElementById('task-img');
