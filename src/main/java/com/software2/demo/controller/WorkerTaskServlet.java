@@ -17,7 +17,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * @Author：Wang Mo
+ * @Description：用于查看工人workTask信息
+ */
 @Controller
 @Transactional
 public class WorkerTaskServlet {
@@ -29,6 +32,10 @@ public class WorkerTaskServlet {
     PictureBLService pS;
     @Autowired
     LabelBLService lS;
+
+    /**
+     * @Description：根据workerID返回workTask的详细信息
+     */
     @RequestMapping(value = "/workerTask/total")
     @ResponseBody
     public Map<String,Object> getWTask(@RequestBody Map<String,Object> requestMap){
@@ -93,10 +100,13 @@ public class WorkerTaskServlet {
         return resultMap;
     }
 
+    /**
+     * 根据
+     */
     @RequestMapping("/workerTask/piclist")
     @ResponseBody
-    public Map<String,Object> getpivList(@RequestBody Map<String,Object> requestMap){
-        System.out.println("getpivList");
+    public Map<String,Object> getpicList(@RequestBody Map<String,Object> requestMap){
+        System.out.println("getpicList");
         String taskID=requestMap.get("taskID").toString();
         WorkTask w=wS.getSingleWTask(Integer.parseInt(taskID));
         InitTask i=iS.getSingleITask(w.getInitTaskID());
