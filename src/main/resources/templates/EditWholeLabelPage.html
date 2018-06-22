@@ -270,10 +270,9 @@
                     success: function(data) {
                         if(data==true){
                             alert("删除成功");
-                            window.opener.location.reload();
-                            window.close();
+                            window.open("./myTaskDetailOfWorker.html","_self");
                         }else{
-                            alert("删除失败")
+                            alert("删除失败");
                         }
 
                     },
@@ -310,9 +309,7 @@
         }
 
         function close1() {
-            window.opener=null;
-            window.open('','_self');
-            window.close();
+            window.open("./myTaskDetailOfWorker.html","_self");
         }
 
 

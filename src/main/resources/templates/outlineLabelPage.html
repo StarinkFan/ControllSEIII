@@ -273,6 +273,8 @@
         {
             x=x.toFixed(1);
             y=y.toFixed(1);
+            console.log(x);
+            console.log(y);
             clickX.push(x);
             clickY.push(y);
             clickDrag.push(dragging);
@@ -336,7 +338,7 @@
                 data: JSON.stringify(partLabel),
                 success: function(data) {
                     if(data==true){
-                        alert("success");
+                        alert("标注成功");
                         window.opener.location.reload();
 
                         window.close();
@@ -437,12 +439,10 @@
         }
 
         function cancel() {
-            window.close();
+            window.open("./myTaskDetailOfWorker.html","_self");
         }
         function close1() {
-            window.opener=null;
-            window.open('','_self');
-            window.close();
+            window.open("./myTaskDetailOfWorker.html","_self");
         }
 
 
