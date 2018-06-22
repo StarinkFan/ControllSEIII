@@ -40,9 +40,11 @@ public class UserBLImpl implements UserBLService{
         if(uS.existsById(u.getID())){
             return ResultMessage.EXIST;
         }
-        List<Title> titles = JSON.parseArray(u.getListOfTitles(),Title.class);
+        List<Title> titles = new ArrayList<>();
         for(int i = 0;i<11;i++){
-            titles.get(i).init(names[i]);
+            Title title = new Title();
+            title.init(names[i]);
+            titles.add(title);
         }
         u.setListOfTitles(JSON.toJSONString(titles));
         uS.save(u);
@@ -272,6 +274,7 @@ public class UserBLImpl implements UserBLService{
                         if(isComplaint){
                             label.setState(0);
                         }
+                        ls.modifyLabel(label);
                         judgeTitle(title);
                         break;
                     }
