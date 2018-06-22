@@ -319,7 +319,7 @@
                         localStorage.setItem('demand',taskRequest);
                         localStorage.setItem('category',taskKind);
                         localStorage.setItem('workerNickname',workerNames[i]);
-                        var postData = {'picSrc': picurls[i], 'picID': picIDs[i], 'workerAccount': workerIDs[i], 'tag': 1,'TaskID':workTaskIDs[i]};
+                        var postData = {'picSrc': picurl, 'picID': picID, 'workerAccount': workerIDs[i], 'tag': 1,'TaskID':workTaskIDs[i]};
                         localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./checkWholeLabelPage.html","_blank");
                     }
@@ -345,7 +345,7 @@
                         localStorage.setItem('demand',taskRequest);
                         localStorage.setItem('category',taskKind);
                         localStorage.setItem('workerNickname',workerNames[i]);
-                        var postData = {'picSrc': picurls[i], 'picID': picIDs[i], 'workerAccount': workerIDs[i], 'tag': 1,'TaskID':workTaskIDs[i]};
+                        var postData = {'picSrc': picurl, 'picID': picID, 'workerAccount': workerIDs[i], 'tag': 1,'TaskID':workTaskIDs[i]};
                         localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./checkRectangleLabelPage.html","_blank");
                     }
@@ -371,7 +371,7 @@
                         localStorage.setItem('demand',taskRequest);
                         localStorage.setItem('category',taskKind);
                         localStorage.setItem('workerNickname',workerNames[i]);
-                        var postData = {'picSrc': taskPicurls[i], 'picID': picIDs[i], 'workerAccount': workerIDs[i], 'tag': 1,'TaskID':workTaskIDs[i]};
+                        var postData = {'picSrc': picurl, 'picID': picID, 'workerAccount': workerIDs[i], 'tag': 1,'TaskID':workTaskIDs[i]};
                         localStorage.setItem('filter',JSON.stringify(postData));
                         window.open("./checkOutlineLabelPage.html","_blank");
                     }

@@ -267,6 +267,7 @@
         sortCondition=select3.value;
         console.log(sortKind);
         console.log(sortnum);
+        console.log(sortCondition);
 
     }
 
@@ -296,6 +297,7 @@
     /*根据requestorID（？）获取该发布者的进行中任务的信息（inittask任务的id，任务要求（string）、要求标注类型（0无1整体2方框3描边）、
     积分、人数、参与者人数、第一张图片的url、开始时间、截止时间、分类、标签(分隔:)*/
     function clickUnfinished () {
+
         var obj=new Object();
         obj={
             requestorID:requestorID,
@@ -310,6 +312,7 @@
             contentType: "application/json",
             async: true,
             success: function(myobj) {
+                console.log(myobj);
                 taskIDs=[];
                 taskRequests=[];
                 taskTags=[];
