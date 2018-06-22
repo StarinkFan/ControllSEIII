@@ -123,25 +123,25 @@
                         localStorage.setItem("filter", postData);
                         if(myobj.ifLabeled==true){
                             if(myobj.kind==1){
-                                window.open("./EditWholeLabelPage.html","_blank");
+                                window.open("./EditWholeLabelPage.html","_self");
                             }else  if(myobj.kind==2){
-                                window.open("./editRectangleLabelPage.html","_blank");
+                                window.open("./editRectangleLabelPage.html","_self");
                             }else{
-                                window.open("./editOutlineLabelPage.html","_blank");
+                                window.open("./editOutlineLabelPage.html","_self");
                             }
                         }else{
                             if(myobj.kind==1){
-                                window.open("./wholeLabelPage.html","_blank");
+                                window.open("./wholeLabelPage.html","_self");
                             }else  if(myobj.kind==2){
-                                window.open("./rectangleLabelPage.html","_blank");
+                                window.open("./rectangleLabelPage.html","_self");
                             }else if(myobj.kind==3){
-                                window.open("./outlineLabelPage.html","_blank");
+                                window.open("./outlineLabelPage.html","_self");
                             }else{
                                 var con=confirm("任务未指定标注方式，将进行整体标注，是否返回任务界面选择其它标注方式？");
                                 if(con==true){
                                     window.close();
                                 }else{
-                                    window.open("./wholeLabelPage.html","_blank");
+                                    window.open("./wholeLabelPage.html","_self");
                                 }
                             }
                         }
@@ -180,25 +180,25 @@
                         localStorage.setItem("filter", postData);
                         if(myobj.ifLabeled==true){
                             if(myobj.kind==1){
-                                window.open("./EditWholeLabelPage.html","_blank");
+                                window.open("./EditWholeLabelPage.html","_self");
                             }else  if(myobj.kind==2){
-                                window.open("./editRectangleLabelPage.html","_blank");
+                                window.open("./editRectangleLabelPage.html","_self");
                             }else{
-                                window.open("./editOutlineLabelPage.html","_blank");
+                                window.open("./editOutlineLabelPage.html","_self");
                             }
                         }else{
                             if(myobj.kind==1){
-                                window.open("./wholeLabelPage.html","_blank");
+                                window.open("./wholeLabelPage.html","_self");
                             }else  if(myobj.kind==2){
-                                window.open("./rectangleLabelPage.html","_blank");
+                                window.open("./rectangleLabelPage.html","_self");
                             }else if(myobj.kind==3){
-                                window.open("./outlineLabelPage.html","_blank");
+                                window.open("./outlineLabelPage.html","_self");
                             }else{
                                 var con=confirm("任务未指定标注方式，将进行整体标注，是否返回任务界面选择其它标注方式？");
                                 if(con==true){
                                     window.close();
                                 }else{
-                                    window.open("./wholeLabelPage.html","_blank");
+                                    window.open("./wholeLabelPage.html","_self");
                                 }
                             }
                         }
