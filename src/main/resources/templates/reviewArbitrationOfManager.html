@@ -157,6 +157,7 @@
     var peoples=new Array();
     var workerIDs=new Array();
     var workerNames=new Array();
+    var workTaskIDs=new Array();
 
     var marklist=new Array();
     var oldanswer='';
@@ -315,6 +316,7 @@
                             peoples=[];
                             workerIDs=[];
                             workerNames=[];
+                            workTaskIDs=[];
 
                             labelIDs=myobj.labelid;
                             labelInfos=myobj.info;
@@ -322,6 +324,7 @@
                             peoples=myobj.num;
                             workerIDs=myobj.workerid;
                             workerNames=myobj.workername;
+                            workTaskIDs=myobj.worktaskid;
                         },
                         error: function() {
                             alert("error");
@@ -352,10 +355,10 @@
                         taskinput.id='menu-radio'+k;
                         taskinput.name='answer';
                         taskinput.value=marklist[k];
-                        if(marklist[k]=="无"){
+                       /* if(marklist[k]=="无答案"){
                             console.log("find");
                             taskinput.checked=true;
-                        }
+                        }*/
                         tasklabel.setAttribute('for','menu-radio'+k);
                         taskem.innerText=marklist[k];
 
@@ -389,10 +392,13 @@
         if(check_val[0]=="无答案"){
             check_val=[];
         }
+        console.log(taskPicIDs[num]);
+        console.log(check_val);
         /*任务，picid，正确答案list（可能0，也可能大于1，拥有答案，返回结果成功*/
         var obj={
             picID:taskPicIDs[num],
             answer:check_val,
+            workTaskID:workTaskIDs[num],
         };
         var html = $.ajax({
             type: "Post",

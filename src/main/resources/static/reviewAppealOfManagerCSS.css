@@ -265,15 +265,15 @@ hr{height:1px;border:none;border-top:1px solid lightgrey;}
     /*-webkit-transform:rotate(-45deg);*/
 }
 .menu-span label:hover:after{
-    border:2px solid dimgray;
+    border:2px solid black;
     border-top:none;
     border-right:none;
 }
 .menu-span input:checked+label{
-    border:2px solid dimgray;
+    border:2px solid black;
 }
 .menu-span input:checked+label:after{
-    opacity:1; border:2px solid dimgray;
+    opacity:1; border:2px solid black;
     border-top:none;
     border-right:none;
 }
