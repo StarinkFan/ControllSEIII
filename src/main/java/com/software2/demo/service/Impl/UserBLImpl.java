@@ -5,10 +5,7 @@ import com.software2.demo.ResultMessage;
 import com.software2.demo.bean.*;
 import com.software2.demo.dao.UserDataService;
 import com.software2.demo.dao.WorkTaskDataService;
-import com.software2.demo.service.LabelBLService;
-import com.software2.demo.service.PictureBLService;
-import com.software2.demo.service.UserBLService;
-import com.software2.demo.service.WorkTaskBLService;
+import com.software2.demo.service.*;
 import com.software2.demo.util.AutoIntegrationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -36,6 +33,8 @@ public class UserBLImpl implements UserBLService{
     LabelBLService ls;
     @Autowired
     WorkTaskDataService wD;
+    @Autowired
+    InitTaskBLService iS;
     public ResultMessage addUser(User u) {
         if(uS.existsById(u.getID())){
             return ResultMessage.EXIST;
@@ -121,7 +120,6 @@ public class UserBLImpl implements UserBLService{
             List<Integer> listOfITask= JSON.parseArray(strLOITask,Integer.class);
             total =listOfITask.size();
         }
-        InitTaskBLImpl iS=new InitTaskBLImpl();
         String strLOITask=u.getListOfITask();
         List<Integer> listOfITask=JSON.parseArray(strLOITask,Integer.class);
         for(int i=0;i<total;i++){
@@ -163,6 +161,7 @@ public class UserBLImpl implements UserBLService{
         int undergoing=UGTask.size();
         List<WorkTask> UCTask=wS.getUndone(uid);
         int uncomplete=UCTask.size();
+        rank(0);
         int rank=u.getRanking();
         List<Integer> list=new ArrayList<>();
         list.add(earnedCredit);
@@ -261,9 +260,9 @@ public class UserBLImpl implements UserBLService{
                                     }
                                 }
                                 if(isComplaint)
-                                    { title.setNum_of_right(title.getNum_of_right()-1);thisWT.setActualCredit(thisWT.getActualCredit()-(int)value);change_score(-value,label.getGiverID());change_score(value,initorID);}
+                                    { title.setNum_of_right(title.getNum_of_right()-1);thisWT.setActualCredit(thisWT.getActualCredit()-(int)value);change_score(-value,label.getGiverID(),false);change_score(value,initorID,true);}
                                 else
-                                    {title.setNum_of_right(title.getNum_of_right() + 1); thisWT.setActualCredit(thisWT.getActualCredit()+(int)value);label.setState(1);change_score(value,label.getGiverID());change_score(-value,initorID);}
+                                    { title.setNum_of_right(title.getNum_of_right() + 1); thisWT.setActualCredit(thisWT.getActualCredit()+(int)value);label.setState(1);change_score(value,label.getGiverID(),false);change_score(-value,initorID,true);}
                                     wD.save(thisWT);
                                     break;
                             }
@@ -276,6 +275,7 @@ public class UserBLImpl implements UserBLService{
                         }
                         ls.modifyLabel(label);
                         judgeTitle(title);
+                        user.setListOfTitles(JSON.toJSONString(titles));
                         break;
                     }
                 }
@@ -296,7 +296,8 @@ public class UserBLImpl implements UserBLService{
                 List<Title> titles = JSON.parseArray(user.getListOfTitles(),Title.class);
                 for(Title title : titles){
                     if(title.getName().equals(kind)){
-                        ability = title.getNum_of_right()/(double)title.getNum_of_complete();
+                        if(title.getNum_of_complete()==0){ability = 0;}
+                        else ability = title.getNum_of_right()/(double)title.getNum_of_complete();
                         break;
                     }
                 }
@@ -329,10 +330,11 @@ public class UserBLImpl implements UserBLService{
         }
     }
     //对相应id的worker进行修改得分
-    public void change_score(double value,String id){
+    public void change_score(double value,String id,boolean isInitor){
         User user = uS.getOne(id);
         user.setCredit(user.getCredit()+(int)value);
-        user.setEarncredit(user.getEarncredit()+(int)value);
+        if(!isInitor)
+            user.setEarncredit(user.getEarncredit()+(int)value);
         modifyUser(user);
     }
 }

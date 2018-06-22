@@ -27,8 +27,14 @@ public class Title {
     public double[] toArray(){
         double[] array = new double[5];
         array[0] = achieve;
-        array[1] = num_of_right/(double)num_of_complete;
-        array[2] = num_of_complete/time;
+        if(num_of_complete!=0)
+            array[1] = num_of_right/(double)num_of_complete;
+        else
+            array[1] = 0;
+        if(time != 0)
+            array[2] = num_of_complete/time;
+        else
+            array[2] = 0;
         array[3] = num_of_complete;
         array[4] = marks;
         return array;
