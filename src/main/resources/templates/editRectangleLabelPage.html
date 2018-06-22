@@ -279,7 +279,7 @@
                     async: false,
                     data: JSON.stringify(partLabel),
                     success: function(data) {
-                        if(data==true){alert("success")}else{alert("fail")}
+                        if(data==true){alert("修改成功")}else{alert("修改失败")}
 
                     },
                     error: function() {
@@ -304,9 +304,10 @@
                     data: JSON.stringify(partLabel),
                     success: function(data) {
                         if(data==true){
-                            alert("success");
-                            window.opener.location.reload();
-                            window.close();
+                            alert("删除成功");
+                            window.open("./myTaskDetailOfWorker.html","_self");
+                        }else{
+                            alert("删除失败");
                         }
 
                     },
@@ -368,9 +369,7 @@
         }
 
         function close1() {
-            window.opener=null;
-            window.open('','_self');
-            window.close();
+            window.open("./myTaskDetailOfWorker.html","_self");
         }
 
     </script>
