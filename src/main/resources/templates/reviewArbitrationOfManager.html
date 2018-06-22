@@ -157,6 +157,7 @@
     var peoples=new Array();
     var workerIDs=new Array();
     var workerNames=new Array();
+    var workTaskIDs=new Array();
 
     var marklist=new Array();
     var oldanswer='';
@@ -315,6 +316,7 @@
                             peoples=[];
                             workerIDs=[];
                             workerNames=[];
+                            workTaskIDs=[];
 
                             labelIDs=myobj.labelid;
                             labelInfos=myobj.info;
@@ -322,6 +324,7 @@
                             peoples=myobj.num;
                             workerIDs=myobj.workerid;
                             workerNames=myobj.workername;
+                            workTaskIDs=myobj.worktaskid;
                         },
                         error: function() {
                             alert("error");
@@ -395,6 +398,7 @@
         var obj={
             picID:taskPicIDs[num],
             answer:check_val,
+            workTaskID:workTaskIDs[num],
         };
         var html = $.ajax({
             type: "Post",
