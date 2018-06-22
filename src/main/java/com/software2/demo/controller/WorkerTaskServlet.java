@@ -303,7 +303,7 @@ public class WorkerTaskServlet {
         System.out.println(tag.get(0));
         return resultMap;
     }
-    @RequestMapping("/workerTask/FininishedPiclist")
+    @RequestMapping("/workerTask/FinishedPiclist")
     @ResponseBody
     public Map<String,Object> FininishedPiclist(@RequestBody Map<String,Object> requestMap){
         System.out.println("FininishedPiclist");
