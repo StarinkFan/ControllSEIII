@@ -237,9 +237,11 @@
 
 
         function loadLabel(obj,answer){
-            for(var i=0;i<obj.lis.length;i++){
-                storeX[i]=obj.lis[i].x;
-                storeY[i]=obj.lis[i].y;
+
+            var lis=JSON.parse(obj.lis);
+            for(var i=0;i<lis.length;i++){
+                storeX[i]=lis[i].x;
+                storeY[i]=lis[i].y;
             }
 
             color=obj.color;

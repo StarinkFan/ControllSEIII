@@ -338,10 +338,8 @@
                 data: JSON.stringify(partLabel),
                 success: function(data) {
                     if(data==true){
-                        alert("success");
-                        window.opener.location.reload();
-
-                        window.close();
+                        alert("标注成功");
+                        nextPic();
                     }
 
                 },
