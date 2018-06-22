@@ -11,6 +11,7 @@ import com.software2.demo.service.UserBLService;
 import com.software2.demo.service.WorkTaskBLService;
 import com.software2.demo.util.AutoIntegrationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -165,7 +166,13 @@ public class UserBLImpl implements UserBLService{
     }
 
     public void rank(int rank) {
-        //uS.Rank(rank);
+        Sort sort = new Sort(Sort.Direction.DESC,"earncredit");
+        List<User> userList = uS.findAll(sort);
+        int ranking = 1;
+        for(User user:userList){
+            user.setRanking(ranking);
+            ranking++;
+        }
     }
     public void modifyTitle(InitTask initTask) {
         List<Integer> pic_ids = JSON.parseArray(initTask.getListOfP(), Integer.class);
