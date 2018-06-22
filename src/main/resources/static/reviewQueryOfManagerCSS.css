@@ -102,7 +102,6 @@ li a:hover {
 }
 
 hr{height:1px;border:none;border-top:1px solid lightgrey;}
-
 .taskbox{
     position: relative;
     margin: auto;
@@ -132,7 +131,7 @@ hr{height:1px;border:none;border-top:1px solid lightgrey;}
     position: absolute;
     margin: 15px;
     left: 250px;
-    top: 60px;
+    top: 30px;
 }
 .tag2{
     font-family: "Microsoft YaHei UI";
@@ -169,7 +168,7 @@ hr{height:1px;border:none;border-top:1px solid lightgrey;}
     font-size: 13px;
     position: absolute;
     margin: 15px;
-    top: 90px;
+    top: 60px;
     left: 250px;
 }
 .bt1{

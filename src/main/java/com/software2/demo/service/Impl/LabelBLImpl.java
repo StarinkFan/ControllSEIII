@@ -33,8 +33,8 @@ public class LabelBLImpl implements LabelBLService{
         workTaskDataService.save(workTask);
         picture picture = pictureDataService.findById(label.getPID()).get();
         List<Integer> list1 = JSON.parseObject(picture.getLID(),List.class);
-        list.add(label.getID());
-        picture.setLID(JSON.toJSONString(list));
+        list1.add(label.getID());
+        picture.setLID(JSON.toJSONString(list1));
         pictureDataService.save(picture);
         return ResultMessage.SUCCESS;
     }

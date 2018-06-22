@@ -3,81 +3,483 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="../static/reviewQueryOfManagerCSS.css" type="text/css"/>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script>
+        var account=localStorage.account;
+        var name=localStorage.nickname;
+
+        window.onload=function () {
+            document.getElementById('username').innerText = name;
+            var username = document.getElementById('username');
+            username.onmouseover = function () {
+                document.getElementById("menu").style.display = "inherit";
+            }
+            document.getElementById("userbar").onmouseleave = function (e) {
+                if (e.target.id != "nemu") {
+                    document.getElementById("menu").style.display = "none";
+                }
+            }
+
+            clickQuery();
+
+        }
+
+        function logout(){
+            var html = $.ajax({
+                type: "Post",
+                url: '/logout',
+                dataType: 'json',
+                contentType: "application/json",
+                async: true,
+                data: JSON.stringify(),
+                success: function () {
+                    window.open("./homepage.html","_self");
+                },
+                error: function () {
+                    window.open("./homepage.html","_self");
+                }
+            });
+        }
+    </script>
 </head>
 <body>
+<div id="userbar" style="width:100%;position: fixed;z-index: 3;padding-left: 12%;">
+    <li><img src="../static/pic/logo.png" style="height: 60px;margin-left: -465%"></li>
+    <div style=" z-index:3;display: inline-block;float:left;margin-left: 10%;" >
+        <ul>
+            <li><a href="#task"></a></li>
+            <li><a href="#news"></a></li>
+            <li><a href="#contact"></a></li>
+            <li><a href="#about"></a></li>
+        </ul>
+    </div>
+    <br>
+
+    <div style="float: right;z-index:3;margin-right:20px;display: inline-block;padding-right: 22%;margin-top: -65px">
+        <ul>
+            <li style="z-index: 3">
+                <a style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">
+                    你好，管理员
+                    <u id="username" style="color:ghostwhite; font-size: 24px;font-family:Microsoft YaHei UI;">用户</u>
+                </a>
+            </li>
+        </ul>
+
+        <div id="menu" style="margin-left: 62%;margin-top: -13%;z-index: 5;display: none;">
+            <button onclick="logout()" style="border-radius:0;background: black;color:white;font-size: 20px;margin-top: -2px;width:120px;border-color: white;border-width: 1px;">退出账户</button>
+        </div>
+    </div>
+
+
+</div>
+<div style="position: fixed;width: 101%;height:90px;background-color: black;opacity: 1;z-index: 2;margin-top: -1%;margin-left: -1%"></div>
+<br>
+
+<div class="titleBox">
+    <h2 style="padding-top: 2%;color: #232323;padding-left: 11.5%">系统中心</h2>
+    <p style="color: #939393;padding-left: 11.5%">在这里，可以集中查看管理系统的用户、收益、使用情况等信息,也可以处理待审核内容</p>
+</div>
+
+<div class="maincut"></div>
+
+<div class="mainbody">
+    <div class="mainbox">
+        <div class="left_menu_box">
+            <ul class="menus">
+                <li><p>系统数据</p></li>
+                <hr style="margin-top: -2%"/>
+                <li><a href="./systemInformationPage.html" class="" >统计数据</a></li><br>
+            </ul>
+            <hr style=""/>
+            <ul class="menus">
+                <li style="margin-top: -3%"><p>审核处理</p></li>
+                <hr style="margin-top: -2%"/>
+                <li><a href="./reviewTaskOfManager.html" class="" >图片审核</a></li><br>
+                <li><a href="./reviewComplaintsOfManager.html" class="">投诉审核</a></li><br>
+                <li><a href="#" class="" style="color: violet">结果质疑</a></li><br>
+                <li><a href="./reviewArbitrationOfManager.html" class="">结果仲裁</a></li><br>
+                <li><a href="./reviewAppealOfManager.html" class="">申诉审核</a></li>
+            </ul>
+        </div>
+
+        <div class="mainPanel" style="font-size: 20px;">
+            <h3 style="padding-left: 3%;">结果质疑</h3>
+            <hr />
+            <!-- <a href="javascript:void(0)" onclick="clickReview()" class="review" id="review">待审核</a>-->
+            <div class="taskbox" id="taskbox">
+
+            </div>
+
+        </div>
+
+        <div class="taskDetail" id="taskDetail">
+            <!--<img class="taskDetail-m" id="taskDetail-m">-->
+            <div class="taskDetail-div" id="taskDetail-div">
+                <img class="taskimg" id="taskimg">
+                <label class="menu-label1" id="menu-label2">标注情况:</label>
+
+                <button class="taskDetail-close" id="taskDetail-close" onclick=taskDetailClose()>×</button>
+                <button class="taskDetail-submit" id="taskDetail-submit" onclick=taskDetailSubmit()>提交</button>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+</div>
+
+<div style="width:101%; float: bottom; background-color: black;margin-left: -0.2%;margin-bottom: -100px;">
+    <img src="../static/pic/logo.png" style="width:8%">
+    <span style="color: white;text-align: center;font-size: 25px;vertical-align: center">让世界的智慧凝聚为你的眼</span>
+    <span style="color: white;text-align: center;font-size: 25px;float: right;padding-top: 20px;margin-right: 0.4%">怎么码都码不队</span>
+</div>
+
+
 <script>
-    /*待审核质疑列表 inittaskid，requestorID，name，picid,url,质疑原因*/
-    var html = $.ajax({
-        type: "Post",
-        url: '/review/query',
-        dataType:'json',
-        success: function(myobj) {
-            taskIDs=[];
-            taskRequestorIDs=[];
-            taskRequestorNames=[];
-            taskPicIDs=[];
-            taskPicurls=[];
-            taskReasons=[];
 
-            taskIDs=myobj.id;
-            taskRequestorIDs=myobj.requestorid;
-            taskRequestorNames=myobj.requestorname;
-            taskPicIDs=myobj.picid;
-            taskPicurls=myobj.picurl;
-            taskReasons=myobj.reason;
+    var managerID=localStorage.accout;
 
-            $("#info").children("div").remove();
-            loadReview();
+    var taskID='';
 
-        },
-        error: function() {
-            alert("error");
+    var taskbox=document.getElementById('taskbox');
+    var taskIDs=new Array();
+    var taskRequestorIDs=new Array();
+    var taskRequestorNames=new Array();
+    var taskPicIDs=new Array();
+    var taskPicurls=new Array();
+    var taskReasons=new Array();
+
+    var labelIDs=new Array();
+    var labelInfos=new Array();
+    var isRight=new Array();
+    var peoples=new Array();
+    var workerIDs=new Array();
+    var workerNames=new Array();
+
+    var marklist=new Array();
+    var oldanswer='';
+    var num=0;
+
+
+    /*labelIDs[0]='01';
+    labelIDs[1]='02';
+    labelIDs[2]='03';
+    labelIDs[3]='04';
+    labelIDs[4]='05';
+    labelInfos[0]='right342342342342';
+    labelInfos[1]='righ34r34fvbnlkbt';
+    labelInfos[2]='sddfvdfnbldfknlek';
+    labelInfos[3]='dfvdfvfdvdfvdfvsd';
+    labelInfos[4]='fdvdfvdfvdfvdfvdfvdfvdfvdfvdfvdfvdfsd';
+    isRight[0]='1';
+    isRight[1]='1';
+    isRight[2]='0';
+    isRight[3]='0';
+    isRight[4]='0';
+    peoples[0]='1';
+    peoples[1]='1';
+    peoples[2]='1';
+    peoples[3]='1';
+    peoples[4]='1';
+    workerIDs[0]='c';
+    workerIDs[1]='c';
+    workerIDs[2]='c';
+    workerIDs[3]='c';
+    workerIDs[4]='c';
+    workerNames[0]='w01';
+    workerNames[1]='w02';
+    workerNames[2]='w03';
+    workerNames[3]='w04';
+    workerNames[4]='w05';
+
+
+    taskIDs[0]='01';
+    taskIDs[1]='02';
+    taskIDs[2]='03';
+    taskIDs[3]='04';
+    taskIDs[4]='05';
+    taskRequestorIDs[0]="43";
+    taskRequestorIDs[1]="43";
+    taskRequestorIDs[2]="43";
+    taskRequestorIDs[3]="43";
+    taskRequestorIDs[4]="43";
+    taskRequestorNames[0]='ds';
+    taskRequestorNames[1]='ds';
+    taskRequestorNames[2]='ds';
+    taskRequestorNames[3]='ds';
+    taskRequestorNames[4]='ds';
+    taskPicIDs[0]='1';
+    taskPicIDs[1]='2';
+    taskPicIDs[2]='3';
+    taskPicIDs[3]='4';
+    taskPicIDs[4]='5';
+    taskPicurls[0]="http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg";
+    taskPicurls[1]="http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg";
+    taskPicurls[2]="http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg";
+    taskPicurls[3]="http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg";
+    taskPicurls[4]="http://img17.3lian.com/d/file/201703/03/50f9e9abfcc6320cc918be2de99803d5.jpg";
+    taskReasons[0]="ebvieshvilwejfledmcldkmvkldfnvldkfnvldfvn";
+    taskReasons[1]="ebvieshvilwejfledmcldkmvkldfnvldkfnvldfvn";
+    taskReasons[2]="ebvieshvilwejfledmcldkmvkldfnvldkfnvldfvn";
+    taskReasons[3]="ebvieshvilwejfledmcldkmvkldfnvldkfnvldfvn";
+    taskReasons[4]="ebvieshvilwejfledmcldkmvkldfnvldkfnvldfvn";*/
+
+    function clickQuery() {
+        /*待审核质疑列表 inittaskid，requestorID，name，picid,url,质疑原因*/
+        var html = $.ajax({
+            type: "Post",
+            url: '/review/query',
+            dataType: 'json',
+            success: function (myobj) {
+                taskIDs = [];
+                taskRequestorIDs = [];
+                taskRequestorNames = [];
+                taskPicIDs = [];
+                taskPicurls = [];
+                taskReasons = [];
+
+                taskIDs = myobj.id;
+                taskRequestorIDs = myobj.requestorid;
+                taskRequestorNames = myobj.requestorname;
+                taskPicIDs = myobj.picid;
+                taskPicurls = myobj.picurl;
+                taskReasons = myobj.reason;
+
+                $("#info").children("div").remove();
+                loadReview();
+
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+       /* $("#info").children("div").remove();
+        loadReview();*/
+    }
+
+    var info =document.createElement("info");
+    info.className="info";
+    info.id="info";
+
+    function loadReview() {
+        for(var i=0;i<taskIDs.length;i++){
+            var item=document.createElement("div");
+            var tag1 = document.createElement("label");
+            var tag2 = document.createElement("label");
+            var tag3 = document.createElement("label");
+            var tag4 = document.createElement("label");
+            var tag5 = document.createElement("label");
+            var tag6 = document.createElement("label");
+            var infoimg7=document.createElement('img');
+            var bt1 = document.createElement("button");
+            item.className="item";
+            item.id="item"+i;
+            tag1.className="tag1";
+            tag1.innerHTML="任务ID： "+taskIDs[i];
+            tag2.className="tag2";
+            tag2.innerHTML="发布者ID： "+taskRequestorIDs[i];
+            tag3.className="tag3";
+            tag3.innerHTML="发布者姓名： "+taskRequestorNames[i];
+            tag6.className="tag6";
+            tag6.innerHTML="申诉原因： "+taskReasons[i];
+            infoimg7.className="infoimg7";
+            infoimg7.src=taskPicurls[i];
+            bt1.className="bt1";
+            bt1.id="bt1"+i;
+            bt1.innerHTML="查看";
+
+
+            item.appendChild(tag1);
+            item.appendChild(tag2);
+            item.appendChild(tag3);
+            item.appendChild(tag4);
+            item.appendChild(tag5);
+            item.appendChild(tag6);
+            item.appendChild(bt1);
+            item.appendChild(infoimg7);
+            info.appendChild(item);
         }
-    });
-    /*$("#info").children("div").remove();
-    loadReview();*/
+        taskbox.appendChild(info);
+        clickTaskDetail();
+    }
+
+    var taskDetail_div=document.getElementById("taskDetail-div");
+    var taskimg=document.getElementById('taskimg');
+    var taskDetail_pics = document.createElement("div");
+    taskDetail_pics.className="taskDetail-pics";
+    taskDetail_pics.id="taskDetail-pics";
+    function clickTaskDetail() {
+        for(var i=0;i<taskIDs.length;i++){
+            !function (i) {
+                var bt1=document.getElementById('bt1'+i);
+                bt1.addEventListener("click",function () {
+                    taskimg.src=taskPicurls[i];
+                    num=i;
+                    /* 给图片id，获取list含标注id，标注information，人数（标注该information的人数），对应的workerid，workername*/
+                    var obj=new Object();
+                    obj={
+                        picID:picIDs[i],
+                    };
+                    var html = $.ajax({
+                        type: "Post",
+                        url: '/review/arbitrationlist',
+                        dataType:'json',
+                        contentType: "application/json",
+                        async: false,
+                        data:JSON.stringify(obj),
+                        success: function(myobj) {
+                            console.log(myobj);
+                            console.log(myobj.Rid);
+                            labelIDs=[];
+                            labelInfos=[];
+                            isRight=[];
+                            peoples=[];
+                            workerIDs=[];
+                            workerNames=[];
+
+                            labelIDs=myobj.labelid;
+                            labelInfos=myobj.info;
+                            isRight=myobj.right;
+                            peoples=myobj.num;
+                            workerIDs=myobj.workerid;
+                            workerNames=myobj.workername;
+                        },
+                        error: function() {
+                            alert("error");
+                        }
+                    });
+
+                    /*点击展开查看页面*/
+                    $("#taskDetail-pics").children("span").remove();
+                    var taskDetail=document.getElementById('taskDetail');
+                    taskDetail.style.display='block';
+                    var m=0;
+                    marklist=[];
+                    while(m<labelInfos.length){
+                        marklist.push(labelInfos[m]);
+                        m=parseInt(m)+parseInt(peoples[m]);
+                    }
+                    marklist.push("无");
+                    oldanswer=marklist[0];
+                    console.log(marklist);
+                    for(var k=0;k<marklist.length;k++){
+                        var taskspan=document.createElement("span");
+                        taskspan.className='menu-span';
+                        var taskinput=document.createElement("input");
+                        var tasklabel=document.createElement("label");
+                        var taskem=document.createElement("em");
+
+                        taskinput.type='checkbox';
+                        taskinput.className='menu-radio';
+                        taskinput.id='menu-radio'+k;
+                        taskinput.name='answer';
+                        taskinput.value=marklist[k];
+                        if(marklist[k]==oldanswer){
+                            console.log("find");
+                            taskinput.checked=true;
+                        }
+                        tasklabel.setAttribute('for','menu-radio'+k);
+                        taskem.innerText=marklist[k];
+
+                        taskspan.appendChild(taskinput);
+                        taskspan.appendChild(tasklabel);
+                        taskspan.appendChild(taskem);
 
 
-    /*质疑通过，给任务inittaskid，picid，正确答案list（可能0，也可能大于1，修改答案,通知发起者（requestor）（？，返回结果成功*/
-    var obj={
-        taskID:taskIDs[i],
-        picID:taskPicIDs[i],
-        answer:answerlist,
-    };
-    var html = $.ajax({
-        type: "Post",
-        url: '/checkQuery/pass',
-        data:JSON.stringify(obj),
-        dataType:'json',
-        contentType: "application/json",
-        async: false,
-        success: function(data) {
-            clickReview();
-        },
-        error: function() {
-            alert("error");
+                        taskDetail_pics.appendChild(taskspan);
+                    }
+                    taskDetail_div.appendChild(taskDetail_pics);
+                })
+
+            }(i);
+
         }
-    });
+    }
 
-    /*质疑失败，给任务inittaskid，picid,通知质疑人（requestor）（？，返回结果成功*/
-    var obj={
-        taskID:taskIDs[i],
-        picID:taskPicIDs[i],
-    };
-    var html = $.ajax({
-        type: "Post",
-        url: '/checkQuery/nopass',
-        data:JSON.stringify(obj),
-        dataType:'json',
-        contentType: "application/json",
-        async: false,
-        success: function(data) {
-            clickReview();
-        },
-        error: function() {
-            alert("error");
+
+
+
+
+    function taskDetailSubmit() {
+        obj=document.getElementsByName("answer");
+        check_val=[];
+        for(k in obj){
+            if(obj[k].checked){
+                check_val.push(obj[k].value);
+            }
         }
-    });
+        if(check_val.length==1&&check_val[0]==oldanswer){
+            console.log("no"+num);
+            /*质疑失败，给任务inittaskid，picid,通知质疑人（requestor）（？，返回结果成功*/
+            var obj={
+                taskID:taskIDs[num],
+                picID:taskPicIDs[num],
+            };
+            var html = $.ajax({
+                type: "Post",
+                url: '/checkQuery/nopass',
+                data:JSON.stringify(obj),
+                dataType:'json',
+                contentType: "application/json",
+                async: false,
+                success: function(data) {
+                    var taskDetail=document.getElementById('taskDetail');
+                    taskDetail.style.display='none';
+                    clickQuery();
+                },
+                error: function() {
+                    alert("error");
+                }
+            });
+            /*var taskDetail=document.getElementById('taskDetail');
+            taskDetail.style.display='none';
+            clickQuery();*/
+        }
+        else{
+            console.log("submit");
+            /*质疑通过，给任务inittaskid，picid，正确答案list（可能0，也可能大于1，修改答案,通知发起者（requestor）（？，返回结果成功*/
+            var obj={
+                taskID:taskIDs[num],
+                picID:taskPicIDs[num],
+                answer:check_val,
+            };
+            var html = $.ajax({
+                type: "Post",
+                url: '/checkQuery/pass',
+                data:JSON.stringify(obj),
+                dataType:'json',
+                contentType: "application/json",
+                async: false,
+                success: function(data) {
+                    var taskDetail=document.getElementById('taskDetail');
+                    taskDetail.style.display='none';
+                    clickQuery();
+                },
+                error: function() {
+                    alert("error");
+                }
+            });
+           /* var taskDetail=document.getElementById('taskDetail');
+            taskDetail.style.display='none';
+            clickQuery();*/
+
+        }
+    }
+
+    function taskDetailClose() {
+        var taskDetail=document.getElementById('taskDetail');
+        taskDetail.style.display='none';
+    }
+
+
+
+
+
+
+
 </script>
 </body>
 </html>
