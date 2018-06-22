@@ -123,6 +123,7 @@
                 success: function(myobj) {
                     if(myobj.result==false){
                         alert("已是第一张图片");
+                        window.open("./myTaskDetailOfWorker.html","_self");
                     }
                     else{
                         var postData ={'picSrc':myobj.picSrc,'picID':myobj.picID,'TaskID':tID,
@@ -180,6 +181,7 @@
                 success: function(myobj) {
                     if(myobj.result==false){
                         alert("已是最后一张图片");
+                        window.open("./myTaskDetailOfWorker.html","_self");
                     }
                     else{
                         var postData ={'picSrc':myobj.picSrc,'picID':myobj.picID,'TaskID':tID,
