@@ -302,7 +302,7 @@ public class UserBLImpl implements UserBLService{
             if(autoIntegrationUtil.isNeed_human_judge()){
                 for(int label_id:label_ids){
                     Label label = ls.getSingleLabel(label_id);
-                    label.setState(4);
+                    label.setState(3);
                     ls.modifyLabel(label);
                 }
             }
