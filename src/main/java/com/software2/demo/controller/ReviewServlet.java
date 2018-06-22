@@ -32,6 +32,8 @@ public class ReviewServlet {
     AppealBLService appealBLService;
     @Autowired
     QueryBLService queryBLService;
+    @Autowired
+    LabelBLService labelBLService;
 
     @RequestMapping("/review/pass")
     @ResponseBody
@@ -304,7 +306,7 @@ public class ReviewServlet {
     @ResponseBody
     public Map<String,Object> arbitration(){
         List<Integer> picID=new ArrayList<>();
-        List<Label> listOfLabel=new ArrayList<>();
+        List<Label> listOfLabel=labelBLService.getAll();
         for(Label l:listOfLabel){
             if(l.getState()==3){
                 boolean in=false;
