@@ -341,7 +341,7 @@ function loadTask() {
                     标注的info，每张图片标注的正确情况（0错1对*/
         var obj=new Object();
         obj={
-            taskID:taskIDs[i]
+            taskID:taskID
         };
         var html = $.ajax({
             type: "Post",
@@ -400,7 +400,7 @@ function loadTask() {
             pictag.appendChild(picbt3);
             taskDetail_pics.appendChild(picitem)
             console.log("1"+picConditions);
-            console.log("2"+picTags)
+            console.log("2"+picTags);
             if (picConditions[i] == 1) {
                 if (picTags[i] == 1) {
                     /*var p1=document.getElementById("picbt10");

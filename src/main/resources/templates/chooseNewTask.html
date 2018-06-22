@@ -830,6 +830,7 @@
                     taskq3.style.display='none';
                     taskq4.style.display='none';
                     taskq5.style.display='none';
+                    taskq7.style.display='none';
                 }
                 else if(hasQuestion==1&&isQualified==0){
                     taskq1.innerText="问题"+questionText;
@@ -837,10 +838,10 @@
                     taskq3.style.display='initial';
                     taskq4.style.display='initial';
                     taskq5.style.display='initial';
-                    taskq2.innerText="A"+questionInput[0];
-                    taskq3.innerText="B"+questionInput[1];
-                    taskq4.innerText="C"+questionInput[2];
-                    taskq5.innerText="D"+questionInput[3];
+                    taskq2.innerText="A: "+questionInput[0];
+                    taskq3.innerText="B: "+questionInput[1];
+                    taskq4.innerText="C: "+questionInput[2];
+                    taskq5.innerText="D: "+questionInput[3];
                 }
 
             },

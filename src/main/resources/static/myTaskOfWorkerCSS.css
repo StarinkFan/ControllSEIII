@@ -419,7 +419,7 @@ img{
     content:'';
     width:20px;
     height: 0%;
-    border: 15px solid;
+    border: 20px solid;
     border-color: transparent #FCB69F transparent transparent ;
     position: absolute;right:150px;top: 0px; }
 
@@ -431,7 +431,7 @@ img{
     border-top: 0;
     right: -25px;
     position: absolute;/*使伪元素脱离文档流,使伪元素不受div内容的影响,便于计算位置,此时after相对于div的左上角进行定位*/
-    top: 30px;
+    top: 40px;
 }
 .infomark1{
     display: none;
