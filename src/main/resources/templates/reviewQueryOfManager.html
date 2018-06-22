@@ -164,7 +164,7 @@
     var num=0;
 
 
-    labelIDs[0]='01';
+    /*labelIDs[0]='01';
     labelIDs[1]='02';
     labelIDs[2]='03';
     labelIDs[3]='04';
@@ -225,11 +225,11 @@
     taskReasons[1]="ebvieshvilwejfledmcldkmvkldfnvldkfnvldfvn";
     taskReasons[2]="ebvieshvilwejfledmcldkmvkldfnvldkfnvldfvn";
     taskReasons[3]="ebvieshvilwejfledmcldkmvkldfnvldkfnvldfvn";
-    taskReasons[4]="ebvieshvilwejfledmcldkmvkldfnvldkfnvldfvn";
+    taskReasons[4]="ebvieshvilwejfledmcldkmvkldfnvldkfnvldfvn";*/
 
     function clickQuery() {
         /*待审核质疑列表 inittaskid，requestorID，name，picid,url,质疑原因*/
-        /*var html = $.ajax({
+        var html = $.ajax({
             type: "Post",
             url: '/review/query',
             dataType: 'json',
@@ -255,9 +255,9 @@
             error: function () {
                 alert("error");
             }
-        });*/
-        $("#info").children("div").remove();
-        loadReview();
+        });
+       /* $("#info").children("div").remove();
+        loadReview();*/
     }
 
     var info =document.createElement("info");
