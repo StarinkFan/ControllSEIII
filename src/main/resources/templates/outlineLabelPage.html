@@ -271,6 +271,8 @@
         }
         function addClick(x, y, dragging)
         {
+            x=x.toFixed(1);
+            y=y.toFixed(1);
             clickX.push(x);
             clickY.push(y);
             clickDrag.push(dragging);
@@ -349,6 +351,7 @@
         }
 
         function clear1() {
+            black();
             clickX = new Array();
             clickY = new Array();
             clickDrag = new Array();
@@ -502,7 +505,7 @@
 </div>
 
 <div class="colorSelector" style="text-align: center;position: fixed;left: 750px;bottom:100px">
-    <div class="color" onclick="black()" id="bla" style="background-color: black"></div>
+    <div class="color" onclick="black()" id="bla" style="background-color: black;border: 1px solid red"></div>
     <div class="color" onclick="white()" id="whi" style="background-color: white"></div>
     <div class="color" onclick="yellow()" id="yel" style="background-color: yellow"></div>
     <div class="color" onclick="blue()" id="blu" style="background-color: blue"></div>

@@ -327,7 +327,7 @@
                             alert("error");
                         }
                     });
-
+                    console.log(labelInfos);
                     /*点击展开查看页面*/
                     $("#taskDetail-pics").children("span").remove();
                     var taskDetail=document.getElementById('taskDetail');
@@ -338,7 +338,7 @@
                         marklist.push(labelInfos[m]);
                         m=parseInt(m)+parseInt(peoples[m]);
                     }
-                    marklist.push("无");
+                    marklist.push("无答案");
                     console.log(marklist);
                     for(var k=0;k<marklist.length;k++){
                         var taskspan=document.createElement("span");
@@ -385,6 +385,9 @@
             if(obj[k].checked){
                 check_val.push(obj[k].value);
             }
+        }
+        if(check_val[0]=="无答案"){
+            check_val=[];
         }
         /*任务，picid，正确答案list（可能0，也可能大于1，拥有答案，返回结果成功*/
         var obj={
