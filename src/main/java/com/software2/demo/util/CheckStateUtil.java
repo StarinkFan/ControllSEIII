@@ -66,6 +66,9 @@ public class CheckStateUtil {
                 List<WorkTask> workTaskList = c.wS.getByInitTaskID(i.getID());
                 for(WorkTask workTask: workTaskList){
                     if(workTask.getState()==0){
+                        User u=c.userBLService.getSingle(workTask.getWorkerID());
+                        List<Integer> listOfWTask=JSON.parseArray(u.getListOfWTask(),Integer.class);
+                        List<Integer> newList=new ArrayList<>();
                         workTask.setState(3);
                     }else{
                         workTask.setState(2);
