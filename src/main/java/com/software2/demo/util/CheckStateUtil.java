@@ -1,12 +1,8 @@
 package com.software2.demo.util;
 
 import com.alibaba.fastjson.JSON;
-import com.software2.demo.bean.InitTask;
-import com.software2.demo.bean.User;
-import com.software2.demo.bean.WorkTask;
-import com.software2.demo.service.InitTaskBLService;
-import com.software2.demo.service.UserBLService;
-import com.software2.demo.service.WorkTaskBLService;
+import com.software2.demo.bean.*;
+import com.software2.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -24,6 +20,10 @@ public class CheckStateUtil {
     InitTaskBLService iS;
     @Autowired
     UserBLService userBLService;
+    @Autowired
+    PictureBLService pictureBLService;
+    @Autowired
+    LabelBLService labelBLService;
     static CheckStateUtil c;
     @PostConstruct
     public void init(){
@@ -31,6 +31,8 @@ public class CheckStateUtil {
         c.userBLService=this.userBLService;
         c.iS=this.iS;
         c.wS=this.wS;
+        c.pictureBLService=this.pictureBLService;
+        c.labelBLService=this.labelBLService;
     }
     public static void checkWT(int WorkTaskID){
         Date day=new Date();
@@ -69,6 +71,31 @@ public class CheckStateUtil {
                         User u=c.userBLService.getSingle(workTask.getWorkerID());
                         List<Integer> listOfWTask=JSON.parseArray(u.getListOfWTask(),Integer.class);
                         List<Integer> newList=new ArrayList<>();
+                        for(int wtid:listOfWTask){
+                            if(wtid!=workTask.getID()){
+                                newList.add(wtid);
+                            }
+                        }
+                        u.setListOfWTask(JSON.toJSONString(newList));
+                        c.userBLService.modifyUser(u);
+
+                        List<Integer> labelID=JSON.parseArray(workTask.getListOfLabel(),Integer.class);
+                        c.labelBLService.deleteLabel(labelID,workTask.getID());
+                        c.wS.deleteTask(workTask.getID());
+/*                        for(int temp:labelID){
+                            Label label=c.labelBLService.getSingleLabel(temp);
+                            picture picture=c.pictureBLService.getSinglePicture(label.getPID());
+                            List<Integer> listOfLabelID=JSON.parseArray(picture.getLID(),Integer.class);
+                            List<Integer> newListOfLabel=new ArrayList<>();
+                            for(int temp2:listOfLabelID){
+                                if(temp2!=temp){
+                                    newListOfLabel.add(temp2);
+                                }
+                            }
+                            picture.setLID(JSON.toJSONString(newListOfLabel));
+                            c.pictureBLService.modify(picture);
+                            c.labelBLService.deleteLabel()
+                        }*/
                         workTask.setState(3);
                     }else{
                         workTask.setState(2);

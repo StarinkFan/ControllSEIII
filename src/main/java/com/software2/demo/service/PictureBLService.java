@@ -12,4 +12,5 @@ public interface PictureBLService {
     public List<picture> getAllPictures();
     public picture getSinglePicture(int picID);
     public picture addPicture(picture p);
+    public picture modify(picture p);
 }

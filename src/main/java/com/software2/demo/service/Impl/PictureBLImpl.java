@@ -64,4 +64,9 @@ public class PictureBLImpl implements PictureBLService{
     public picture addPicture(picture p) {
         return pictureData.save(p);
     }
+
+    @Override
+    public picture modify(picture p) {
+        return pictureData.save(p);
+    }
 }
