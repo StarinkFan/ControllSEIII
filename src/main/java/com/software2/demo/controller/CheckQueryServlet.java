@@ -38,7 +38,7 @@ public class CheckQueryServlet {
     public boolean pass(@RequestBody Map<String,Object> requestMap){
         int QueryID= Integer.parseInt(requestMap.get("QueryID").toString());
         Query q=queryBLService.getSingle(QueryID);
-        q.setCheck(1);
+        q.setChecking(1);
         queryBLService.modify(q);
         Integer taskID= Integer.valueOf(requestMap.get("taskID").toString());
         InitTask initTask = initTaskBLService.getSingleITask(taskID);
@@ -70,7 +70,7 @@ public class CheckQueryServlet {
     public boolean nopass(@RequestBody Map<String,Object> requestMap){
         int QueryID= Integer.parseInt(requestMap.get("QueryID").toString());
         Query q=queryBLService.getSingle(QueryID);
-        q.setCheck(1);
+        q.setChecking(1);
         queryBLService.modify(q);
         Integer taskID= Integer.valueOf(requestMap.get("taskID").toString());
         Integer picID= Integer.valueOf(requestMap.get("picID").toString());

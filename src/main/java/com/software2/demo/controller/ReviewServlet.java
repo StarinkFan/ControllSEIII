@@ -227,7 +227,7 @@ public class ReviewServlet {
         List<Integer> workTaskid=new ArrayList<>();
         List<Integer> complaintid=new ArrayList<>();
         for(Complaint c:list){
-            if(c.getCheck()==0) {
+            if(c.getChecking()==0) {
                 InitTask i = iS.getSingleITask(c.getInitTaskID());
                 WorkTask w = workTaskBLService.getSingleWTask(c.getWorkTaskID());
                 User requestor = userBLService.getSingle(c.getRequestorID());
@@ -286,7 +286,7 @@ public class ReviewServlet {
         List<Integer> appealid=new ArrayList<>();
         List<Appeal> list=appealBLService.getAll();
         for(Appeal a:list){
-            if(a.getCheck()==0) {
+            if(a.getChecking()==0) {
                 User requestor = userBLService.getSingle(a.getRequestorID());
                 User worker = userBLService.getSingle(a.getWorkerID());
                 picture p = pictureBLService.getSinglePicture(a.getPictureID());
@@ -362,7 +362,7 @@ public class ReviewServlet {
         List<Query> list=queryBLService.getAll();
         List<Integer> queryid=new ArrayList<>();
         for(Query a:list){
-            if(a.getCheck()==0) {
+            if(a.getChecking()==0) {
                 User requestor = userBLService.getSingle(a.getRequestorID());
                 picture p = pictureBLService.getSinglePicture(a.getPictureID());
                 id.add(a.getInitTaskID());

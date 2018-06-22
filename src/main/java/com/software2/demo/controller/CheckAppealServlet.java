@@ -39,7 +39,7 @@ public class CheckAppealServlet {
     public boolean appealPass(@RequestBody Map<String,Object> requestMap){
         int appealID= Integer.parseInt(requestMap.get("appealID").toString());
         Appeal a=appealBLService.getSingle(appealID);
-        a.setCheck(1);
+        a.setChecking(1);
         appealBLService.modify(a);
         int taskID=Integer.parseInt(requestMap.get("taskID").toString());
         int picID=Integer.parseInt(requestMap.get("picID").toString());
@@ -71,7 +71,7 @@ public class CheckAppealServlet {
     public boolean appealNoPass(@RequestBody Map<String,Object> requestMap){
         int appealID= Integer.parseInt(requestMap.get("appealID").toString());
         Appeal a=appealBLService.getSingle(appealID);
-        a.setCheck(1);
+        a.setChecking(1);
         appealBLService.modify(a);
         String taskID=requestMap.get("taskID").toString();
         String picID=requestMap.get("picID").toString();

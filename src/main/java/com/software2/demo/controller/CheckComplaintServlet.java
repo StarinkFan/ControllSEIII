@@ -38,7 +38,7 @@ public class CheckComplaintServlet {
     public boolean pass(@RequestBody Map<String,Object> requestMap){
         int complaintID= Integer.parseInt(requestMap.get("complaintID").toString());
         Complaint a=complaintBLService.getSingle(complaintID);
-        a.setCheck(1);
+        a.setChecking(1);
         complaintBLService.modify(a);
         Integer taskID= Integer.valueOf(requestMap.get("taskID").toString());
         Integer picID= Integer.valueOf(requestMap.get("picID").toString());
@@ -83,7 +83,7 @@ public class CheckComplaintServlet {
     public boolean nopass(@RequestBody Map<String,Object> requestMap){
         int complaintID= Integer.parseInt(requestMap.get("complaintID").toString());
         Complaint a=complaintBLService.getSingle(complaintID);
-        a.setCheck(1);
+        a.setChecking(1);
         complaintBLService.modify(a);
         Integer taskID= Integer.valueOf(requestMap.get("taskID").toString());
         Integer picID= Integer.valueOf(requestMap.get("picID").toString());
