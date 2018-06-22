@@ -187,7 +187,7 @@ public class UserBLImpl implements UserBLService{
         List<String > ids = JSON.parseArray(initTask.getListOfWoker(),String.class);
         //修改title的时间来计算效率
         for(String id:ids){
-            User user = uS.getOne(id);
+            User user = getSingle(id);
             double time = 0;
             List<WorkTask> lis = wD.findByWorkerID(id);
             for(WorkTask workTask:lis){
@@ -278,7 +278,7 @@ public class UserBLImpl implements UserBLService{
                         break;
                     }
                 }
-                uS.save(user);
+                modifyUser(user);
             }
 
 
@@ -330,7 +330,7 @@ public class UserBLImpl implements UserBLService{
     }
     //对相应id的worker进行修改得分
     public void change_score(double value,String id,boolean isInitor){
-        User user = uS.getOne(id);
+        User user = getSingle(id);
         user.setCredit(user.getCredit()+(int)value);
         if(!isInitor)
             user.setEarncredit(user.getEarncredit()+(int)value);
