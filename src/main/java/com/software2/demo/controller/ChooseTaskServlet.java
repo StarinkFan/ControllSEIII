@@ -5,6 +5,7 @@ import com.software2.demo.bean.*;
 import com.software2.demo.service.InitTaskBLService;
 import com.software2.demo.service.UserBLService;
 import com.software2.demo.service.WorkTaskBLService;
+import com.software2.demo.util.AutoIntegrationUtil;
 import com.software2.demo.util.RequestTaskUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -105,6 +106,7 @@ public class ChooseTaskServlet {
     @RequestMapping("/chooseTask/Recommendation")
     @ResponseBody
     public Map<String,Object> recommendation(@RequestBody Map<String,Object> requestMap){
+        AutoIntegrationUtil autoIntegrationUtil = new AutoIntegrationUtil();
         String userID=requestMap.get("workerID").toString();
         User u=userBLService.getSingle(userID);
         List<String> listOfTags=JSON.parseArray(u.getListOfTags(),String.class);
@@ -116,7 +118,7 @@ public class ChooseTaskServlet {
                 List<String> tags = JSON.parseArray(i.getListOfTags(), String.class);
                 for (String str : tags) {
                     for (String str2 : listOfTags) {
-                        if (str.equals(str2)) {
+                        if (autoIntegrationUtil.calculate_alike(str,str2)>0.7) {
                             in = true;
                             break;
                         }
