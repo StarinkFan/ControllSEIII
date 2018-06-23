@@ -117,7 +117,7 @@ public class ChooseTaskServlet {
                 List<String> tags = JSON.parseArray(i.getListOfTags(), String.class);
                 for (String str : tags) {
                     for (String str2 : listOfTags) {
-                        if (new AutoIntegrationUtil().calculate_alike(str,str2)>0.7) {
+                        if (str.equals(str2)) {
                             in = true;
                             break;
                         }
