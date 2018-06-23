@@ -106,7 +106,6 @@ public class ChooseTaskServlet {
     @RequestMapping("/chooseTask/Recommendation")
     @ResponseBody
     public Map<String,Object> recommendation(@RequestBody Map<String,Object> requestMap){
-        AutoIntegrationUtil autoIntegrationUtil = new AutoIntegrationUtil();
         String userID=requestMap.get("workerID").toString();
         User u=userBLService.getSingle(userID);
         List<String> listOfTags=JSON.parseArray(u.getListOfTags(),String.class);
@@ -118,7 +117,7 @@ public class ChooseTaskServlet {
                 List<String> tags = JSON.parseArray(i.getListOfTags(), String.class);
                 for (String str : tags) {
                     for (String str2 : listOfTags) {
-                        if (autoIntegrationUtil.calculate_alike(str,str2)>0.7) {
+                        if (new AutoIntegrationUtil().calculate_alike(str,str2)>0.7) {
                             in = true;
                             break;
                         }
