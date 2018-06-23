@@ -357,13 +357,13 @@ public class UserBLImpl implements UserBLService{
             int isExist = 0;
             for(CostRecord record:recordList){
                 if(todaystr.equals(simpleDateFormat.format(record.getDate()))){
-                    record.setCredit(record.getCredit()+(int)value);
+                    record.setCredit(record.getCredit()-(int)value);
                     isExist = 1;
                     break;
                 }
             }
             if(isExist==0){
-                recordList.add(new CostRecord(new Date(),(int)value));
+                recordList.add(new CostRecord(new Date(),-(int)value));
             }
             user.setListOfCRecord(JSON.toJSONString(recordList));
         }
