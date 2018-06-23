@@ -1,12 +1,15 @@
 package com.software2.demo.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.aliyuncs.exceptions.ClientException;
 import com.software2.demo.bean.InitTask;
+import com.software2.demo.bean.Title;
 import com.software2.demo.bean.User;
 import com.software2.demo.bean.picture;
 import com.software2.demo.service.InitTaskBLService;
 import com.software2.demo.service.PictureBLService;
 import com.software2.demo.service.UserBLService;
+import com.software2.demo.util.SendTextMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -89,6 +92,22 @@ public class UploadServlet {
         i.setKind(kind);
         i.setWrongAnswerWorker(JSON.toJSONString(new ArrayList<>()));
         int iID=iS.addITask(i).getID();
+        List<User> listOfUser=userBLService.getAllUser();
+        for(User u:listOfUser){
+            List<Title> listOfTitle=JSON.parseArray(u.getListOfTitles(), Title.class);
+            for(Title t:listOfTitle){
+                if(t.getAchieve()==1){
+                    if(t.getName().equals(kind)){
+                        try {
+                            SendTextMessage.sendAnswerChange(u.getID());
+                        } catch (ClientException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    }
+                }
+            }
+        }
         User u=userBLService.getSingle(requestorID);
         String strIT=u.getListOfITask();
         List<Integer> iT=JSON.parseArray(strIT,Integer.class);
