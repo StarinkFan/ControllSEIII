@@ -1,5 +1,8 @@
 package com.software2.demo.util;
 
+import com.baidu.aip.nlp.AipNlp;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,11 +17,16 @@ import java.util.List;
 通过get_label可获得最终标注结果
  */
 public class AutoIntegrationUtil {
+    private double standard = 0.6;
     private HashMap<String,Double> answers = new HashMap<String, Double>();//答案及其价值
     private List<relation> list = new ArrayList<>();
     private String answer = "";
     private boolean need_human_judge = false;
+    private AipNlp client = Client.getClient();
+    // 传入可选参数调用接口
+    private HashMap<String, Object> options = new HashMap<String, Object>();
     public AutoIntegrationUtil(){
+        options.put("model", "CNN");
         answers = new HashMap<String, Double>();//答案及其价值
         list = new ArrayList<>();
     }
@@ -29,7 +37,49 @@ public class AutoIntegrationUtil {
         r.setUserID(id);
         list.add(r);
     }
+    //进行聚类(填充answer属性)
+    public void cluster(){
+        int size = list.size();
+        for(int i = 0;i<size-1;i++){
+            for(int j = i+1;j<size;j++){
+                relation a1 = list.get(i);
+                relation b1 = list.get(j);
+                String a,b;
+                if(a1.isHas_answer()){
+                    a = a1.getAnswer();
+                }
+                else
+                    a = a1.getLabel();
+
+                if(b1.isHas_answer()){
+                    b = b1.getAnswer();
+                }
+                else
+                    b = b1.getLabel();
+                if(calculate_alike(a,b)>standard){
+                    if(a.length()>b.length()){
+                        a1.setAnswer(b);
+                        b1.setAnswer(b);
+                    }else{
+
+                        a1.setAnswer(a);
+                        b1.setAnswer(a);
+                    }
+                    a1.setHas_answer(true);
+                    b1.setHas_answer(true);
+                }
+            }
+        }
+    }
+
+    public double calculate_alike(String a,String b){
+        // 短文本相似度
+        JSONObject res = client.simnet(a, b, options);
+        System.out.println(res);
+        return res.getDouble("score");
+    }
     public void run(){
+        cluster();
         judge_data();
         //change_ability(answer);
     }
@@ -38,8 +88,9 @@ public class AutoIntegrationUtil {
         String label;
         double ability;
         for(relation r:list){
-            label = r.getLabel();
-            ability = r.getAbility();
+            label = r.getAnswer();
+            //ability = r.getAbility();
+            ability = 1;
             if(!answers.keySet().contains(label)){
                 answers.put(label,ability);
             }else{
@@ -66,15 +117,15 @@ public class AutoIntegrationUtil {
         }
     }
     //修改能力值作为权重
-    public void change_ability(String s){
-        for(relation r : list){
-            if(r.getLabel().equals(s)){
-                r.setAbility(r.getAbility()+1);
-            }else{
-                r.setAbility(r.getAbility()-1);
-            }
-        }
-    }
+//    public void change_ability(String s){
+//        for(relation r : list){
+//            if(r.getLabel().equals(s)){
+//                r.setAbility(r.getAbility()+1);
+//            }else{
+//                r.setAbility(r.getAbility()-1);
+//            }
+//        }
+//    }
 
     public HashMap<String, Double> getUsers() {
         HashMap<String,Double> users = new HashMap<>();
@@ -97,6 +148,24 @@ class relation {
     String userID;
     double ability;
     String label;
+    String answer;
+    boolean has_answer;
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public boolean isHas_answer() {
+        return has_answer;
+    }
+
+    public void setHas_answer(boolean has_answer) {
+        this.has_answer = has_answer;
+    }
 
     public String getUserID() {
         return userID;
