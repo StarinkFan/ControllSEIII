@@ -89,8 +89,8 @@ public class AutoIntegrationUtil {
         double ability;
         for(relation r:list){
             label = r.getAnswer();
-            //ability = r.getAbility();
-            ability = 1;
+            ability = r.getAbility();
+//            ability = 1;
             if(!answers.keySet().contains(label)){
                 answers.put(label,ability);
             }else{

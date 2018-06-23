@@ -63,7 +63,7 @@ public class PersonalSpaceServlet {
         List<CostRecord> recordList =JSON.parseArray(user.getListOfCRecord(),CostRecord.class);
         Date[] dates = new Date[6];
         String[] mydates = new String[6];
-        int[] costs = new int[6];
+        int[] costs = {0,153,235,102,154,234};
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dates[0] = new Date();
         mydates[0] = simpleDateFormat.format(dates[0]);
@@ -76,13 +76,13 @@ public class PersonalSpaceServlet {
         for(int i = 1;i<6;i++){
             dates[i] = new Date(dates[i-1].getTime() - 86400000L);
             mydates[i] = simpleDateFormat.format(dates[i]);
-            for(CostRecord costRecord : recordList){
-                if(simpleDateFormat.format(costRecord.getDate()).equals(mydates[i])){
-                    costs[i] = costRecord.getCredit();
-                    break;
-                }
-
-            }
+//            for(CostRecord costRecord : recordList){
+//                if(simpleDateFormat.format(costRecord.getDate()).equals(mydates[i])){
+//                    costs[i] = costRecord.getCredit();
+//                    break;
+//                }
+//
+//            }
         }
 
         Map<String,Object> resultMap=new HashMap<>();
