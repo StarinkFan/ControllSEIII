@@ -320,21 +320,19 @@
         var select2=document.getElementById("menu-select2");
         searchnum=select.options[select.selectedIndex].value;
         searchKind=select2.value;
-        console.log(sortKind);
-        console.log(sortnum);
     }
 
     function search() {
         searchWord = document.getElementById('search-input').value;
-        if (sortnum == 0) {
+        if (searchnum == 0) {
             /*alert('0'+searchWord);*/
             searchByID();
         }
-        else if (sortnum == 1) {
+        else if (searchnum == 1) {
             //alert('1'+searchWord);
             searchByCredit();
         }
-        else if (sortnum == 2) {
+        else if (searchnum == 2) {
             //alert('2'+searchWord);
             searchByNum();
         }

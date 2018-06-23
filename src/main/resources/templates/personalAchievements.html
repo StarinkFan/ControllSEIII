@@ -164,8 +164,8 @@
                         }else{
                             values[1].innerText="未获得";
                         }
-                        values[3].innerText=data[i][1];
-                        values[5].innerText=data[i][2];
+                        values[3].innerText=data[i][1].toFixed(1);
+                        values[5].innerText=data[i][2].toFixed(1);
                         values[7].innerText=data[i][3];
                         values[9].innerText=data[i][4];
                         scores.push(data[i][4]);
@@ -228,17 +228,17 @@
                         }
                     },
                     indicator: [
-                        { name: '自然（Nature）', max: 2000},
-                        { name: '地理（Geography）', max: 2000},
-                        { name: '文化（Culture）', max: 2000},
-                        { name: '历史（History）', max: 2000},
-                        { name: '艺术（Art）', max: 2000},
-                        { name: '人物（Figure）', max: 2000},
-                        { name: '生活（Life）', max: 2000},
-                        { name: '社会（Society）', max: 2000},
-                        { name: '体育（Sports）', max: 2000},
-                        { name: '经济（Economy）', max: 2000},
-                        { name: '科技（Science and technology）', max: 2000}
+                        { name: '自然（Nature）', max: 3000},
+                        { name: '地理（Geography）', max: 3000},
+                        { name: '文化（Culture）', max: 3000},
+                        { name: '历史（History）', max: 3000},
+                        { name: '艺术（Art）', max: 3000},
+                        { name: '人物（Figure）', max: 3000},
+                        { name: '生活（Life）', max: 3000},
+                        { name: '社会（Society）', max: 3000},
+                        { name: '体育（Sports）', max: 3000},
+                        { name: '经济（Economy）', max: 3000},
+                        { name: '科技（Science and technology）', max: 3000}
                     ]
                 },
                 series: [{
